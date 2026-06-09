@@ -1,24 +1,39 @@
 {
   "current": {
     "app": "Stage Music",
-    "version": "v0.8.0",
-    "versionNumber": "0.8.0",
+    "version": "v0.9.0",
+    "versionNumber": "0.9.0",
     "phase": 3,
     "phaseLabel": "Fase 3",
     "phaseName": "Biblioteca de Cifras Profissional",
     "date": "09/06/2026",
     "isoDate": "2026-06-09",
-    "time": "12:38",
-    "stamp": "20260609-1238",
+    "time": "12:48",
+    "stamp": "20260609-1248",
     "environment": "production",
     "costStrategy": "free-first",
     "resilience": "anti-break-v2"
   },
   "builds": [
     {
-      "version": "v0.8.0",
+      "version": "v1.0.0",
       "date": "2026-06-09",
-      "time": "12:38",
+      "time": "12:56",
+      "phase": "Fase 5",
+      "phaseName": "Repertórios e Setlists",
+      "notes": [
+        "criação e edição de repertórios",
+        "ordenação por arrastar e botões",
+        "tom, duração e status de ensaio por música",
+        "duplicação, exclusão e resumo de tempo",
+        "integração inicial com o Modo Live",
+        "persistência local protegida anti-break v4"
+      ]
+    },
+    {
+      "version": "v0.9.0",
+      "date": "2026-06-09",
+      "time": "12:48",
       "phase": "Fase 3",
       "phaseName": "Biblioteca de Cifras Profissional",
       "notes": [

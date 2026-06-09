@@ -12,9 +12,9 @@
   <main class="page-shell">
     <div class="page-header compact">
       <a href="index.html" class="back-link">← Início</a>
-      <span class="visual-badge">Fase 5 liberada</span>
+      <span class="visual-badge">Fase 4 • Editor inteligente</span>
       <h1>Inserir cifra</h1>
-      <p>Agora o editor já salva cifras localmente, mantém rascunhos automáticos no dispositivo e cria uma pequena biblioteca pessoal offline para o Stage Music.</p>
+      <p>Crie cifras estruturadas para palco com detecção de acordes, transposição, capo, seções musicais, histórico e salvamento automático protegido.</p>
     </div>
     <div class="editor-shell">
       <section class="editor-card">
@@ -76,6 +76,24 @@
             </label>
           </div>
 
+          <section class="music-toolbox" aria-label="Ferramentas musicais">
+            <div class="toolbox-row">
+              <label><span>Capotraste</span><select id="song-capo"><option value="0">Sem capo</option><option value="1">Casa 1</option><option value="2">Casa 2</option><option value="3">Casa 3</option><option value="4">Casa 4</option><option value="5">Casa 5</option><option value="6">Casa 6</option><option value="7">Casa 7</option><option value="8">Casa 8</option><option value="9">Casa 9</option><option value="10">Casa 10</option><option value="11">Casa 11</option><option value="12">Casa 12</option></select></label>
+              <label><span>Notação</span><select id="accidental-mode"><option value="sharp">Sustenidos</option><option value="flat">Bemóis</option></select></label>
+              <button class="btn btn-outline" type="button" id="transpose-down">−1 semitom</button>
+              <button class="btn btn-outline" type="button" id="transpose-up">+1 semitom</button>
+              <button class="btn btn-outline" type="button" id="detect-key">Detectar tom</button>
+              <button class="btn btn-outline" type="button" id="format-chords">Formatar cifra</button>
+            </div>
+            <div class="section-palette" id="section-palette">
+              <span>Inserir seção:</span>
+              <button type="button" data-section="Intro">Intro</button><button type="button" data-section="Verso">Verso</button><button type="button" data-section="Pré-Refrão">Pré</button><button type="button" data-section="Refrão">Refrão</button><button type="button" data-section="Ponte">Ponte</button><button type="button" data-section="Solo">Solo</button><button type="button" data-section="Final">Final</button>
+            </div>
+            <div class="editor-insights">
+              <span id="chord-count">0 acordes detectados</span><span id="section-count">0 seções</span><span id="history-count">Histórico pronto</span>
+            </div>
+          </section>
+
           <label class="editor-area-label">
             <span>Conteúdo da cifra</span>
             <textarea id="song-content" placeholder="[Intro]
@@ -89,6 +107,8 @@ Tua presença me sustenta..."></textarea>
           <div class="editor-actions">
             <button class="btn btn-primary" type="submit">Salvar cifra local</button>
             <button class="btn btn-secondary" type="button" id="save-draft">Salvar rascunho</button>
+            <button class="btn btn-outline" type="button" id="undo-edit">Desfazer</button>
+            <button class="btn btn-outline" type="button" id="redo-edit">Refazer</button>
             <button class="btn btn-outline" type="button" id="load-demo">Carregar demo</button>
             <button class="btn btn-outline" type="button" id="clear-editor">Limpar editor</button>
             <button class="btn btn-ghost" type="button" id="export-local-json">Exportar JSON</button>

@@ -3,33 +3,97 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stage Music • Minhas listas</title>
+  <meta name="theme-color" content="#090b12" />
+  <title>Stage Music • Repertórios</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
   <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/setlists.css" />
 </head>
 <body data-page="minhas-listas">
-  <main class="page-shell">
-    <header class="page-header">
-      <a href="index.html" class="back-link">← Início</a>
-      <span class="visual-badge">Setlists e repertório</span>
-      <h1>Minhas listas</h1>
-      <p>Base visual pronta para repertórios, setlists e organização de músicas.</p>
+  <main class="page-shell setlist-shell">
+    <header class="page-header setlist-hero">
+      <div>
+        <a href="index.html" class="back-link">← Início</a>
+        <span class="visual-badge">Fase 5 • Organização de palco</span>
+        <h1>Repertórios e setlists</h1>
+        <p>Monte, ordene e prepare suas músicas para ensaios, cultos e apresentações.</p>
+      </div>
+      <button id="new-setlist-btn" class="btn btn-primary">＋ Criar repertório</button>
     </header>
-    <section class="two-column">
-      <div class="placeholder-card">
-        <div class="list-row"><div><strong>Culto Domingo Noite</strong><small>12 músicas • principal</small></div><span class="status-pill">Principal</span></div>
-        <div class="list-row"><div><strong>Show Acústico</strong><small>10 músicas • versão pocket</small></div><span class="status-pill">Acústico</span></div>
-        <div class="list-row"><div><strong>Reunião de Célula</strong><small>9 músicas • íntimo</small></div><span class="status-pill">Célula</span></div>
-        <button class="btn btn-primary">Criar nova lista</button>
-      </div>
-      <div class="mockup-card">
-        <img src="assets/illustrations/lists-reference.png" alt="Referência visual de Minhas Listas" />
-      </div>
+
+    <section class="setlist-stats" aria-label="Resumo dos repertórios">
+      <article><strong id="stat-setlists">0</strong><span>Repertórios</span></article>
+      <article><strong id="stat-songs">0</strong><span>Músicas escaladas</span></article>
+      <article><strong id="stat-duration">0 min</strong><span>Tempo total</span></article>
+      <article><strong id="stat-ready">0%</strong><span>Prontas para tocar</span></article>
+    </section>
+
+    <section class="setlist-workspace">
+      <aside class="setlist-sidebar panel-card">
+        <div class="panel-heading">
+          <div><span class="eyebrow">Seus eventos</span><h2>Listas</h2></div>
+          <button id="duplicate-setlist-btn" class="icon-btn" title="Duplicar repertório" disabled>⧉</button>
+        </div>
+        <label class="search-field"><span>⌕</span><input id="setlist-search" type="search" placeholder="Buscar repertório" /></label>
+        <div id="setlist-list" class="setlist-list" aria-live="polite"></div>
+      </aside>
+
+      <section class="setlist-editor panel-card">
+        <div id="setlist-empty" class="setlist-empty">
+          <span>♫</span><h2>Crie seu primeiro repertório</h2>
+          <p>Organize músicas, tonalidades, duração e andamento em uma única tela.</p>
+          <button class="btn btn-primary" data-action="new">Criar repertório</button>
+        </div>
+
+        <div id="setlist-content" hidden>
+          <div class="setlist-title-row">
+            <div>
+              <span class="eyebrow">Repertório ativo</span>
+              <input id="setlist-name" class="setlist-name-input" maxlength="80" aria-label="Nome do repertório" />
+              <div class="setlist-meta-line"><span id="setlist-song-count">0 músicas</span><span id="setlist-total-time">0 min</span><span id="setlist-updated">Atualizado agora</span></div>
+            </div>
+            <div class="setlist-main-actions">
+              <button id="add-song-btn" class="btn btn-secondary">＋ Adicionar música</button>
+              <button id="start-live-btn" class="btn btn-primary">▶ Iniciar Live</button>
+              <button id="delete-setlist-btn" class="btn btn-danger">Excluir</button>
+            </div>
+          </div>
+
+          <div class="setlist-details-grid">
+            <label><span>Data/evento</span><input id="setlist-date" type="date" /></label>
+            <label><span>Tipo</span><select id="setlist-type"><option>Culto</option><option>Show</option><option>Ensaio</option><option>Evento</option><option>Aula</option><option>Outro</option></select></label>
+            <label><span>Status</span><select id="setlist-status"><option value="draft">Em preparação</option><option value="rehearsal">Em ensaio</option><option value="ready">Pronto</option><option value="done">Concluído</option></select></label>
+            <label class="wide"><span>Observações gerais</span><input id="setlist-notes" maxlength="240" placeholder="Ex.: entrada após vídeo, final espontâneo..." /></label>
+          </div>
+
+          <div class="setlist-table-head"><span>Ordem</span><span>Música</span><span>Tom</span><span>Duração</span><span>Ensaio</span><span>Ações</span></div>
+          <div id="setlist-songs" class="setlist-song-list" aria-live="polite"></div>
+        </div>
+      </section>
     </section>
   </main>
+
+  <dialog id="setlist-dialog" class="stage-dialog">
+    <form method="dialog" id="setlist-form">
+      <div class="dialog-header"><div><span class="eyebrow">Novo repertório</span><h2>Criar lista</h2></div><button value="cancel" class="icon-btn">✕</button></div>
+      <label><span>Nome</span><input id="new-setlist-name" required maxlength="80" placeholder="Ex.: Culto de domingo à noite" /></label>
+      <div class="dialog-grid"><label><span>Data</span><input id="new-setlist-date" type="date" /></label><label><span>Tipo</span><select id="new-setlist-type"><option>Culto</option><option>Show</option><option>Ensaio</option><option>Evento</option><option>Aula</option><option>Outro</option></select></label></div>
+      <div class="dialog-actions"><button value="cancel" class="btn btn-secondary">Cancelar</button><button id="confirm-new-setlist" value="default" class="btn btn-primary">Criar repertório</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="song-picker-dialog" class="stage-dialog song-picker-dialog">
+    <div class="dialog-header"><div><span class="eyebrow">Biblioteca local</span><h2>Adicionar músicas</h2></div><button id="close-song-picker" class="icon-btn">✕</button></div>
+    <label class="search-field"><span>⌕</span><input id="song-picker-search" type="search" placeholder="Buscar título, artista ou tom" /></label>
+    <div id="song-picker-list" class="song-picker-list"></div>
+  </dialog>
+
+  <div id="stage-toast" class="stage-toast" role="status" aria-live="polite"></div>
   <footer class="app-footer"><span id="build-info" data-build-info>Carregando informações da build…</span></footer>
   <script src="js/build-info.js"></script>
   <script src="js/resilience.js"></script>
+  <script src="js/local-db.js"></script>
+  <script src="js/setlists.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

@@ -1,210 +1,42 @@
-(function () {
-  const formatDate = (iso) => {
-    if (!iso) return '—';
-    const date = new Date(iso);
-    if (Number.isNaN(date.getTime())) return '—';
-    return new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' }).format(date);
-  };
-
-  const escapeHtml = (value) => String(value || '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-
-  document.addEventListener('DOMContentLoaded', () => {
-    if (!document.body.matches('[data-page="inserir-cifra"]')) return;
-    if (!window.StageMusicAuth.requireAuth('inserir-cifra.html')) return;
-
-    const titleInput = document.getElementById('song-title');
-    const artistInput = document.getElementById('song-artist');
-    const keyInput = document.getElementById('song-key');
-    const bpmInput = document.getElementById('song-bpm');
-    const tagsInput = document.getElementById('song-tags');
-    const notesInput = document.getElementById('song-notes');
-    const contentInput = document.getElementById('song-content');
-    const preview = document.getElementById('song-preview');
-    const form = document.getElementById('song-form');
-    const libraryEl = document.getElementById('local-library');
-    const draftStampEl = document.getElementById('draft-stamp');
-    const saveStampEl = document.getElementById('save-stamp');
-    const statsSongsEl = document.getElementById('stats-songs');
-    const statsDraftEl = document.getElementById('stats-draft');
-    const statusToastEl = document.getElementById('editor-toast');
-    const hiddenIdInput = document.getElementById('song-id');
-    const clearButton = document.getElementById('clear-editor');
-    const demoButton = document.getElementById('load-demo');
-    const draftButton = document.getElementById('save-draft');
-    const exportButton = document.getElementById('export-local-json');
-
-    let draftTimer = null;
-
-    const getPayload = () => ({
-      id: hiddenIdInput.value || '',
-      title: titleInput.value,
-      artist: artistInput.value,
-      key: keyInput.value,
-      bpm: bpmInput.value,
-      tags: tagsInput.value,
-      notes: notesInput.value,
-      content: contentInput.value
-    });
-
-    const showToast = (message) => {
-      statusToastEl.textContent = message;
-      statusToastEl.classList.add('visible');
-      window.clearTimeout(showToast._timer);
-      showToast._timer = window.setTimeout(() => statusToastEl.classList.remove('visible'), 2200);
-    };
-
-    const renderPreview = () => {
-      preview.textContent = `${titleInput.value || 'Sem título'}\n${artistInput.value || 'Sem artista'} • Tom ${keyInput.value} • ${bpmInput.value || '--'} BPM\n${tagsInput.value ? `Tags: ${tagsInput.value}\n` : ''}\n${contentInput.value || 'Preencha a cifra para visualizar aqui.'}`;
-    };
-
-    const updateStats = () => {
-      const stats = window.StageMusicLocalDB.getStats();
-      statsSongsEl.textContent = String(stats.songsCount);
-      statsDraftEl.textContent = stats.draftExists ? `Rascunho em ${formatDate(stats.lastDraftUpdatedAt)}` : 'Nenhum rascunho';
-      draftStampEl.textContent = stats.lastDraftUpdatedAt ? `Rascunho salvo automaticamente em ${formatDate(stats.lastDraftUpdatedAt)}` : 'Auto-save pronto';
-      saveStampEl.textContent = stats.lastSongUpdatedAt ? `Última cifra local salva em ${formatDate(stats.lastSongUpdatedAt)}` : 'Nenhuma cifra local salva';
-    };
-
-    const loadIntoForm = (song) => {
-      hiddenIdInput.value = song?.id || '';
-      titleInput.value = song?.title || '';
-      artistInput.value = song?.artist || '';
-      keyInput.value = song?.key || 'C';
-      bpmInput.value = song?.bpm || '72';
-      tagsInput.value = Array.isArray(song?.tags) ? song.tags.join(', ') : (song?.tags || '');
-      notesInput.value = song?.notes || '';
-      contentInput.value = song?.content || '';
-      renderPreview();
-    };
-
-    const renderLibrary = (songs) => {
-      if (!songs.length) {
-        libraryEl.innerHTML = '<article class="library-empty"><strong>Nenhuma cifra local ainda</strong><small>Salve sua primeira cifra ou deixe um rascunho automático.</small></article>';
-        return;
-      }
-      libraryEl.innerHTML = songs.map(song => `
-        <article class="library-item">
-          <div>
-            <strong>${escapeHtml(song.title)}</strong>
-            <small>${escapeHtml(song.artist)} • Tom ${escapeHtml(song.key)} • ${escapeHtml(song.bpm)} BPM</small>
-            <small>Atualizada em ${escapeHtml(formatDate(song.updatedAt))}</small>
-          </div>
-          <div class="library-actions">
-            <button class="btn btn-outline btn-mini" type="button" data-open-song="${escapeHtml(song.id)}">Abrir</button>
-            <button class="btn btn-ghost btn-mini" type="button" data-delete-song="${escapeHtml(song.id)}">Excluir</button>
-          </div>
-        </article>`).join('');
-    };
-
-    const refreshLibrary = () => {
-      renderLibrary(window.StageMusicLocalDB.getAllSongs());
-      updateStats();
-    };
-
-    const saveDraft = (feedback = false) => {
-      const payload = getPayload();
-      if (!payload.title && !payload.artist && !payload.content) {
-        window.StageMusicLocalDB.clearDraft();
-        updateStats();
-        return;
-      }
-      window.StageMusicLocalDB.saveDraft(payload);
-      updateStats();
-      if (feedback) showToast('Rascunho salvo no dispositivo.');
-    };
-
-    const scheduleDraftSave = () => {
-      window.clearTimeout(draftTimer);
-      draftTimer = window.setTimeout(() => saveDraft(false), 500);
-    };
-
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const song = window.StageMusicLocalDB.saveSong(getPayload());
-      hiddenIdInput.value = song.id;
-      refreshLibrary();
-      renderPreview();
-      showToast('Cifra salva localmente com sucesso.');
-    });
-
-    [titleInput, artistInput, keyInput, bpmInput, tagsInput, notesInput, contentInput].forEach((field) => {
-      field.addEventListener('input', () => {
-        renderPreview();
-        scheduleDraftSave();
-      });
-      field.addEventListener('change', scheduleDraftSave);
-    });
-
-    libraryEl.addEventListener('click', (event) => {
-      const openId = event.target.getAttribute('data-open-song');
-      const deleteId = event.target.getAttribute('data-delete-song');
-      if (openId) {
-        const song = window.StageMusicLocalDB.getSongById(openId);
-        if (song) {
-          loadIntoForm(song);
-          showToast('Cifra local carregada no editor.');
-        }
-      }
-      if (deleteId) {
-        const song = window.StageMusicLocalDB.getSongById(deleteId);
-        const confirmed = window.confirm(`Excluir a cifra local "${song?.title || 'Sem título'}"?`);
-        if (!confirmed) return;
-        window.StageMusicLocalDB.deleteSong(deleteId);
-        if (hiddenIdInput.value === deleteId) {
-          hiddenIdInput.value = '';
-        }
-        refreshLibrary();
-        showToast('Cifra local removida.');
-      }
-    });
-
-    demoButton.addEventListener('click', () => {
-      loadIntoForm({
-        title: 'Santo',
-        artist: 'Ariane Mazur',
-        key: 'D',
-        bpm: '74',
-        tags: ['worship', 'rock', 'palco'],
-        notes: 'Entrar suave, subir no refrão final.',
-        content: `[Intro]\nD  A  Bm  G\n\n[Verso]\nD                A\nTeu nome é santo sobre mim\nBm               G\nTua presença enche este lugar\n\n[Refrão]\nD        A\nSanto, santo\nBm          G\nÉs digno de louvor`
-      });
-      saveDraft(true);
-    });
-
-    draftButton.addEventListener('click', () => saveDraft(true));
-
-    clearButton.addEventListener('click', () => {
-      const confirmed = window.confirm('Limpar o editor e apagar o rascunho atual do dispositivo?');
-      if (!confirmed) return;
-      form.reset();
-      hiddenIdInput.value = '';
-      keyInput.value = 'C';
-      bpmInput.value = '72';
-      window.StageMusicLocalDB.clearDraft();
-      renderPreview();
-      refreshLibrary();
-      showToast('Editor limpo e rascunho removido.');
-    });
-
-    exportButton.addEventListener('click', () => {
-      const songsJson = window.StageMusicLocalDB.exportSongs();
-      const blob = new Blob([songsJson], { type: 'application/json' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `stage-music-cifras-locais-${new Date().toISOString().slice(0, 10)}.json`;
-      link.click();
-      URL.revokeObjectURL(link.href);
-      showToast('Backup JSON das cifras locais exportado.');
-    });
-
-    const draft = window.StageMusicLocalDB.getDraft();
-    if (draft) loadIntoForm(draft);
-    renderPreview();
-    refreshLibrary();
-  });
+(function(){
+ const NOTES_SHARP=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+ const NOTES_FLAT=['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+ const ROOT_RE=/\b([A-G](?:#|b)?)(?=(?:m|maj|min|dim|aug|sus|add|M|\d|\/|\)|\s|$))/g;
+ const CHORD_RE=/^(?:\(?)([A-G](?:#|b)?)(?:(?:maj|min|m|dim|aug|sus|add|M)?\d*(?:[#b]\d+)?)*(?:\/[A-G](?:#|b)?)?(?:\)?)$/;
+ const fmt=iso=>{if(!iso)return'—';const d=new Date(iso);return Number.isNaN(d.getTime())?'—':new Intl.DateTimeFormat('pt-BR',{dateStyle:'short',timeStyle:'short'}).format(d)};
+ const esc=v=>String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+ const noteIndex=n=>{const i=NOTES_SHARP.indexOf(n);return i>=0?i:NOTES_FLAT.indexOf(n)};
+ const transposeText=(text,steps,mode)=>text.replace(ROOT_RE,(all,root)=>{const i=noteIndex(root);if(i<0)return all;return (mode==='flat'?NOTES_FLAT:NOTES_SHARP)[(i+steps+120)%12]});
+ const chordTokens=line=>line.trim().split(/\s+/).filter(Boolean);
+ const isChordLine=line=>{const t=chordTokens(line);return t.length>0&&t.filter(x=>CHORD_RE.test(x.replace(/[|:]/g,''))).length/Math.max(t.length,1)>=.6};
+ const detect=(text)=>{const chords=[];const sections=[];text.split('\n').forEach(line=>{const sec=line.match(/^\s*\[([^\]]+)\]\s*$/);if(sec)sections.push(sec[1]);if(isChordLine(line)) chordTokens(line).forEach(x=>{const c=x.replace(/[|:]/g,'');if(CHORD_RE.test(c))chords.push(c)})});return{chords,sections}};
+ const guessKey=text=>{const d=detect(text).chords.map(c=>(c.match(/^([A-G](?:#|b)?)/)||[])[1]).filter(Boolean);if(!d.length)return null;const count={};d.forEach(n=>count[n]=(count[n]||0)+1);return Object.entries(count).sort((a,b)=>b[1]-a[1])[0][0]};
+ const formatChordPro=text=>text.replace(/\r/g,'').split('\n').map(line=>{const s=line.trim();if(/^\[[^\]]+\]$/.test(s))return s;if(isChordLine(line))return chordTokens(line).join('  ');return line.replace(/\s+$/,'')}).join('\n').replace(/\n{3,}/g,'\n\n').trim();
+ document.addEventListener('DOMContentLoaded',()=>{if(!document.body.matches('[data-page="inserir-cifra"]'))return;if(!window.StageMusicAuth?.requireAuth('inserir-cifra.html'))return;
+  const $=id=>document.getElementById(id), fields={id:$('song-id'),title:$('song-title'),artist:$('song-artist'),key:$('song-key'),bpm:$('song-bpm'),tags:$('song-tags'),notes:$('song-notes'),content:$('song-content'),capo:$('song-capo')};
+  const preview=$('song-preview'),form=$('song-form'),library=$('local-library'),toast=$('editor-toast'),acc=$('accidental-mode');let timer=null,history=[],historyPos=-1,recording=true;
+  const payload=()=>({id:fields.id.value,title:fields.title.value,artist:fields.artist.value,key:fields.key.value,bpm:fields.bpm.value,tags:fields.tags.value,notes:fields.notes.value,content:fields.content.value,capo:Number(fields.capo?.value||0)});
+  const say=m=>{toast.textContent=m;toast.classList.add('visible');clearTimeout(say.t);say.t=setTimeout(()=>toast.classList.remove('visible'),2200)};
+  const snapshot=()=>JSON.stringify(payload()); const pushHistory=()=>{if(!recording)return;const s=snapshot();if(history[historyPos]===s)return;history=history.slice(0,historyPos+1);history.push(s);if(history.length>60)history.shift();historyPos=history.length-1;renderInsights()};
+  const applySnapshot=s=>{recording=false;load(JSON.parse(s));recording=true;render()};
+  const renderInsights=()=>{const d=detect(fields.content.value);$('chord-count').textContent=`${d.chords.length} acordes detectados`;$('section-count').textContent=`${d.sections.length} seções`;$('history-count').textContent=`Histórico ${historyPos+1}/${history.length}`};
+  const render=()=>{preview.textContent=`${fields.title.value||'Sem título'}\n${fields.artist.value||'Sem artista'} • Tom ${fields.key.value} • ${fields.bpm.value||'--'} BPM${Number(fields.capo?.value||0)?` • Capo ${fields.capo.value}`:''}\n${fields.tags.value?`Tags: ${fields.tags.value}\n`:''}\n${fields.content.value||'Preencha a cifra para visualizar aqui.'}`;renderInsights()};
+  const stats=()=>{const x=window.StageMusicLocalDB.getStats();$('stats-songs').textContent=x.songsCount;$('stats-draft').textContent=x.draftExists?`Rascunho em ${fmt(x.lastDraftUpdatedAt)}`:'Nenhum rascunho';$('draft-stamp').textContent=x.lastDraftUpdatedAt?`Rascunho salvo automaticamente em ${fmt(x.lastDraftUpdatedAt)}`:'Auto-save pronto';$('save-stamp').textContent=x.lastSongUpdatedAt?`Última cifra salva em ${fmt(x.lastSongUpdatedAt)}`:'Nenhuma cifra local salva'};
+  const load=s=>{fields.id.value=s?.id||'';fields.title.value=s?.title||'';fields.artist.value=s?.artist||'';fields.key.value=s?.key||'C';fields.bpm.value=s?.bpm||72;fields.tags.value=Array.isArray(s?.tags)?s.tags.join(', '):(s?.tags||'');fields.notes.value=s?.notes||'';fields.content.value=s?.content||'';if(fields.capo)fields.capo.value=String(s?.capo||0);render()};
+  const drawLib=()=>{const songs=window.StageMusicLocalDB.getAllSongs();library.innerHTML=songs.length?songs.map(s=>`<article class="library-item"><div><strong>${esc(s.title)}</strong><small>${esc(s.artist)} • Tom ${esc(s.key)} • ${esc(s.bpm)} BPM${s.capo?` • Capo ${s.capo}`:''}</small><small>Atualizada em ${esc(fmt(s.updatedAt))}</small></div><div class="library-actions"><button class="btn btn-outline btn-mini" data-open-song="${esc(s.id)}">Abrir</button><button class="btn btn-ghost btn-mini" data-delete-song="${esc(s.id)}">Excluir</button></div></article>`).join(''):'<article class="library-empty"><strong>Nenhuma cifra local ainda</strong><small>Crie sua primeira cifra inteligente.</small></article>';stats()};
+  const saveDraft=feedback=>{const p=payload();if(!p.title&&!p.artist&&!p.content){window.StageMusicLocalDB.clearDraft();stats();return}window.StageMusicLocalDB.saveDraft(p);stats();if(feedback)say('Rascunho protegido salvo.')};
+  const schedule=()=>{clearTimeout(timer);timer=setTimeout(()=>saveDraft(false),450)};
+  form.addEventListener('submit',e=>{e.preventDefault();const s=window.StageMusicLocalDB.saveSong(payload());fields.id.value=s.id;drawLib();render();say('Cifra inteligente salva com sucesso.')});
+  Object.values(fields).filter(Boolean).forEach(f=>{f.addEventListener('input',()=>{render();schedule();clearTimeout(pushHistory.t);pushHistory.t=setTimeout(pushHistory,250)});f.addEventListener('change',()=>{render();schedule();pushHistory()})});
+  $('transpose-down').onclick=()=>transpose(-1);$('transpose-up').onclick=()=>transpose(1);function transpose(step){fields.content.value=transposeText(fields.content.value,step,acc.value);const i=noteIndex(fields.key.value);if(i>=0)fields.key.value=(acc.value==='flat'?NOTES_FLAT:NOTES_SHARP)[(i+step+12)%12];render();pushHistory();saveDraft(false);say(`Transposição ${step>0?'+1':'−1'} aplicada.`)}
+  $('detect-key').onclick=()=>{const k=guessKey(fields.content.value);if(!k)return say('Não foi possível detectar acordes suficientes.');fields.key.value=k;render();pushHistory();say(`Tom provável detectado: ${k}.`)};
+  $('format-chords').onclick=()=>{fields.content.value=formatChordPro(fields.content.value);render();pushHistory();saveDraft(false);say('Cifra formatada por seções e acordes.')};
+  $('section-palette').addEventListener('click',e=>{const n=e.target.dataset.section;if(!n)return;const t=fields.content,start=t.selectionStart,end=t.selectionEnd,insert=`${start&&t.value[start-1]!='\n'?'\n':''}[${n}]\n`;t.setRangeText(insert,start,end,'end');t.focus();render();pushHistory();schedule()});
+  $('undo-edit').onclick=()=>{if(historyPos<=0)return say('Não há alteração anterior.');historyPos--;applySnapshot(history[historyPos]);say('Alteração desfeita.')};$('redo-edit').onclick=()=>{if(historyPos>=history.length-1)return say('Não há alteração posterior.');historyPos++;applySnapshot(history[historyPos]);say('Alteração refeita.')};
+  library.addEventListener('click',e=>{const id=e.target.dataset.openSong,del=e.target.dataset.deleteSong;if(id){const s=window.StageMusicLocalDB.getSongById(id);if(s){load(s);pushHistory();say('Cifra carregada no editor.')}}if(del){const s=window.StageMusicLocalDB.getSongById(del);if(confirm(`Excluir "${s?.title||'Sem título'}"?`)){window.StageMusicLocalDB.deleteSong(del);drawLib();say('Cifra removida.')}}});
+  $('load-demo').onclick=()=>{load({title:'Santo',artist:'Ariane Mazur',key:'D',bpm:74,capo:0,tags:['worship','palco'],notes:'Subir dinâmica no refrão final.',content:'[Intro]\nD  A  Bm  G\n\n[Verso]\nD                A\nTeu nome é santo sobre mim\nBm               G\nTua presença enche este lugar\n\n[Refrão]\nD        A\nSanto, santo\nBm          G\nÉs digno de louvor'});pushHistory();saveDraft(true)};
+  $('save-draft').onclick=()=>saveDraft(true);$('clear-editor').onclick=()=>{if(!confirm('Limpar editor e rascunho?'))return;form.reset();fields.id.value='';fields.key.value='C';fields.bpm.value='72';if(fields.capo)fields.capo.value='0';window.StageMusicLocalDB.clearDraft();history=[];historyPos=-1;render();pushHistory();drawLib();say('Editor limpo.')};
+  $('export-local-json').onclick=()=>{const blob=new Blob([window.StageMusicLocalDB.exportSongs()],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`stage-music-cifras-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);say('Backup JSON exportado.')};
+  const draft=window.StageMusicLocalDB.getDraft();if(draft)load(draft);render();pushHistory();drawLib();
+ });
 })();
