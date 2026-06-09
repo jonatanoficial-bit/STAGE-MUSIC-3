@@ -1,0 +1,15 @@
+{
+  "app": "Stage Music",
+  "version": "v0.8.0",
+  "versionNumber": "0.8.0",
+  "phase": 3,
+  "phaseLabel": "Fase 3",
+  "phaseName": "Biblioteca de Cifras Profissional",
+  "date": "09/06/2026",
+  "isoDate": "2026-06-09",
+  "time": "12:38",
+  "stamp": "20260609-1238",
+  "environment": "production",
+  "costStrategy": "free-first",
+  "resilience": "anti-break-v2"
+}

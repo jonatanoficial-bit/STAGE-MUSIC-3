@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stage Music • Editor de cifra</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/editor.css" />
+</head>
+<body data-page="inserir-cifra">
+  <main class="page-shell">
+    <div class="page-header compact">
+      <a href="index.html" class="back-link">← Início</a>
+      <span class="visual-badge">Fase 5 liberada</span>
+      <h1>Inserir cifra</h1>
+      <p>Agora o editor já salva cifras localmente, mantém rascunhos automáticos no dispositivo e cria uma pequena biblioteca pessoal offline para o Stage Music.</p>
+    </div>
+    <div class="editor-shell">
+      <section class="editor-card">
+        <div class="editor-topbar">
+          <div class="editor-status" data-session-badge>Sem sessão ativa</div>
+          <div class="dual-actions">
+            <button class="btn btn-outline" type="button" data-auth-logout>Sair</button>
+          </div>
+        </div>
+
+        <div class="editor-stat-grid">
+          <article class="editor-stat-card">
+            <strong id="stats-songs">0</strong>
+            <small>Cifras locais</small>
+          </article>
+          <article class="editor-stat-card">
+            <strong id="stats-draft">Nenhum rascunho</strong>
+            <small>Status do rascunho</small>
+          </article>
+        </div>
+
+        <div class="session-card">
+          <strong>Salvamento local ativo</strong>
+          <small id="draft-stamp">Auto-save pronto</small>
+          <small id="save-stamp">Nenhuma cifra local salva</small>
+        </div>
+
+        <form id="song-form">
+          <input id="song-id" type="hidden" />
+          <div class="editor-grid">
+            <label>
+              <span>Título</span>
+              <input id="song-title" type="text" placeholder="Ex.: Nunca Vi Amor Assim" />
+            </label>
+            <label>
+              <span>Artista</span>
+              <input id="song-artist" type="text" placeholder="Ex.: Ariane Mazur" />
+            </label>
+            <label>
+              <span>Tom</span>
+              <select id="song-key">
+                <option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>A</option><option>B</option>
+              </select>
+            </label>
+            <label>
+              <span>BPM</span>
+              <input id="song-bpm" type="number" min="40" max="240" value="72" />
+            </label>
+          </div>
+
+          <div class="editor-grid editor-grid-secondary">
+            <label>
+              <span>Tags</span>
+              <input id="song-tags" type="text" placeholder="Ex.: worship, live, abertura" />
+            </label>
+            <label>
+              <span>Notas do palco</span>
+              <input id="song-notes" type="text" placeholder="Entrada suave, solo, ministração..." />
+            </label>
+          </div>
+
+          <label class="editor-area-label">
+            <span>Conteúdo da cifra</span>
+            <textarea id="song-content" placeholder="[Intro]
+G  D  Em  C
+
+[Verso]
+G            D
+Tua presença me sustenta..."></textarea>
+          </label>
+
+          <div class="editor-actions">
+            <button class="btn btn-primary" type="submit">Salvar cifra local</button>
+            <button class="btn btn-secondary" type="button" id="save-draft">Salvar rascunho</button>
+            <button class="btn btn-outline" type="button" id="load-demo">Carregar demo</button>
+            <button class="btn btn-outline" type="button" id="clear-editor">Limpar editor</button>
+            <button class="btn btn-ghost" type="button" id="export-local-json">Exportar JSON</button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="editor-side-card">
+        <div class="page-header compact" style="margin-bottom:16px;">
+          <span class="visual-badge">Prévia</span>
+          <h2 style="margin:10px 0 0; font-size:1.5rem;">Leitura rápida</h2>
+        </div>
+        <div class="preview-block">
+          <pre id="song-preview">Preencha a cifra para visualizar aqui.</pre>
+        </div>
+
+        <div class="page-header compact side-spacing">
+          <span class="visual-badge">Biblioteca local</span>
+          <h2 class="side-title">Suas cifras offline</h2>
+        </div>
+        <div id="local-library" class="library-list"></div>
+      </aside>
+    </div>
+  </main>
+
+  <div class="editor-toast" id="editor-toast" aria-live="polite">Ação concluída</div>
+  <footer class="app-footer"><span id="build-info" data-build-info>Carregando informações da build…</span></footer>
+  <script src="js/build-info.js"></script>
+  <script src="js/resilience.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/local-db.js"></script>
+  <script src="js/editor-local.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

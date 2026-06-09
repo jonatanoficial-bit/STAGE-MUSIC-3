@@ -1,0 +1,58 @@
+{
+  "current": {
+    "app": "Stage Music",
+    "version": "v0.8.0",
+    "versionNumber": "0.8.0",
+    "phase": 3,
+    "phaseLabel": "Fase 3",
+    "phaseName": "Biblioteca de Cifras Profissional",
+    "date": "09/06/2026",
+    "isoDate": "2026-06-09",
+    "time": "12:38",
+    "stamp": "20260609-1238",
+    "environment": "production",
+    "costStrategy": "free-first",
+    "resilience": "anti-break-v2"
+  },
+  "builds": [
+    {
+      "version": "v0.8.0",
+      "date": "2026-06-09",
+      "time": "12:38",
+      "phase": "Fase 3",
+      "phaseName": "Biblioteca de Cifras Profissional",
+      "notes": [
+        "busca completa por música, artista, tom, tag e conteúdo",
+        "favoritos e histórico de músicas recentes",
+        "filtros por tags e ordenação profissional",
+        "visualização de cifra em modal",
+        "armazenamento protegido e compatibilidade offline"
+      ]
+    },
+    {
+      "version": "v0.6.0",
+      "date": "2026-06-09",
+      "time": "12:12",
+      "phase": "Fase 1",
+      "phaseName": "Fundação Premium",
+      "notes": [
+        "versão centralizada em todos os arquivos",
+        "data e hora visíveis em todas as telas",
+        "cache PWA atualizado e compatível com subpastas",
+        "documentação de auditoria, testes e estratégia gratuita",
+        "validação automática da integridade da build"
+      ]
+    },
+    {
+      "version": "v0.5.0",
+      "date": "2026-04-22",
+      "time": "19:36",
+      "phase": "Fase 5 (legado)",
+      "notes": [
+        "salvamento local de cifras",
+        "rascunho automático",
+        "busca local"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/inserir-cifra", "destination": "/login-cifra.html" },
+    { "source": "/modo-live", "destination": "/modo-live.html" },
+    { "source": "/buscar-cifra", "destination": "/buscar-cifra.html" },
+    { "source": "/minhas-listas", "destination": "/minhas-listas.html" },
+    { "source": "/configuracoes", "destination": "/configuracoes.html" }
+  ]
+}

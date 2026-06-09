@@ -1,0 +1,11 @@
+{
+  "name": "stage-music",
+  "version": "0.8.0",
+  "private": true,
+  "scripts": {
+    "start": "npx serve .",
+    "build": "npm run check",
+    "check": "npm run audit",
+    "audit": "node scripts/validate-build.js"
+  }
+}

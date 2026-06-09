@@ -1,0 +1,23 @@
+<svg width="820" height="560" viewBox="0 0 820 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="820" height="560" rx="48" fill="url(#bg)"/>
+  <circle cx="641" cy="103" r="95" fill="white" fill-opacity="0.12"/>
+  <circle cx="176" cy="426" r="126" fill="white" fill-opacity="0.1"/>
+  <rect x="58" y="74" width="106" height="106" rx="30" fill="white" fill-opacity="0.18"/>
+  <rect x="188" y="82" width="298" height="26" rx="13" fill="white" fill-opacity="0.86"/>
+  <rect x="188" y="123" width="214" height="18" rx="9" fill="white" fill-opacity="0.5"/>
+  <rect x="58" y="226" width="704" height="210" rx="34" fill="white" fill-opacity="0.14"/>
+  <rect x="88" y="266" width="224" height="20" rx="10" fill="white" fill-opacity="0.88"/>
+  <rect x="88" y="306" width="302" height="14" rx="7" fill="white" fill-opacity="0.52"/>
+  <rect x="88" y="334" width="276" height="14" rx="7" fill="white" fill-opacity="0.52"/>
+  <rect x="88" y="382" width="132" height="44" rx="22" fill="white"/>
+  <rect x="502" y="257" width="218" height="146" rx="30" fill="white" fill-opacity="0.2"/>
+  <path d="M570 339C570 311 592 289 620 289C648 289 670 311 670 339C670 367 648 389 620 389C592 389 570 367 570 339Z" fill="white" fill-opacity="0.9"/>
+  <path d="M623 308V340L645 352" stroke="#6D4AFF" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <defs>
+    <linearGradient id="bg" x1="66" y1="44" x2="728" y2="522" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8B47FF"/>
+      <stop offset="0.54" stop-color="#6D4AFF"/>
+      <stop offset="1" stop-color="#38AEFF"/>
+    </linearGradient>
+  </defs>
+</svg>

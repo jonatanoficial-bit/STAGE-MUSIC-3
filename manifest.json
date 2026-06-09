@@ -1,0 +1,26 @@
+{
+  "name": "Stage Music",
+  "short_name": "Stage Music",
+  "description": "App de cifras mobile-first para palco, listas e modo live.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f6f7ff",
+  "theme_color": "#6d4aff",
+  "icons": [
+    {
+      "src": "assets/icons/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "id": "./",
+  "scope": "./",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
+  "lang": "pt-BR",
+  "orientation": "any"
+}
