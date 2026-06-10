@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v2.5.0 — Fase 20 — 10/06/2026 22:02
+- Auditoria dedicada para celular e tablet.
+- Navegação inferior global em mobile.
+- Editor com ações fixas, melhor toque e adaptação ao teclado virtual.
+- Repertórios reorganizados em cards mobile.
+- Safe areas, viewport e orientação horizontal revisados.
+- Firebase e sincronização preservados integralmente.
+
 ## v2.4.1 — Fase 19.1 — 10/06/2026 21:54
 - Corrige fundos premium quase invisíveis no desktop.
 - Adiciona imagens horizontais 16:9 para desktop e mantém 9:16 no mobile.

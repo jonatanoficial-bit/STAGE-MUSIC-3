@@ -1,19 +1,18 @@
 # Stage Music
 
-**Build atual:** v2.4.0  
-**Fase:** 19 — Integração Visual AAA de Fundos Premium  
-**Gerada em:** 10/06/2026 às 18:31 (America/Sao_Paulo)
+**Build atual:** v2.5.0  
+**Fase:** 20 — Auditoria Mobile e Tablet  
+**Gerada em:** 10/06/2026 às 22:02
 
-Aplicativo PWA mobile-first para cifras, repertórios, equipes, eventos e execução musical ao vivo.
+PWA mobile-first para cifras, repertórios, equipes, eventos e execução musical ao vivo.
 
 ## Destaques
-- cinco fundos cinematográficos mobile-first integrados;
-- overlays específicos para preservar legibilidade;
-- assets WebP armazenados em `assets/backgrounds/mobile/webp/`;
-- Firebase, Authentication, Firestore e Sala Live online preservados sem mudanças;
-- Service Worker atualizado para uso offline dos fundos;
-- anti-break v20.
+- navegação mobile consistente;
+- editor otimizado para teclado virtual e toque;
+- repertórios em cards responsivos;
+- safe areas e orientação horizontal;
+- fundos premium mobile/desktop;
+- Firebase, Firestore e sincronização preservados.
 
 ## Validar
-
 `npm run audit`
