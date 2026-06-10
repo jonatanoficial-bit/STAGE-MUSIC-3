@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## v2.6.0 — Fase 21 — 10/06/2026 19:32
+- Login com Google transformado em ação principal da Home.
+- Botão de conta destacado no menu inferior mobile.
+- Atualização automática da nuvem após restauração da sessão, com botão manual obrigatório em destaque.
+- Título inicial simplificado para uma proposta comercial mais direta.
+- Modo Live com controles recolhíveis e leitura imersiva padrão no celular.
+- Firebase, Firestore, autenticação e regras preservados.
+- Anti-break v23.
+
 ## v2.5.0 — Fase 20 — 10/06/2026 22:02
 - Auditoria dedicada para celular e tablet.
 - Navegação inferior global em mobile.

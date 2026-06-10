@@ -24,6 +24,7 @@
 
       <nav class='side-nav'>
         <a class='active' href='index.html'>Início</a>
+        <a class='side-login-link' href='login-cifra.html' data-home-login-link>Entrar com Google</a>
         <a href='modo-live.html'>Modo Live</a>
         <a href='sala-live.html'>Sala Live</a>
         <a href='buscar-cifra.html'>Buscar cifra</a>
@@ -58,22 +59,29 @@
         <a class='icon-btn home-live-shortcut' href='modo-live.html' aria-label='Abrir modo live'>♫</a>
       </header>
 
+      <section class='home-auth-gateway' id='home-auth-gateway' aria-live='polite'>
+        <div class='home-auth-copy'>
+          <span class='eyebrow'>COMECE AQUI</span>
+          <h2 id='home-auth-title'>Entre para acessar suas cifras em qualquer aparelho.</h2>
+          <p id='home-auth-text'>Use sua conta Google para sincronizar cifras, repertórios, equipes e Sala Live com segurança.</p>
+        </div>
+        <div class='home-auth-actions'>
+          <a class='btn btn-primary home-google-login' href='login-cifra.html' id='home-login-primary'>Entrar com Google</a>
+          <button class='btn btn-secondary home-sync-now' type='button' id='home-sync-now' hidden>Atualizar meu conteúdo agora</button>
+          <span class='home-sync-hint' id='home-sync-hint'>Login recomendado para não perder seus dados.</span>
+        </div>
+      </section>
+
       <section class='hero-card home-command-hero'>
         <div class='hero-copy'>
-          <span class='eyebrow'>Fase 20 • Mobile e tablet auditados</span>
-          <h2>O centro de comando da sua apresentação ao vivo.</h2>
-          <p>Abra o repertório certo, encontre a cifra em segundos, retome a leitura ao vivo e organize sua banda com uma experiência mais forte, elegante e realmente pensada para palco.</p>
+          <span class='eyebrow'>STAGE MUSIC</span>
+          <h2>Seu palco. Suas cifras. Tudo pronto para tocar.</h2>
+          <p class='hero-commercial-copy'>Escolha uma ação e comece agora.</p>
 
           <div class='hero-actions'>
             <a class='btn btn-primary' href='modo-live.html'>Continuar no palco</a>
             <a class='btn btn-outline' href='buscar-cifra.html'>Buscar cifra</a>
             <a class='btn btn-secondary' href='minhas-listas.html'>Criar repertório</a>
-          </div>
-
-          <div class='hero-checks'>
-            <span>Retomada rápida do que o músico mais usa</span>
-            <span>Visual escuro premium com foco em legibilidade</span>
-            <span>Entrada clara para Live, Biblioteca, Editor e Setlists</span>
           </div>
 
           <div class='hero-stat-pills'>
@@ -344,7 +352,7 @@
     <a href='minhas-listas.html'>Listas</a>
     <a href='equipes.html'>Equipes</a>
     <a href='eventos.html'>Eventos</a>
-    <a href='configuracoes.html'>Ajustes</a>
+    <a class='bottom-login-link' href='login-cifra.html'>Entrar</a>
   </nav>
 
   <footer class='app-footer'>
@@ -353,9 +361,14 @@
 
   <script src='js/build-info.js'></script>
   <script src='js/resilience.js'></script>
+  <script src='js/firebase-config.js'></script>
+  <script src='js/auth.js'></script>
+  <script src='js/firebase-runtime.js'></script>
   <script src='js/local-db.js'></script>
+  <script src='js/cloud-sync.js'></script>
   <script src='js/app.js'></script>
   <script src='js/home-dashboard.js'></script>
+  <script src='js/home-auth-sync.js'></script>
   <script src="js/mobile-audit.js"></script>
 </body>
 </html>
