@@ -232,3 +232,55 @@ body[data-page] .live-stage-card{
 @media (min-width:961px){
   body[data-page]{background-size:cover;background-position:center 18%;}
 }
+
+/* v2.4.1 — HOTFIX DE VISIBILIDADE DOS FUNDOS */
+:root{
+  --stage-bg-home-desktop:url('../assets/backgrounds/desktop/webp/bg-home-stage-desktop.webp');
+  --stage-bg-library-desktop:url('../assets/backgrounds/desktop/webp/bg-library-wave-desktop.webp');
+  --stage-bg-live-desktop:url('../assets/backgrounds/desktop/webp/bg-live-stage-desktop.webp');
+  --stage-bg-account-desktop:url('../assets/backgrounds/desktop/webp/bg-account-portal-desktop.webp');
+  --stage-bg-setlists-desktop:url('../assets/backgrounds/desktop/webp/bg-setlists-flow-desktop.webp');
+}
+body[data-page]{
+  background-blend-mode:normal;
+}
+body[data-page] .app-shell,
+body[data-page] .main-content,
+body[data-page] .page-shell,
+body[data-page] .auth-layout,
+body[data-page] .live-app{
+  background:transparent!important;
+}
+body[data-page] .sidebar{
+  background:linear-gradient(180deg,rgba(10,14,25,.84),rgba(10,14,25,.74))!important;
+  backdrop-filter:blur(22px) saturate(118%);
+  -webkit-backdrop-filter:blur(22px) saturate(118%);
+}
+body[data-page] .section-card,
+body[data-page] .panel-card,
+body[data-page] .placeholder-card,
+body[data-page] .editor-card,
+body[data-page] .editor-side-card,
+body[data-page] .auth-panel,
+body[data-page] .auth-brand,
+body[data-page] .feature-card,
+body[data-page] .live-stage-card{
+  background:linear-gradient(180deg,rgba(12,17,31,.78),rgba(8,12,23,.70))!important;
+  border-color:rgba(255,255,255,.10)!important;
+}
+@media (min-width:961px){
+  body[data-page="home"]{background-image:linear-gradient(180deg,rgba(5,8,18,.26),rgba(5,8,18,.62) 48%,rgba(5,8,18,.90)),var(--stage-bg-home-desktop);}
+  body[data-page="buscar-cifra"],body[data-page="inserir-cifra"]{background-image:linear-gradient(180deg,rgba(5,8,18,.34),rgba(5,8,18,.70) 52%,rgba(5,8,18,.92)),var(--stage-bg-library-desktop);}
+  body[data-page="modo-live"],body[data-page="sala-live"]{background-image:linear-gradient(180deg,rgba(3,5,12,.38),rgba(3,5,12,.76) 52%,rgba(3,5,12,.94)),var(--stage-bg-live-desktop);}
+  body[data-page="login-cifra"],body[data-page="configuracoes"]{background-image:linear-gradient(180deg,rgba(5,8,18,.36),rgba(5,8,18,.72) 52%,rgba(5,8,18,.93)),var(--stage-bg-account-desktop);}
+  body[data-page="minhas-listas"],body[data-page="equipes"],body[data-page="eventos"]{background-image:linear-gradient(180deg,rgba(5,8,18,.34),rgba(5,8,18,.72) 52%,rgba(5,8,18,.93)),var(--stage-bg-setlists-desktop);}
+  body[data-page]{background-size:cover;background-position:center top;background-attachment:fixed;}
+}
+@media (max-width:960px){
+  body[data-page="home"]{background-image:linear-gradient(180deg,rgba(5,8,18,.34),rgba(5,8,18,.70) 50%,rgba(5,8,18,.92)),var(--stage-bg-home);}
+  body[data-page="buscar-cifra"],body[data-page="inserir-cifra"]{background-image:linear-gradient(180deg,rgba(5,8,18,.42),rgba(5,8,18,.76) 50%,rgba(5,8,18,.94)),var(--stage-bg-library);}
+  body[data-page="modo-live"],body[data-page="sala-live"]{background-image:linear-gradient(180deg,rgba(3,5,12,.44),rgba(3,5,12,.80) 52%,rgba(3,5,12,.95)),var(--stage-bg-live);}
+  body[data-page="login-cifra"],body[data-page="configuracoes"]{background-image:linear-gradient(180deg,rgba(5,8,18,.42),rgba(5,8,18,.77) 52%,rgba(5,8,18,.94)),var(--stage-bg-account);}
+  body[data-page="minhas-listas"],body[data-page="equipes"],body[data-page="eventos"]{background-image:linear-gradient(180deg,rgba(5,8,18,.42),rgba(5,8,18,.77) 52%,rgba(5,8,18,.94)),var(--stage-bg-setlists);}
+  body[data-page]{background-size:cover;background-position:center top;background-attachment:scroll;}
+}

@@ -1,20 +1,35 @@
 {
   "current": {
     "app": "Stage Music",
-    "version": "v2.4.0",
-    "versionNumber": "2.4.0",
-    "phase": 19,
-    "phaseLabel": "Fase 19",
-    "phaseName": "Integração Visual AAA de Fundos Premium",
+    "version": "v2.4.1",
+    "versionNumber": "2.4.1",
+    "phase": 19.1,
+    "phaseLabel": "Fase 19.1",
+    "phaseName": "Hotfix de visibilidade dos fundos premium",
     "date": "10/06/2026",
     "isoDate": "2026-06-10",
-    "time": "18:31",
-    "stamp": "20260610-1831",
+    "time": "21:54",
+    "stamp": "20260610-2154",
     "environment": "production",
     "costStrategy": "firebase-spark-free-first",
-    "resilience": "anti-break-v20"
+    "resilience": "anti-break-v21"
   },
   "builds": [
+    {
+      "app": "Stage Music",
+      "version": "v2.4.1",
+      "versionNumber": "2.4.1",
+      "phase": 19.1,
+      "phaseLabel": "Fase 19.1",
+      "phaseName": "Hotfix de visibilidade dos fundos premium",
+      "date": "10/06/2026",
+      "isoDate": "2026-06-10",
+      "time": "21:54",
+      "stamp": "20260610-2154",
+      "environment": "production",
+      "costStrategy": "firebase-spark-free-first",
+      "resilience": "anti-break-v21"
+    },
     {
       "app": "Stage Music",
       "version": "v2.4.0",
