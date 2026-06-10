@@ -1,5 +1,53 @@
 # CHANGELOG
 
+## v2.1.0 — Fase 16 — 10/06/2026 16:26
+- Agenda de eventos, cultos, shows, ensaios e aulas.
+- Escala de músicos com confirmação de presença.
+- Associação de equipe e repertório.
+- Checklist de preparação e indicadores de prontidão.
+- Persistência local offline e anti-break v15.
+
+## v2.0.0 — Fase 15 — 10/06/2026 16:13
+- Painel de pedal Bluetooth, teclado externo e Web MIDI no Modo Live.
+- Mapeamento configurável de próxima/anterior música e seção, rolagem, repetição, fonte e tela cheia.
+- Modo de aprendizado: pressione o botão físico do pedal para remapear.
+- Persistência offline das preferências e restauração do padrão.
+- Web MIDI opcional com fallback seguro em navegadores incompatíveis.
+- Anti-break v14 e auditoria da fase.
+
+## v1.9.0 — Fase 14 — 10/06/2026 13:28
+- Worship Flow e direção musical avançada.
+- Controle sincronizado de seções, repetição, vamp, ministração e final.
+- Dinâmica ao vivo: suave, crescendo, banda completa e corte total.
+- Modulação visual de até dois semitons para cima ou para baixo.
+- Histórico de comandos e painel persistente no Modo Live.
+- Anti-break v13 e auditoria da fase.
+
+## v1.8.0 — Fase 13 — 10/06/2026 13:02
+- Sala Live com criação de sessão e entrada por código.
+- Diretor controla a música atual e envia comandos rápidos.
+- Músicos conectados recebem posição e mensagens da sala.
+- Sincronização local por BroadcastChannel e armazenamento protegido.
+- Integração entre Sala Live, repertório ativo e leitor ao vivo.
+- Anti-break v12 e auditoria da fase.
+
+## v1.7.0 — Fase 12 — 10/06/2026 12:39
+- Criação e gestão de bandas, ministérios e equipes musicais.
+- Funções de administrador, diretor, editor, músico e somente leitura.
+- Cadastro de membros por instrumento.
+- Códigos de convite e entrada por código local.
+- Associação de repertórios a equipes.
+- Sincronização opcional de equipes via Firebase.
+- Anti-break v11 e auditoria completa.
+
+## v1.6.0 — Fase 11 — 10/06/2026 10:58
+- Conta, nuvem e sincronização free-first preparadas para Firebase Spark.
+- Central de sincronização com status de conta, status da nuvem e auto-sync opcional.
+- Envio manual e download manual de cifras e repertórios entre dispositivo e Firestore.
+- Editor e setlists agora tentam sincronizar automaticamente quando o auto-sync estiver ativo.
+- Backup local completo exportável pelas Configurações.
+- Anti-break v10 e auditoria da fase.
+
 ## v1.5.0 — Fase 10 — 10/06/2026 10:24
 - Home reconstruída com visual premium AAA e hierarquia visual mais forte.
 - Hero principal redesenhado para comunicar valor real do produto.

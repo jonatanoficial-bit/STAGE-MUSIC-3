@@ -6,25 +6,115 @@
   <title>Stage Music • Configurações</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
   <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/settings.css" />
 </head>
 <body data-page="configuracoes">
-  <main class="page-shell">
+  <main class="page-shell settings-page-shell">
     <header class="page-header">
       <a href="index.html" class="back-link">← Início</a>
-      <span class="visual-badge">Preferências do app</span>
-      <h1>Configurações</h1>
-      <p>Base para ajustes de tema, leitura, sincronização e comportamento do Stage Music.</p>
+      <span class="visual-badge">Fase 11 • Conta, nuvem e sincronização</span>
+      <h1>Configurações e sincronização</h1>
+      <p>Gerencie sua conta, acompanhe o status da nuvem e mantenha seu Stage Music funcional mesmo sem internet.</p>
     </header>
-    <section class="placeholder-card settings-grid">
-      <label class="setting-item"><span>Tema claro</span><input type="checkbox" checked /></label>
-      <label class="setting-item"><span>Fonte grande</span><input type="checkbox" /></label>
-      <label class="setting-item"><span>Rolagem automática</span><input type="checkbox" /></label>
-      <label class="setting-item"><span>Sincronização online</span><input type="checkbox" /></label>
+
+    <section class="settings-grid-advanced">
+      <article class="section-card settings-card sync-overview-card">
+        <div class="section-head">
+          <div>
+            <span class="visual-badge">Conta e nuvem</span>
+            <h3>Central de sincronização</h3>
+          </div>
+          <span class="status-pill" data-cloud-status>Aguardando ação</span>
+        </div>
+
+        <div class="settings-stat-grid">
+          <article class="mini-stat"><span>Conta</span><strong data-cloud-account>Sem sessão</strong></article>
+          <article class="mini-stat"><span>Modo</span><strong data-cloud-mode>Modo local/guest</strong></article>
+          <article class="mini-stat"><span>Firebase</span><strong data-cloud-config>Firebase não configurado</strong></article>
+          <article class="mini-stat"><span>Dados em nuvem</span><strong data-cloud-counts>0 cifras • 0 repertórios</strong></article>
+        </div>
+
+        <div class="info-strip settings-sync-message">
+          <strong>Status atual</strong>
+          <p data-cloud-message>Pronto para sincronizar</p>
+        </div>
+
+        <div class="settings-action-grid">
+          <button class="btn btn-primary" type="button" data-cloud-upload data-cloud-enable>Enviar para a nuvem</button>
+          <button class="btn btn-secondary" type="button" data-cloud-download data-cloud-enable>Baixar da nuvem</button>
+          <a class="btn btn-outline" href="login-cifra.html">Entrar / trocar conta</a>
+          <button class="btn btn-outline" type="button" data-auth-logout>Sair da conta</button>
+        </div>
+
+        <label class="setting-item wide-toggle">
+          <div>
+            <strong>Auto-sync</strong>
+            <small>Ao salvar cifras e repertórios, tente sincronizar automaticamente quando houver conta online e Firebase configurado.</small>
+          </div>
+          <input type="checkbox" data-cloud-auto-sync />
+        </label>
+
+        <div class="sync-timeline">
+          <div><span>Última sincronização</span><strong data-cloud-last-sync>Nunca sincronizado</strong></div>
+          <div><span>Último envio</span><strong data-cloud-last-upload>Nunca sincronizado</strong></div>
+          <div><span>Último download</span><strong data-cloud-last-download>Nunca sincronizado</strong></div>
+        </div>
+      </article>
+
+      <article class="section-card settings-card">
+        <div class="section-head">
+          <div>
+            <span class="visual-badge">Preferências</span>
+            <h3>Leitura e comportamento</h3>
+          </div>
+        </div>
+        <div class="settings-list">
+          <label class="setting-item"><span>Tema escuro premium</span><input type="checkbox" checked disabled /></label>
+          <label class="setting-item"><span>Fonte grande no palco</span><input type="checkbox" /></label>
+          <label class="setting-item"><span>Rolagem automática padrão</span><input type="checkbox" /></label>
+          <label class="setting-item"><span>Permitir Wake Lock quando suportado</span><input type="checkbox" checked /></label>
+        </div>
+      </article>
+
+      <article class="section-card settings-card">
+        <div class="section-head">
+          <div>
+            <span class="visual-badge">Backup local</span>
+            <h3>Segurança dos seus dados</h3>
+          </div>
+        </div>
+        <p class="section-subtitle">Mesmo sem Firebase, você pode exportar um backup completo contendo cifras, repertórios, sessão e preferências de sincronização.</p>
+        <div class="settings-action-grid single-column">
+          <button class="btn btn-primary" type="button" id="export-full-backup">Exportar backup completo</button>
+          <small class="section-subtitle">Arquivo JSON local, ideal para guardar seus dados antes de publicar novas builds.</small>
+        </div>
+      </article>
+
+      <article class="section-card settings-card">
+        <div class="section-head">
+          <div>
+            <span class="visual-badge">Configuração gratuita</span>
+            <h3>Como ativar o Firebase sem gastar</h3>
+          </div>
+        </div>
+        <ol class="setup-steps">
+          <li>Crie um projeto no Firebase no plano gratuito Spark.</li>
+          <li>Ative Authentication e Firestore.</li>
+          <li>Copie as chaves para <code>js/firebase-config.js</code>.</li>
+          <li>Publique a build no GitHub Pages ou Firebase Hosting.</li>
+          <li>Faça login online e use os botões de enviar/baixar.</li>
+        </ol>
+      </article>
     </section>
   </main>
   <footer class="app-footer"><span id="build-info" data-build-info>Carregando informações da build…</span></footer>
   <script src="js/build-info.js"></script>
   <script src="js/resilience.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/local-db.js"></script>
+  <script src="js/cloud-sync.js"></script>
+  <script src="js/settings.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

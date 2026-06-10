@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stage Music • Sala Live</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/live-room.css" />
+</head>
+<body data-page="sala-live">
+  <main class="page-shell live-room-page">
+    <header class="page-header live-room-header">
+      <div>
+        <a href="index.html" class="back-link">← Início</a>
+        <span class="visual-badge">Fase 14 • Worship Flow e direção avançada</span>
+        <h1>Sala Live</h1>
+        <p>Conduza repertório, seções, dinâmica, vamp, ministração e modulações em tempo real para todos os músicos conectados.</p>
+      </div>
+      <a class="btn btn-outline" href="modo-live.html">Abrir leitor Live</a>
+    </header>
+
+    <section class="room-stats-grid">
+      <article><strong id="room-stat-status">Inativa</strong><small>Status</small></article>
+      <article><strong id="room-stat-code">—</strong><small>Código</small></article>
+      <article><strong id="room-stat-members">0</strong><small>Participantes</small></article>
+      <article><strong id="room-stat-position">0 / 0</strong><small>Música atual</small></article>
+    </section>
+
+    <section class="room-layout">
+      <article class="section-card room-control-card">
+        <div class="section-head">
+          <div><span class="eyebrow">Direção musical</span><h2>Criar ou controlar sessão</h2></div>
+          <span id="room-role-badge" class="status-pill">Sem sala</span>
+        </div>
+        <div class="room-form-grid">
+          <label><span>Repertório</span><select id="room-setlist-select"></select></label>
+          <label><span>Equipe</span><select id="room-team-select"></select></label>
+          <label><span>Seu nome</span><input id="room-display-name" maxlength="60" placeholder="Ex.: Jonatan" /></label>
+          <label><span>Instrumento</span><select id="room-instrument"><option>Direção musical</option><option>Vocal</option><option>Teclado</option><option>Guitarra</option><option>Violão</option><option>Baixo</option><option>Bateria</option><option>Sopros</option><option>Outro</option></select></label>
+        </div>
+        <div class="room-actions">
+          <button id="create-room-btn" class="btn btn-primary" type="button">Criar Sala Live</button>
+          <button id="end-room-btn" class="btn btn-danger" type="button" disabled>Encerrar sala</button>
+          <button id="copy-room-code" class="btn btn-outline" type="button" disabled>Copiar código</button>
+        </div>
+
+        <div id="director-panel" class="director-panel" hidden>
+          <div class="current-song-card">
+            <span>MÚSICA ATUAL</span>
+            <strong id="director-current-title">—</strong>
+            <small id="director-current-meta">—</small>
+          </div>
+          <div class="director-controls">
+            <button id="director-prev" class="btn btn-outline" type="button">← Anterior</button>
+            <button id="director-next" class="btn btn-primary" type="button">Próxima →</button>
+          </div>
+          <div class="director-message-row">
+            <input id="director-message" maxlength="120" placeholder="Mensagem rápida: repetir refrão, baixar dinâmica..." />
+            <button id="director-send-message" class="btn btn-secondary" type="button">Enviar aviso</button>
+          </div>
+          <div class="quick-command-grid" id="quick-command-grid">
+            <button type="button" data-command="Repetir refrão">Repetir refrão</button>
+            <button type="button" data-command="Baixar dinâmica">Baixar dinâmica</button>
+            <button type="button" data-command="Somente piano">Somente piano</button>
+            <button type="button" data-command="Banda entra">Banda entra</button>
+            <button type="button" data-command="Final agora">Final agora</button>
+            <button type="button" data-command="Modular +1">Modular +1</button>
+          </div>
+
+          <section class="worship-flow-panel" id="worship-flow-panel">
+            <div class="flow-panel-head">
+              <div><span class="eyebrow">Worship Flow</span><h3>Condução musical avançada</h3></div>
+              <span id="flow-live-state" class="status-pill">Fluxo normal</span>
+            </div>
+            <div class="flow-control-grid">
+              <label><span>Seção ao vivo</span><select id="flow-section-select"><option value="">Automática / atual</option></select></label>
+              <label><span>Dinâmica</span><select id="flow-dynamics"><option value="normal">Normal</option><option value="soft">Suave</option><option value="build">Crescendo</option><option value="full">Banda completa</option><option value="drop">Corte / somente voz</option></select></label>
+              <label><span>Modulação</span><select id="flow-modulation"><option value="0">Tom original</option><option value="1">+1 semitom</option><option value="2">+2 semitons</option><option value="-1">−1 semitom</option><option value="-2">−2 semitons</option></select></label>
+              <label><span>Modo de execução</span><select id="flow-mode"><option value="normal">Estrutura normal</option><option value="repeat">Repetir seção</option><option value="vamp">Vamp contínuo</option><option value="ministry">Ministração</option><option value="spontaneous">Espontâneo</option><option value="ending">Preparar final</option></select></label>
+            </div>
+            <div class="flow-action-grid">
+              <button type="button" data-flow-action="apply">Aplicar fluxo</button>
+              <button type="button" data-flow-action="repeat">Repetir seção</button>
+              <button type="button" data-flow-action="vamp">Ativar vamp</button>
+              <button type="button" data-flow-action="ministry">Entrar em ministração</button>
+              <button type="button" data-flow-action="build">Crescendo</button>
+              <button type="button" data-flow-action="drop">Corte total</button>
+              <button type="button" data-flow-action="band">Banda entra</button>
+              <button type="button" data-flow-action="ending">Final agora</button>
+            </div>
+            <div class="flow-summary" id="flow-summary">
+              <div><span>Seção</span><strong id="flow-summary-section">Automática</strong></div>
+              <div><span>Modo</span><strong id="flow-summary-mode">Normal</strong></div>
+              <div><span>Dinâmica</span><strong id="flow-summary-dynamics">Normal</strong></div>
+              <div><span>Modulação</span><strong id="flow-summary-modulation">Original</strong></div>
+            </div>
+            <div class="flow-history" id="flow-history"><p class="section-subtitle">Nenhum comando avançado enviado.</p></div>
+          </section>
+        </div>
+      </article>
+
+      <article class="section-card room-join-card">
+        <div class="section-head">
+          <div><span class="eyebrow">Músico</span><h2>Entrar com código</h2></div>
+        </div>
+        <label><span>Código da sala</span><input id="join-room-code" maxlength="10" placeholder="LIVE-1234" /></label>
+        <div class="room-actions single">
+          <button id="join-room-btn" class="btn btn-primary" type="button">Entrar na sala</button>
+          <button id="leave-room-btn" class="btn btn-outline" type="button" disabled>Sair da sala</button>
+        </div>
+        <div class="joined-room-summary" id="joined-room-summary" hidden>
+          <span>SALA CONECTADA</span>
+          <strong id="joined-room-name">—</strong>
+          <p id="joined-room-song">Aguardando direção musical...</p>
+          <div id="room-command-banner" class="room-command-banner" hidden></div>
+          <a class="btn btn-secondary wide" href="modo-live.html">Abrir leitura sincronizada</a>
+        </div>
+      </article>
+
+      <article class="section-card room-members-card">
+        <div class="section-head"><div><span class="visual-badge">Conectados</span><h3>Participantes da sala</h3></div></div>
+        <div id="room-member-list" class="room-member-list"><p class="section-subtitle">Nenhum participante conectado.</p></div>
+      </article>
+
+      <article class="section-card room-connection-card">
+        <div class="section-head"><div><span class="visual-badge">Conexão</span><h3>Modo de sincronização</h3></div></div>
+        <div class="connection-status-grid">
+          <div><span>Local</span><strong>BroadcastChannel + armazenamento protegido</strong></div>
+          <div><span>Nuvem</span><strong data-cloud-config>Firebase não configurado</strong></div>
+          <div><span>Fallback</span><strong>App continua funcional offline</strong></div>
+        </div>
+        <p class="section-subtitle">Nesta build, múltiplas abas no mesmo dispositivo sincronizam imediatamente. Com Firebase configurado, a estrutura também persiste a sala na nuvem.</p>
+      </article>
+    </section>
+  </main>
+
+  <div id="room-toast" class="stage-toast" role="status" aria-live="polite"></div>
+  <footer class="app-footer"><span data-build-info>Carregando build…</span></footer>
+  <script src="js/build-info.js"></script>
+  <script src="js/resilience.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/local-db.js"></script>
+  <script src="js/cloud-sync.js"></script>
+  <script src="js/live-room.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

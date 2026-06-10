@@ -12,9 +12,9 @@
   <main class="page-shell">
     <div class="page-header compact">
       <a href="index.html" class="back-link">← Início</a>
-      <span class="visual-badge">Fase 4 • Editor inteligente</span>
+      <span class="visual-badge">Fase 11 • Editor + sincronização opcional</span>
       <h1>Inserir cifra</h1>
-      <p>Crie cifras estruturadas para palco com detecção de acordes, transposição, capo, seções musicais, histórico e salvamento automático protegido.</p>
+      <p>Crie cifras estruturadas para palco com detecção de acordes, transposição, capo, histórico, salvamento automático protegido e sincronização opcional com Firebase gratuito.</p>
     </div>
     <div class="editor-shell">
       <section class="editor-card">
@@ -40,6 +40,17 @@
           <strong>Salvamento local ativo</strong>
           <small id="draft-stamp">Auto-save pronto</small>
           <small id="save-stamp">Nenhuma cifra local salva</small>
+        </div>
+
+        <div class="session-card sync-card-inline">
+          <strong>Sincronização opcional</strong>
+          <small data-cloud-message>Pronto para sincronizar</small>
+          <div class="dual-actions" style="margin-top:10px; flex-wrap:wrap;">
+            <button class="btn btn-outline" type="button" data-cloud-upload data-cloud-enable>Enviar nuvem</button>
+            <button class="btn btn-outline" type="button" data-cloud-download data-cloud-enable>Baixar nuvem</button>
+            <a class="btn btn-ghost" href="configuracoes.html">Central de sync</a>
+          </div>
+          <small>Última sincronização: <span data-cloud-last-sync>Nunca sincronizado</span></small>
         </div>
 
         <form id="song-form">
@@ -141,6 +152,7 @@ Tua presença me sustenta..."></textarea>
   <script src="js/firebase-config.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/local-db.js"></script>
+  <script src="js/cloud-sync.js"></script>
   <script src="js/editor-local.js"></script>
   <script src="js/app.js"></script>
 </body>

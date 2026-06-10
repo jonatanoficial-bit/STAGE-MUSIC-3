@@ -17,6 +17,7 @@
   const writeState = (state) => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     window.StageMusicAuth.state = state;
+    window.dispatchEvent(new CustomEvent('stage-music-auth-changed', { detail: state }));
   };
 
   const firebaseConfig = window.STAGE_MUSIC_FIREBASE || {};
