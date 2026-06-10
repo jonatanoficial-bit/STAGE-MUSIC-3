@@ -1,20 +1,35 @@
 {
   "current": {
     "app": "Stage Music",
-    "version": "v2.4.1",
-    "versionNumber": "2.4.1",
-    "phase": 19.1,
-    "phaseLabel": "Fase 19.1",
-    "phaseName": "Hotfix de visibilidade dos fundos premium",
+    "version": "v2.5.0",
+    "versionNumber": "2.5.0",
+    "phase": 20,
+    "phaseLabel": "Fase 20",
+    "phaseName": "Auditoria Mobile e Tablet",
     "date": "10/06/2026",
     "isoDate": "2026-06-10",
-    "time": "21:54",
-    "stamp": "20260610-2154",
+    "time": "22:02",
+    "stamp": "20260610-2202",
     "environment": "production",
     "costStrategy": "firebase-spark-free-first",
-    "resilience": "anti-break-v21"
+    "resilience": "anti-break-v22"
   },
   "builds": [
+    {
+      "app": "Stage Music",
+      "version": "v2.5.0",
+      "versionNumber": "2.5.0",
+      "phase": 20,
+      "phaseLabel": "Fase 20",
+      "phaseName": "Auditoria Mobile e Tablet",
+      "date": "10/06/2026",
+      "isoDate": "2026-06-10",
+      "time": "22:02",
+      "stamp": "20260610-2202",
+      "environment": "production",
+      "costStrategy": "firebase-spark-free-first",
+      "resilience": "anti-break-v22"
+    },
     {
       "app": "Stage Music",
       "version": "v2.4.1",
@@ -224,35 +239,6 @@
       "environment": "production",
       "costStrategy": "free-first",
       "resilience": "anti-break-v8"
-    },
-    {
-      "version": "v1.0.0",
-      "date": "2026-06-09",
-      "time": "12:56",
-      "phase": "Fase 5",
-      "phaseName": "Repertórios e Setlists",
-      "notes": [
-        "criação e edição de repertórios",
-        "ordenação por arrastar e botões",
-        "tom, duração e status de ensaio por música",
-        "duplicação, exclusão e resumo de tempo",
-        "integração inicial com o Modo Live",
-        "persistência local protegida anti-break v4"
-      ]
-    },
-    {
-      "version": "v0.9.0",
-      "date": "2026-06-09",
-      "time": "12:48",
-      "phase": "Fase 3",
-      "phaseName": "Biblioteca de Cifras Profissional",
-      "notes": [
-        "busca completa por música, artista, tom, tag e conteúdo",
-        "favoritos e histórico de músicas recentes",
-        "filtros por tags e ordenação profissional",
-        "visualização de cifra em modal",
-        "armazenamento protegido e compatibilidade offline"
-      ]
     }
   ]
 }

@@ -34,5 +34,11 @@ if(info.phase>=19){
   for(const token of ['bg-home-stage-mobile.webp','bg-library-wave-mobile.webp','bg-live-stage-mobile.webp','bg-account-portal-mobile.webp','bg-setlists-flow-mobile.webp','FASE 19'])if(!css.includes(token))errors.push('Fase 19 CSS incompleto: '+token);
   for(const token of backgrounds.filter(x=>x.endsWith('.webp')).map(x=>'./'+x))if(!sw.includes(token))errors.push('Fase 19 cache ausente: '+token);
 }
+
+if(info.phase>=20){
+  for(const required of ['css/mobile-audit.css','js/mobile-audit.js','docs/AUDITORIA-FASE-20.md','docs/TESTES-FASE-20.md'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 20 arquivo ausente: '+required);
+  for(const file of htmls){const html=fs.readFileSync(path.join(root,file),'utf8');for(const token of ['viewport-fit=cover','css/mobile-audit.css','js/mobile-audit.js'])if(!html.includes(token))errors.push(`Fase 20 ${file}: ausente ${token}`)}
+  const mobileCss=fs.readFileSync(path.join(root,'css/mobile-audit.css'),'utf8');for(const token of ['mobile-audit-nav','editor-actions','setlist-song-row','env(safe-area-inset-bottom)'])if(!mobileCss.includes(token))errors.push('Fase 20 CSS incompleto: '+token);
+}
 if(errors.length){console.error('AUDITORIA REPROVADA\n'+errors.join('\n'));process.exit(1)}console.log(`AUDITORIA APROVADA — ${info.app} ${info.version} | ${htmls.length} páginas | ${info.date} ${info.time}`);if(warnings.length)console.warn(warnings.join('\n'));
 
