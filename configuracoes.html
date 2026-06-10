@@ -12,9 +12,9 @@
   <main class="page-shell settings-page-shell">
     <header class="page-header">
       <a href="index.html" class="back-link">← Início</a>
-      <span class="visual-badge">Fase 11 • Conta, nuvem e sincronização</span>
+      <span class="visual-badge">Fase 18 • Firebase real e multidispositivo</span>
       <h1>Configurações e sincronização</h1>
-      <p>Gerencie sua conta, acompanhe o status da nuvem e mantenha seu Stage Music funcional mesmo sem internet.</p>
+      <p>Gerencie sua conta, teste a conexão Firebase, sincronize dados e mantenha o Stage Music funcional mesmo sem internet.</p>
     </header>
 
     <section class="settings-grid-advanced">
@@ -43,6 +43,7 @@
           <button class="btn btn-primary" type="button" data-cloud-upload data-cloud-enable>Enviar para a nuvem</button>
           <button class="btn btn-secondary" type="button" data-cloud-download data-cloud-enable>Baixar da nuvem</button>
           <a class="btn btn-outline" href="login-cifra.html">Entrar / trocar conta</a>
+          <button class="btn btn-outline" type="button" id="test-firebase-connection">Testar Firebase</button>
           <button class="btn btn-outline" type="button" data-auth-logout>Sair da conta</button>
         </div>
 
@@ -111,6 +112,7 @@
   <script src="js/build-info.js"></script>
   <script src="js/resilience.js"></script>
   <script src="js/firebase-config.js"></script>
+  <script src="js/firebase-runtime.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/local-db.js"></script>
   <script src="js/cloud-sync.js"></script>

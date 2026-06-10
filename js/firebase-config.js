@@ -1,3 +1,7 @@
+/*
+  Configuração Web do Firebase para o projeto Stage Music.
+  A segurança dos dados é controlada pelo Firebase Authentication e pelas regras do Firestore.
+*/
 window.STAGE_MUSIC_FIREBASE = {
   apiKey: "AIzaSyCrY_jawl40C_ZFpTUSFRgKJmUKzbKhZ4k",
   authDomain: "stage-music-96cc1.firebaseapp.com",
@@ -11,5 +15,7 @@ window.STAGE_MUSIC_FIREBASE = {
 window.STAGE_MUSIC_AUTH_SETTINGS = {
   googleEnabled: true,
   allowLocalMode: true,
-  persistLogin: true
+  persistLogin: true,
+  firestoreOffline: true,
+  liveRoomsOnline: true
 };

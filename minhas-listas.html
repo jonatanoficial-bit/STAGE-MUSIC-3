@@ -14,7 +14,7 @@
     <header class="page-header setlist-hero">
       <div>
         <a href="index.html" class="back-link">← Início</a>
-        <span class="visual-badge">Fase 5 • Organização de palco</span>
+        <span class="visual-badge">Fase 17 • Repertório inteligente</span>
         <h1>Repertórios e setlists</h1>
         <p>Monte, ordene e prepare suas músicas para ensaios, cultos e apresentações.</p>
       </div>
@@ -67,6 +67,16 @@
             <label class="wide"><span>Observações gerais</span><input id="setlist-notes" maxlength="240" placeholder="Ex.: entrada após vídeo, final espontâneo..." /></label>
           </div>
 
+          <section class="setlist-smart-card">
+            <div>
+              <span class="eyebrow">Assistente de repertório</span>
+              <h3>Análise de prontidão e transições</h3>
+              <p>Verifique duração, músicas não ensaiadas e mudanças de tonalidade que podem prejudicar o fluxo.</p>
+            </div>
+            <button id="setlist-smart-analyze" class="btn btn-outline" type="button">Analisar repertório</button>
+            <div id="setlist-smart-results" class="setlist-smart-results"><p>Selecione um repertório e execute a análise.</p></div>
+          </section>
+
           <div class="setlist-table-head"><span>Ordem</span><span>Música</span><span>Tom</span><span>Duração</span><span>Ensaio</span><span>Ações</span></div>
           <div id="setlist-songs" class="setlist-song-list" aria-live="polite"></div>
         </div>
@@ -96,6 +106,7 @@
   <script src="js/local-db.js"></script>
   <script src="js/cloud-sync.js"></script>
   <script src="js/setlists.js"></script>
+  <script src="js/music-intelligence.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

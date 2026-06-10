@@ -18,7 +18,6 @@
   const setState=(patch)=>{const next=Object.assign({},getState(),patch||{});write(STATE_KEY,next);window.dispatchEvent(new CustomEvent('stage-music-sync-updated',{detail:{prefs:getPrefs(),state:next}}));return next;};
   const isConfigured=()=>!!(window.STAGE_MUSIC_FIREBASE?.apiKey&&window.STAGE_MUSIC_FIREBASE?.authDomain&&window.STAGE_MUSIC_FIREBASE?.projectId&&window.STAGE_MUSIC_FIREBASE?.appId);
   let firebaseCache=null;
-  const toKey=(email='anonymous@stage-music.local')=>String(email||'anonymous@stage-music.local').toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'')||'anonymous_user';
   async function initFirebase(){
     if(firebaseCache) return firebaseCache;
     if(!isConfigured()) throw new Error('Firebase não configurado.');
@@ -50,32 +49,37 @@
   }
   async function ensureReady(){
     const authState=getAuthState();
-    if(!authState.isAuthenticated) throw new Error('Entre em uma conta ou ative o modo local antes de sincronizar.');
-    if(authState.mode==='local') throw new Error('Sincronização em nuvem exige conta online. Use o login online para enviar os dados.');
+    if(!authState.isAuthenticated) throw new Error('Entre em uma conta antes de sincronizar.');
+    if(authState.mode==='local') throw new Error('Sincronização em nuvem exige conta online. Use o login com Google ou e-mail.');
     if(!isConfigured()) throw new Error('Firebase ainda não foi configurado neste projeto.');
-    return {authState,firebase:await initFirebase()};
+    const firebase=await initFirebase();
+    const firebaseUser=firebase.auth.currentUser;
+    const uid=firebaseUser?.uid||authState.uid||'';
+    if(!uid) throw new Error('A sessão Firebase ainda não forneceu um UID válido. Saia e entre novamente na conta.');
+    if(firebaseUser?.uid&&authState.uid&&firebaseUser.uid!==authState.uid) throw new Error('A sessão local não corresponde ao usuário autenticado no Firebase. Entre novamente.');
+    return {authState:Object.assign({},authState,{uid,email:firebaseUser?.email||authState.email||''}),firebase,uid};
   }
   async function syncAllToCloud(){
-    const {authState,firebase}=await ensureReady();
+    const {authState,firebase,uid}=await ensureReady();
     setState({status:'running',message:'Enviando dados locais para a nuvem...'});
     const songs=window.StageMusicLocalDB?.getAllSongs?.()||[];
     const setlists=readSetlists();
     const teams=readTeams();
-    const owner=toKey(authState.email);
+    const owner=uid;
     const songCol=firebase.collection(firebase.db,'users',owner,'songs');
     const setlistCol=firebase.collection(firebase.db,'users',owner,'setlists');
     const teamCol=firebase.collection(firebase.db,'users',owner,'teams');
-    await Promise.all(songs.map(song=>firebase.setDoc(firebase.doc(songCol,song.id),Object.assign({},song,{ownerEmail:authState.email,updatedAt:song.updatedAt||now()}),{merge:true})));
-    await Promise.all(setlists.map(list=>firebase.setDoc(firebase.doc(setlistCol,list.id),Object.assign({},list,{ownerEmail:authState.email,updatedAt:list.updatedAt||now()}),{merge:true})));
-    await Promise.all(teams.map(team=>firebase.setDoc(firebase.doc(teamCol,team.id),Object.assign({},team,{ownerEmail:authState.email,updatedAt:team.updatedAt||now()}),{merge:true})));
+    await Promise.all(songs.map(song=>firebase.setDoc(firebase.doc(songCol,song.id),Object.assign({},song,{ownerUid:uid,ownerEmail:authState.email,updatedAt:song.updatedAt||now()}),{merge:true})));
+    await Promise.all(setlists.map(list=>firebase.setDoc(firebase.doc(setlistCol,list.id),Object.assign({},list,{ownerUid:uid,ownerEmail:authState.email,updatedAt:list.updatedAt||now()}),{merge:true})));
+    await Promise.all(teams.map(team=>firebase.setDoc(firebase.doc(teamCol,team.id),Object.assign({},team,{ownerUid:uid,ownerEmail:authState.email,updatedAt:team.updatedAt||now()}),{merge:true})));
     const stamp=now();
     setState({status:'success',message:'Dados locais enviados com sucesso.',lastSyncAt:stamp,lastUploadAt:stamp,cloudSongs:songs.length,cloudSetlists:setlists.length,cloudTeams:teams.length});
     return {songs:songs.length,setlists:setlists.length,teams:teams.length,stamp};
   }
   async function pullAllFromCloud(){
-    const {authState,firebase}=await ensureReady();
+    const {authState,firebase,uid}=await ensureReady();
     setState({status:'running',message:'Baixando dados da nuvem...'});
-    const owner=toKey(authState.email);
+    const owner=uid;
     const songCol=firebase.collection(firebase.db,'users',owner,'songs');
     const setlistCol=firebase.collection(firebase.db,'users',owner,'setlists');
     const teamCol=firebase.collection(firebase.db,'users',owner,'teams');
@@ -93,10 +97,10 @@
   async function syncSong(song){
     const prefs=getPrefs();
     if(!prefs.autoSync) return {skipped:true,reason:'auto-sync-disabled'};
-    const {authState,firebase}=await ensureReady();
-    const owner=toKey(authState.email);
+    const {authState,firebase,uid}=await ensureReady();
+    const owner=uid;
     const songCol=firebase.collection(firebase.db,'users',owner,'songs');
-    const payload=Object.assign({},song,{ownerEmail:authState.email,updatedAt:song.updatedAt||now()});
+    const payload=Object.assign({},song,{ownerUid:uid,ownerEmail:authState.email,updatedAt:song.updatedAt||now()});
     await firebase.setDoc(firebase.doc(songCol,payload.id),payload,{merge:true});
     setState({status:'success',message:'Última cifra sincronizada automaticamente.',lastSyncAt:now(),lastUploadAt:now()});
     return {ok:true};
@@ -104,22 +108,22 @@
   async function syncSetlists(setlists){
     const prefs=getPrefs();
     if(!prefs.autoSync) return {skipped:true,reason:'auto-sync-disabled'};
-    const {authState,firebase}=await ensureReady();
-    const owner=toKey(authState.email);
+    const {authState,firebase,uid}=await ensureReady();
+    const owner=uid;
     const setlistCol=firebase.collection(firebase.db,'users',owner,'setlists');
     const items=Array.isArray(setlists)?setlists:readSetlists();
-    await Promise.all(items.map(list=>firebase.setDoc(firebase.doc(setlistCol,list.id),Object.assign({},list,{ownerEmail:authState.email,updatedAt:list.updatedAt||now()}),{merge:true})));
+    await Promise.all(items.map(list=>firebase.setDoc(firebase.doc(setlistCol,list.id),Object.assign({},list,{ownerUid:uid,ownerEmail:authState.email,updatedAt:list.updatedAt||now()}),{merge:true})));
     setState({status:'success',message:'Repertórios sincronizados automaticamente.',lastSyncAt:now(),lastUploadAt:now()});
     return {ok:true,count:items.length};
   }
   async function syncTeams(teams){
     const prefs=getPrefs();
     if(!prefs.autoSync) return {skipped:true,reason:'auto-sync-disabled'};
-    const {authState,firebase}=await ensureReady();
-    const owner=toKey(authState.email);
+    const {authState,firebase,uid}=await ensureReady();
+    const owner=uid;
     const teamCol=firebase.collection(firebase.db,'users',owner,'teams');
     const items=Array.isArray(teams)?teams:[];
-    await Promise.all(items.map(team=>firebase.setDoc(firebase.doc(teamCol,team.id),Object.assign({},team,{ownerEmail:authState.email,updatedAt:team.updatedAt||now()}),{merge:true})));
+    await Promise.all(items.map(team=>firebase.setDoc(firebase.doc(teamCol,team.id),Object.assign({},team,{ownerUid:uid,ownerEmail:authState.email,updatedAt:team.updatedAt||now()}),{merge:true})));
     setState({status:'success',message:'Equipes sincronizadas automaticamente.',lastSyncAt:now(),lastUploadAt:now()});
     return {ok:true,count:items.length};
   }

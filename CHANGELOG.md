@@ -1,5 +1,30 @@
 # CHANGELOG
 
+## v2.3.1 — Fase 18.1 — 10/06/2026 17:21
+- Hotfix do Firebase: caminhos privados agora usam o UID real do Firebase Authentication.
+- Removido o identificador derivado do e-mail em `cloud-sync.js`.
+- Configuração do projeto `stage-music-96cc1` inserida na build.
+- Regras do Firestore alinhadas com `users/{uid}` e propriedade imutável das Salas Live.
+- Validação anti-regressão para impedir retorno do caminho baseado em e-mail.
+- Anti-break v18.
+
+## v2.3.0 — Fase 18 — 10/06/2026 16:42
+- Firebase Authentication real com sessão persistente e UID local.
+- Runtime Firebase centralizado e Firestore offline quando suportado.
+- Sala Live online por código entre dispositivos diferentes.
+- Listener em tempo real no painel da sala e no Modo Live.
+- Regras Firestore, firebase.json e guia de implantação incluídos.
+- Teste de conexão Firebase nas Configurações.
+- Fallback local/offline e anti-break v17 preservados.
+
+## v2.2.0 — Fase 17 — 10/06/2026 16:35
+- Assistente musical local com reconhecimento de estrutura, acordes e tom provável.
+- Estimativa de duração baseada em conteúdo e BPM.
+- Sugestões de capo e transposição para tonalidades mais simples.
+- Simplificação harmônica para leitura rápida.
+- Assistente de repertório com prontidão, duração e alertas de transição tonal.
+- Anti-break v16 e auditoria da fase.
+
 ## v2.1.0 — Fase 16 — 10/06/2026 16:26
 - Agenda de eventos, cultos, shows, ensaios e aulas.
 - Escala de músicos com confirmação de presença.

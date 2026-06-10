@@ -12,7 +12,7 @@
   <main class="page-shell">
     <div class="page-header compact">
       <a href="index.html" class="back-link">← Início</a>
-      <span class="visual-badge">Fase 11 • Editor + sincronização opcional</span>
+      <span class="visual-badge">Fase 17 • Assistente musical inteligente</span>
       <h1>Inserir cifra</h1>
       <p>Crie cifras estruturadas para palco com detecção de acordes, transposição, capo, histórico, salvamento automático protegido e sincronização opcional com Firebase gratuito.</p>
     </div>
@@ -105,6 +105,27 @@
             </div>
           </section>
 
+          <section class="smart-assistant-card" aria-label="Assistente musical inteligente local">
+            <div class="smart-assistant-head">
+              <div>
+                <span class="visual-badge">Inteligência local</span>
+                <h3>Assistente musical</h3>
+                <p>Analisa a cifra no próprio dispositivo, sem enviar conteúdo para serviços externos.</p>
+              </div>
+              <button class="btn btn-primary" type="button" id="smart-analyze">Analisar cifra</button>
+            </div>
+            <div class="smart-action-row">
+              <button class="btn btn-outline" type="button" id="smart-simplify">Simplificar acordes</button>
+              <button class="btn btn-outline" type="button" id="smart-transpose-easy">Levar para tom fácil</button>
+              <button class="btn btn-outline" type="button" id="smart-apply-capo">Aplicar capo sugerido</button>
+              <button class="btn btn-outline" type="button" id="smart-estimate">Estimar duração</button>
+            </div>
+            <div class="smart-inline-status"><span id="smart-duration-value">Duração não estimada</span><span id="smart-capo-shape">Capo não calculado</span></div>
+            <div id="smart-analysis-results" class="smart-analysis-results">
+              <p>Toque em <strong>Analisar cifra</strong> para reconhecer seções, acordes, complexidade, duração e sugestões de capo.</p>
+            </div>
+          </section>
+
           <label class="editor-area-label">
             <span>Conteúdo da cifra</span>
             <textarea id="song-content" placeholder="[Intro]
@@ -154,6 +175,7 @@ Tua presença me sustenta..."></textarea>
   <script src="js/local-db.js"></script>
   <script src="js/cloud-sync.js"></script>
   <script src="js/editor-local.js"></script>
+  <script src="js/music-intelligence.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

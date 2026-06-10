@@ -1,15 +1,15 @@
 {
   "app": "Stage Music",
-  "version": "v2.1.0",
-  "versionNumber": "2.1.0",
-  "phase": 16,
-  "phaseLabel": "Fase 16",
-  "phaseName": "Planejamento de eventos e ensaios",
+  "version": "v2.3.1",
+  "versionNumber": "2.3.1",
+  "phase": 18,
+  "phaseLabel": "Fase 18.1",
+  "phaseName": "Hotfix Firebase UID e regras seguras",
   "date": "10/06/2026",
   "isoDate": "2026-06-10",
-  "time": "16:26",
-  "stamp": "20260610-1626",
+  "time": "17:21",
+  "stamp": "20260610-1721",
   "environment": "production",
-  "costStrategy": "free-first-local-offline",
-  "resilience": "anti-break-v15"
+  "costStrategy": "firebase-spark-free-first",
+  "resilience": "anti-break-v18"
 }
