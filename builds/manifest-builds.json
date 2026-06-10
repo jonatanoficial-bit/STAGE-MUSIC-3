@@ -1,20 +1,65 @@
 {
   "current": {
     "app": "Stage Music",
-    "version": "v2.1.0",
-    "versionNumber": "2.1.0",
-    "phase": 16,
-    "phaseLabel": "Fase 16",
-    "phaseName": "Planejamento de eventos e ensaios",
+    "version": "v2.3.1",
+    "versionNumber": "2.3.1",
+    "phase": 18,
+    "phaseLabel": "Fase 18.1",
+    "phaseName": "Hotfix Firebase UID e regras seguras",
     "date": "10/06/2026",
     "isoDate": "2026-06-10",
-    "time": "16:26",
-    "stamp": "20260610-1626",
+    "time": "17:21",
+    "stamp": "20260610-1721",
     "environment": "production",
-    "costStrategy": "free-first-local-offline",
-    "resilience": "anti-break-v15"
+    "costStrategy": "firebase-spark-free-first",
+    "resilience": "anti-break-v18"
   },
   "builds": [
+    {
+      "app": "Stage Music",
+      "version": "v2.3.1",
+      "versionNumber": "2.3.1",
+      "phase": 18,
+      "phaseLabel": "Fase 18.1",
+      "phaseName": "Hotfix Firebase UID e regras seguras",
+      "date": "10/06/2026",
+      "isoDate": "2026-06-10",
+      "time": "17:21",
+      "stamp": "20260610-1721",
+      "environment": "production",
+      "costStrategy": "firebase-spark-free-first",
+      "resilience": "anti-break-v18"
+    },
+    {
+      "app": "Stage Music",
+      "version": "v2.3.0",
+      "versionNumber": "2.3.0",
+      "phase": 18,
+      "phaseLabel": "Fase 18",
+      "phaseName": "Firebase Real, Sincronização Multidispositivo e Sala Live Online",
+      "date": "10/06/2026",
+      "isoDate": "2026-06-10",
+      "time": "16:42",
+      "stamp": "20260610-1642",
+      "environment": "production",
+      "costStrategy": "firebase-spark-free-first",
+      "resilience": "anti-break-v17"
+    },
+    {
+      "app": "Stage Music",
+      "version": "v2.2.0",
+      "versionNumber": "2.2.0",
+      "phase": 17,
+      "phaseLabel": "Fase 17",
+      "phaseName": "Inteligência e recursos avançados",
+      "date": "10/06/2026",
+      "isoDate": "2026-06-10",
+      "time": "16:35",
+      "stamp": "20260610-1635",
+      "environment": "production",
+      "costStrategy": "free-first-local-intelligence",
+      "resilience": "anti-break-v16"
+    },
     {
       "app": "Stage Music",
       "version": "v2.1.0",
@@ -188,21 +233,6 @@
         "rascunho automático",
         "busca local"
       ]
-    },
-    {
-      "app": "Stage Music",
-      "version": "v1.2.0",
-      "versionNumber": "1.2.0",
-      "phase": 7,
-      "phaseLabel": "Fase 7",
-      "phaseName": "Rolagem Automática e Navegação por Seções",
-      "date": "09/06/2026",
-      "isoDate": "2026-06-09",
-      "time": "13:17",
-      "stamp": "20260609-1317",
-      "environment": "production",
-      "costStrategy": "free-first",
-      "resilience": "anti-break-v6"
     }
   ]
 }
