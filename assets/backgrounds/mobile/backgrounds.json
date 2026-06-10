@@ -1,0 +1,18 @@
+{
+  "format": "Stage Music Background Asset Map v1",
+  "orientation": "portrait",
+  "resolution": "941x1672",
+  "recommendedFormat": "webp",
+  "assets": {
+    "home": "assets/backgrounds/mobile/webp/bg-home-stage-mobile.webp",
+    "library": "assets/backgrounds/mobile/webp/bg-library-wave-mobile.webp",
+    "editor": "assets/backgrounds/mobile/webp/bg-library-wave-mobile.webp",
+    "live": "assets/backgrounds/mobile/webp/bg-live-stage-mobile.webp",
+    "login": "assets/backgrounds/mobile/webp/bg-account-portal-mobile.webp",
+    "settings": "assets/backgrounds/mobile/webp/bg-account-portal-mobile.webp",
+    "setlists": "assets/backgrounds/mobile/webp/bg-setlists-flow-mobile.webp",
+    "events": "assets/backgrounds/mobile/webp/bg-setlists-flow-mobile.webp",
+    "teams": "assets/backgrounds/mobile/webp/bg-setlists-flow-mobile.webp",
+    "liveRoom": "assets/backgrounds/mobile/webp/bg-live-stage-mobile.webp"
+  }
+}

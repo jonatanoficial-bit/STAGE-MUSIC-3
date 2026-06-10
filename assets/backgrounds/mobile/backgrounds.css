@@ -1,0 +1,7 @@
+:root {
+  --bg-home-mobile: url('./webp/bg-home-stage-mobile.webp');
+  --bg-library-mobile: url('./webp/bg-library-wave-mobile.webp');
+  --bg-live-mobile: url('./webp/bg-live-stage-mobile.webp');
+  --bg-account-mobile: url('./webp/bg-account-portal-mobile.webp');
+  --bg-setlists-mobile: url('./webp/bg-setlists-flow-mobile.webp');
+}
