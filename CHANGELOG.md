@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v2.4.0 — Fase 19 — 10/06/2026 18:31
+- Integração de cinco fundos cinematográficos AAA em WebP.
+- Mapeamento visual por Home, Biblioteca/Editor, Live, Conta e Setlists/Eventos.
+- Overlays de contraste e otimização mobile-first.
+- Service Worker atualizado para cache offline dos fundos.
+- Firebase e conexões existentes preservados integralmente.
+- Anti-break v20 e auditoria da fase.
+
 ## v2.3.2 — Fase 18.2 — 10/06/2026 18:06
 - Corrigido contraste de inputs, selects, textarea, cards e prévia do editor.
 - Texto digitado e placeholders agora ficam legíveis no tema escuro.
