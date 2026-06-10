@@ -19,5 +19,20 @@ if(info.phase>=16){const page=fs.readFileSync(path.join(root,'eventos.html'),'ut
 if(info.phase>=17){for(const required of ['js/music-intelligence.js','docs/AUDITORIA-FASE-17.md','docs/TESTES-FASE-17.md'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 17 arquivo ausente: '+required);const editor=fs.readFileSync(path.join(root,'inserir-cifra.html'),'utf8');for(const token of ['smart-analyze','smart-simplify','smart-apply-capo','js/music-intelligence.js'])if(!editor.includes(token))errors.push('Fase 17 editor incompleto: '+token);const setlists=fs.readFileSync(path.join(root,'minhas-listas.html'),'utf8');for(const token of ['setlist-smart-analyze','setlist-smart-results','js/music-intelligence.js'])if(!setlists.includes(token))errors.push('Fase 17 repertório incompleto: '+token);}
 if(info.phase>=18){for(const required of ['js/firebase-runtime.js','js/firebase-live.js','firestore.rules','firebase.json','docs/FIREBASE-SETUP-FASE-18.md','docs/AUDITORIA-FASE-18.md','docs/TESTES-FASE-18.md'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 18 arquivo ausente: '+required);const room=fs.readFileSync(path.join(root,'sala-live.html'),'utf8');for(const token of ['js/firebase-runtime.js','js/firebase-live.js','Fase 18'])if(!room.includes(token))errors.push('Fase 18 Sala Live incompleta: '+token);const roomJs=fs.readFileSync(path.join(root,'js/live-room.js'),'utf8');for(const token of ['StageMusicFirebaseLive','startRemoteSubscription','getRoom'])if(!roomJs.includes(token))errors.push('Fase 18 integração online incompleta: '+token);const client=fs.readFileSync(path.join(root,'js/live-room-client.js'),'utf8');if(!client.includes('ensureRemoteSubscription'))errors.push('Fase 18 listener remoto ausente no Modo Live.');}
 if(info.versionNumber==='2.3.1'){const cloud=fs.readFileSync(path.join(root,'js/cloud-sync.js'),'utf8');if(cloud.includes('toKey(')||cloud.includes('owner=toKey'))errors.push('Hotfix Firebase: caminho baseado em e-mail ainda presente.');for(const token of ['const owner=uid','ownerUid:uid','firebase.auth.currentUser'])if(!cloud.includes(token))errors.push('Hotfix Firebase incompleto: '+token);const config=fs.readFileSync(path.join(root,'js/firebase-config.js'),'utf8');for(const token of ['stage-music-96cc1.firebaseapp.com','stage-music-96cc1','1009564099611'])if(!config.includes(token))errors.push('Configuração Firebase ausente: '+token);const rules=fs.readFileSync(path.join(root,'firestore.rules'),'utf8');for(const token of ['request.auth.uid == uid','request.resource.data.ownerUid == resource.data.ownerUid'])if(!rules.includes(token))errors.push('Regras seguras incompletas: '+token);}
+
+if(info.phase>=19){
+  const backgrounds=[
+    'assets/backgrounds/mobile/webp/bg-home-stage-mobile.webp',
+    'assets/backgrounds/mobile/webp/bg-library-wave-mobile.webp',
+    'assets/backgrounds/mobile/webp/bg-live-stage-mobile.webp',
+    'assets/backgrounds/mobile/webp/bg-account-portal-mobile.webp',
+    'assets/backgrounds/mobile/webp/bg-setlists-flow-mobile.webp',
+    'assets/backgrounds/mobile/backgrounds.json'
+  ];
+  for(const required of backgrounds)if(!fs.existsSync(path.join(root,required)))errors.push('Fase 19 fundo ausente: '+required);
+  const css=fs.readFileSync(path.join(root,'css/global.css'),'utf8');
+  for(const token of ['bg-home-stage-mobile.webp','bg-library-wave-mobile.webp','bg-live-stage-mobile.webp','bg-account-portal-mobile.webp','bg-setlists-flow-mobile.webp','FASE 19'])if(!css.includes(token))errors.push('Fase 19 CSS incompleto: '+token);
+  for(const token of backgrounds.filter(x=>x.endsWith('.webp')).map(x=>'./'+x))if(!sw.includes(token))errors.push('Fase 19 cache ausente: '+token);
+}
 if(errors.length){console.error('AUDITORIA REPROVADA\n'+errors.join('\n'));process.exit(1)}console.log(`AUDITORIA APROVADA — ${info.app} ${info.version} | ${htmls.length} páginas | ${info.date} ${info.time}`);if(warnings.length)console.warn(warnings.join('\n'));
 

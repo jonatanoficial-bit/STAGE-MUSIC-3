@@ -1,20 +1,35 @@
 {
   "current": {
     "app": "Stage Music",
-    "version": "v2.3.2",
-    "versionNumber": "2.3.2",
-    "phase": 18,
-    "phaseLabel": "Fase 18.2",
-    "phaseName": "Hotfix de legibilidade do editor",
+    "version": "v2.4.0",
+    "versionNumber": "2.4.0",
+    "phase": 19,
+    "phaseLabel": "Fase 19",
+    "phaseName": "Integração Visual AAA de Fundos Premium",
     "date": "10/06/2026",
     "isoDate": "2026-06-10",
-    "time": "18:06",
-    "stamp": "20260610-1806",
+    "time": "18:31",
+    "stamp": "20260610-1831",
     "environment": "production",
     "costStrategy": "firebase-spark-free-first",
-    "resilience": "anti-break-v19"
+    "resilience": "anti-break-v20"
   },
   "builds": [
+    {
+      "app": "Stage Music",
+      "version": "v2.4.0",
+      "versionNumber": "2.4.0",
+      "phase": 19,
+      "phaseLabel": "Fase 19",
+      "phaseName": "Integração Visual AAA de Fundos Premium",
+      "date": "10/06/2026",
+      "isoDate": "2026-06-10",
+      "time": "18:31",
+      "stamp": "20260610-1831",
+      "environment": "production",
+      "costStrategy": "firebase-spark-free-first",
+      "resilience": "anti-break-v20"
+    },
     {
       "app": "Stage Music",
       "version": "v2.3.2",
@@ -222,31 +237,6 @@
         "filtros por tags e ordenação profissional",
         "visualização de cifra em modal",
         "armazenamento protegido e compatibilidade offline"
-      ]
-    },
-    {
-      "version": "v0.6.0",
-      "date": "2026-06-09",
-      "time": "12:12",
-      "phase": "Fase 1",
-      "phaseName": "Fundação Premium",
-      "notes": [
-        "versão centralizada em todos os arquivos",
-        "data e hora visíveis em todas as telas",
-        "cache PWA atualizado e compatível com subpastas",
-        "documentação de auditoria, testes e estratégia gratuita",
-        "validação automática da integridade da build"
-      ]
-    },
-    {
-      "version": "v0.5.0",
-      "date": "2026-04-22",
-      "time": "19:36",
-      "phase": "Fase 5 (legado)",
-      "notes": [
-        "salvamento local de cifras",
-        "rascunho automático",
-        "busca local"
       ]
     }
   ]
