@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v2.4.1 — Fase 19.1 — 10/06/2026 21:54
+- Corrige fundos premium quase invisíveis no desktop.
+- Adiciona imagens horizontais 16:9 para desktop e mantém 9:16 no mobile.
+- Aplica fundo diretamente ao hero da Home.
+- Reduz opacidade das camadas que escondiam as imagens.
+- Firebase e sincronização preservados sem alteração.
+
 ## v2.4.0 — Fase 19 — 10/06/2026 18:31
 - Integração de cinco fundos cinematográficos AAA em WebP.
 - Mapeamento visual por Home, Biblioteca/Editor, Live, Conta e Setlists/Eventos.
