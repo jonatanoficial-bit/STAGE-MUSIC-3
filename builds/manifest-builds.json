@@ -1,20 +1,50 @@
 {
   "current": {
     "app": "Stage Music",
-    "version": "v0.9.0",
-    "versionNumber": "0.9.0",
-    "phase": 3,
-    "phaseLabel": "Fase 3",
-    "phaseName": "Biblioteca de Cifras Profissional",
-    "date": "09/06/2026",
-    "isoDate": "2026-06-09",
-    "time": "12:48",
-    "stamp": "20260609-1248",
+    "version": "v1.5.0",
+    "versionNumber": "1.5.0",
+    "phase": 10,
+    "phaseLabel": "Fase 10",
+    "phaseName": "Home Premium AAA e Refinamento Visual Global",
+    "date": "10/06/2026",
+    "isoDate": "2026-06-10",
+    "time": "10:24",
+    "stamp": "20260610-1024",
     "environment": "production",
     "costStrategy": "free-first",
-    "resilience": "anti-break-v2"
+    "resilience": "anti-break-v9"
   },
   "builds": [
+    {
+      "app": "Stage Music",
+      "version": "v1.5.0",
+      "versionNumber": "1.5.0",
+      "phase": 10,
+      "phaseLabel": "Fase 10",
+      "phaseName": "Home Premium AAA e Refinamento Visual Global",
+      "date": "10/06/2026",
+      "isoDate": "2026-06-10",
+      "time": "10:24",
+      "stamp": "20260610-1024",
+      "environment": "production",
+      "costStrategy": "free-first",
+      "resilience": "anti-break-v9"
+    },
+    {
+      "app": "Stage Music",
+      "version": "v1.4.0",
+      "versionNumber": "1.4.0",
+      "phase": 9,
+      "phaseLabel": "Fase 9",
+      "phaseName": "Perfis por Instrumento",
+      "date": "09/06/2026",
+      "isoDate": "2026-06-09",
+      "time": "13:56",
+      "stamp": "20260609-1356",
+      "environment": "production",
+      "costStrategy": "free-first",
+      "resilience": "anti-break-v8"
+    },
     {
       "version": "v1.0.0",
       "date": "2026-06-09",
@@ -68,6 +98,21 @@
         "rascunho automático",
         "busca local"
       ]
+    },
+    {
+      "app": "Stage Music",
+      "version": "v1.2.0",
+      "versionNumber": "1.2.0",
+      "phase": 7,
+      "phaseLabel": "Fase 7",
+      "phaseName": "Rolagem Automática e Navegação por Seções",
+      "date": "09/06/2026",
+      "isoDate": "2026-06-09",
+      "time": "13:17",
+      "stamp": "20260609-1317",
+      "environment": "production",
+      "costStrategy": "free-first",
+      "resilience": "anti-break-v6"
     }
   ]
 }

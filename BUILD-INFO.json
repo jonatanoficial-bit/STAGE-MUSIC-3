@@ -1,15 +1,15 @@
 {
   "app": "Stage Music",
-  "version": "v1.0.0",
-  "versionNumber": "1.0.0",
-  "phase": 5,
-  "phaseLabel": "Fase 5",
-  "phaseName": "Repertórios e Setlists",
-  "date": "09/06/2026",
-  "isoDate": "2026-06-09",
-  "time": "12:56",
-  "stamp": "20260609-1256",
+  "version": "v1.5.0",
+  "versionNumber": "1.5.0",
+  "phase": 10,
+  "phaseLabel": "Fase 10",
+  "phaseName": "Home Premium AAA e Refinamento Visual Global",
+  "date": "10/06/2026",
+  "isoDate": "2026-06-10",
+  "time": "10:24",
+  "stamp": "20260610-1024",
   "environment": "production",
   "costStrategy": "free-first",
-  "resilience": "anti-break-v4"
+  "resilience": "anti-break-v9"
 }

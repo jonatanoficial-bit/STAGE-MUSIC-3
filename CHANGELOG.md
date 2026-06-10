@@ -1,5 +1,27 @@
 # CHANGELOG
 
+## v1.5.0 — Fase 10 — 10/06/2026 10:24
+- Home reconstruída com visual premium AAA e hierarquia visual mais forte.
+- Hero principal redesenhado para comunicar valor real do produto.
+- Dashboard inicial com cifras recentes, repertórios recentes e ações rápidas.
+- Busca iniciada na Home agora pode seguir direto para a Biblioteca.
+- Refinamento visual global para tornar a Home coerente com as demais telas.
+- Anti-break v9, auditoria da fase e compatibilidade preservada com os dados anteriores.
+
+## v1.4.0 — Fase 9 — 09/06/2026
+- Perfis por instrumento para direção, vocal, teclado, guitarra, violão, baixo, bateria e sopros.
+- Notas privadas separadas por música e instrumento.
+- Lembrete opcional visível acima da cifra no Modo Live.
+- Sugestões rápidas específicas para cada função musical.
+- Persistência offline e compatibilidade com repertórios anteriores.
+- Anti-break v8 e auditoria de integridade.
+
+
+## v1.3.0 — Fase 8 — 09/06/2026
+- Metrônomo, Tap Tempo, contagem de entrada, gerador de tom, capo inteligente e graus harmônicos.
+- Áudio local via Web Audio API, compatível com funcionamento offline.
+- Anti-break v7 e auditoria ampliada.
+
 ## v0.9.0 — Fase 4 — 09/06/2026 12:48
 - Editor musical inteligente, transposição, capo, seções, detecção, histórico e anti-quebra v3.
 
@@ -41,3 +63,19 @@
 - Duplicação, exclusão, filtros e estatísticas.
 - Preparação do repertório ativo para o Modo Live.
 - Camada anti-break v4 e auditoria ampliada.
+
+## v1.1.0 — Fase 6 — 09/06/2026 13:14
+- Modo Live Individual completo com repertório real.
+- Navegação por botões, teclado e gestos.
+- Tela cheia, Wake Lock, bloqueio e modo foco.
+- Fonte ajustável, temas de palco e recuperação de sessão.
+- Anti-break v5 e auditoria da fase.
+
+
+## v1.2.0 — Fase 7 — 09/06/2026 13:17
+- Rolagem automática com 10 velocidades.
+- Pausa e retomada pelo botão central ou barra de espaço.
+- Barra de progresso da cifra.
+- Navegação por seções detectadas automaticamente.
+- Repetição de parte e recuperação da posição de leitura.
+- Anti-break v6 e auditoria específica da Fase 7.

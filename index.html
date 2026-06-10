@@ -20,6 +20,7 @@
           <p>Sua música em qualquer palco.</p>
         </div>
       </div>
+
       <nav class='side-nav'>
         <a class='active' href='index.html'>Início</a>
         <a href='modo-live.html'>Modo Live</a>
@@ -28,204 +29,213 @@
         <a href='minhas-listas.html'>Minhas listas</a>
         <a href='configuracoes.html'>Configurações</a>
       </nav>
-      <div class='promo-card'>
-        <span class='visual-badge'>Fase 2 • experiência AAA</span>
-        <p>A página inicial agora já funciona como um hub real de navegação, acesso rápido, repertórios e visão do fluxo do app.</p>
+
+      <div class='promo-card home-promo-card'>
+        <span class='visual-badge'>Fase 10 • Home Premium AAA</span>
+        <h3>Centro de comando do palco</h3>
+        <p>A entrada do app agora prioriza impacto visual, retomada rápida do repertório e ações imediatas para ensaio, culto e apresentação.</p>
+        <div class='promo-status-list'>
+          <span>Offline first</span>
+          <span>Sem anúncios</span>
+          <span data-build-phase>Fase 10 — Home Premium AAA</span>
+        </div>
       </div>
     </aside>
 
-    <main class='main-content'>
-      <header class='topbar'>
+    <main class='main-content home-page'>
+      <header class='topbar home-topbar'>
         <div class='brand-inline mobile-only'>
           <img class='brand-inline-logo' src='assets/logo/stage-music-logo.svg' alt='Logo Stage Music' />
           <strong>Stage Music</strong>
         </div>
-        <div class='search-shell'>
+        <div class='search-shell home-search-shell'>
           <input data-home-search type='search' placeholder='Buscar músicas, artistas, repertórios ou cifras...' aria-label='Buscar' />
         </div>
-        <button class='icon-btn' aria-label='Conta'>☻</button>
+        <a class='icon-btn home-live-shortcut' href='modo-live.html' aria-label='Abrir modo live'>♫</a>
       </header>
 
-      <section class='hero-card home-hero'>
+      <section class='hero-card home-command-hero'>
         <div class='hero-copy'>
-          <span class='eyebrow'>Fase 2 • experiência AAA • base confiável</span>
-          <h2>Uma home realmente útil para palco, ensaio, ministração e organização musical</h2>
-          <p>O Stage Music agora já apresenta uma página inicial mais estratégica: entrada rápida, listas recentes, atalhos de palco, repertórios e visão clara do que vem nas próximas fases.</p>
+          <span class='eyebrow'>Fase 10 • Home Premium AAA • palco pronto</span>
+          <h2>O centro de comando da sua apresentação ao vivo.</h2>
+          <p>Abra o repertório certo, encontre a cifra em segundos, retome a leitura ao vivo e organize sua banda com uma experiência mais forte, elegante e realmente pensada para palco.</p>
+
           <div class='hero-actions'>
-            <a class='btn btn-primary' href='login-cifra.html'>Abrir editor de cifra</a>
-            <button class='btn btn-secondary' type='button' data-scroll-target='recentes'>Ver repertórios</button>
+            <a class='btn btn-primary' href='modo-live.html'>Continuar no palco</a>
+            <a class='btn btn-outline' href='buscar-cifra.html'>Buscar cifra</a>
+            <a class='btn btn-secondary' href='minhas-listas.html'>Criar repertório</a>
           </div>
+
           <div class='hero-checks'>
-            <span>home com navegação mais prática e mais próxima de produto real</span>
-            <span>setores da interface separados para palco, busca, criação e listas</span>
-            <span>pré-login funcional e editor liberado nesta build</span>
+            <span>Retomada rápida do que o músico mais usa</span>
+            <span>Visual escuro premium com foco em legibilidade</span>
+            <span>Entrada clara para Live, Biblioteca, Editor e Setlists</span>
+          </div>
+
+          <div class='hero-stat-pills'>
+            <article class='hero-pill'>
+              <span>Cifras</span>
+              <strong id='home-stat-songs'>0</strong>
+            </article>
+            <article class='hero-pill'>
+              <span>Repertórios</span>
+              <strong id='home-stat-setlists'>0</strong>
+            </article>
+            <article class='hero-pill'>
+              <span>Favoritas</span>
+              <strong id='home-stat-favorites'>0</strong>
+            </article>
+            <article class='hero-pill'>
+              <span>Prontas</span>
+              <strong id='home-stat-ready'>0%</strong>
+            </article>
           </div>
         </div>
+
         <div class='hero-panel'>
-          <div class='mini-stat mini-brand-card'>
-            <img src='assets/logo/stage-music-logo.svg' alt='Marca Stage Music' />
-            <div>
-              <span>Experiência</span>
-              <strong>Hub inicial mais funcional</strong>
+          <article class='live-session-card'>
+            <div class='live-session-top'>
+              <span class='card-tag live'>Modo Live</span>
+              <span class='live-session-status'>Ao vivo sem distrações</span>
             </div>
-          </div>
-          <div class='mini-stat'><span>Build</span><strong data-build-version>v0.7.0</strong></div>
-          <div class='mini-stat'><span>Status</span><strong data-build-phase>Fase 2 — Redesign AAA e Design System</strong></div>
-          <div class='mini-stat'><span>Próxima meta</span><strong>Salvamento local do editor</strong></div>
+            <div class='live-session-title'>
+              <small>Retomar agora</small>
+              <strong id='hero-live-name'>Nenhum repertório ativo</strong>
+              <p id='hero-live-meta'>Crie um repertório para começar sua rotina de palco.</p>
+            </div>
+            <div class='live-session-grid'>
+              <div>
+                <span>Próxima ação</span>
+                <strong id='hero-next-action'>Montar repertório</strong>
+              </div>
+              <div>
+                <span>Biblioteca</span>
+                <strong id='hero-library-size'>0 cifras</strong>
+              </div>
+              <div>
+                <span>Última atividade</span>
+                <strong id='hero-last-activity'>Sem dados</strong>
+              </div>
+              <div>
+                <span>Resiliência</span>
+                <strong>Anti-break + offline</strong>
+              </div>
+            </div>
+            <div class='hero-panel-actions'>
+              <a class='btn btn-primary wide' href='modo-live.html'>Abrir Modo Live</a>
+              <a class='btn btn-outline wide' href='minhas-listas.html'>Abrir repertórios</a>
+            </div>
+          </article>
+
+          <article class='mini-status-board'>
+            <div class='mini-stat stat-board-item'>
+              <span>Build</span>
+              <strong data-build-version>v1.5.0</strong>
+            </div>
+            <div class='mini-stat stat-board-item'>
+              <span>Status</span>
+              <strong data-build-phase>Fase 10 — Home Premium AAA</strong>
+            </div>
+            <div class='mini-stat stat-board-item'>
+              <span>Diferencial</span>
+              <strong>Leitura ao vivo + setlists + foco em palco</strong>
+            </div>
+          </article>
         </div>
       </section>
 
-      <section class='grid-cards'>
-        <a class='feature-card live' href='modo-live.html'>
-          <span class='card-tag'>Ao vivo</span>
+      <section class='grid-cards home-entry-grid'>
+        <a class='feature-card live feature-card-premium' href='modo-live.html'>
+          <span class='card-tag'>Performance</span>
           <h3>Modo Live</h3>
-          <p>Acesso rápido ao modo leitura para palco com foco em clareza e fluidez.</p>
+          <p>Leitura limpa, seções, rolagem automática, ferramentas musicais e perfil por instrumento.</p>
+          <strong class='feature-cta'>Abrir agora →</strong>
         </a>
-        <a class='feature-card search' href='buscar-cifra.html'>
-          <span class='card-tag'>Catálogo</span>
+        <a class='feature-card search feature-card-premium' href='buscar-cifra.html'>
+          <span class='card-tag'>Biblioteca</span>
           <h3>Buscar cifra</h3>
-          <p>Encontre repertórios, cifras oficiais, rascunhos e bases salvas no futuro.</p>
+          <p>Encontre cifras locais, favoritas, recentes e filtre por artista, tom, tag ou trecho.</p>
+          <strong class='feature-cta'>Explorar acervo →</strong>
         </a>
-        <a class='feature-card insert' href='login-cifra.html'>
+        <a class='feature-card insert feature-card-premium' href='login-cifra.html'>
           <span class='card-tag'>Criação</span>
-          <h3>Inserir cifra</h3>
-          <p>Fluxo local ou online já libera o editor e prepara a sincronização futura.</p>
+          <h3>Editor musical</h3>
+          <p>Escreva, formate, transpõe, aplique capo e monte sua cifra com foco no uso real.</p>
+          <strong class='feature-cta'>Criar nova cifra →</strong>
         </a>
-        <a class='feature-card lists' href='minhas-listas.html'>
-          <span class='card-tag'>Setlists</span>
-          <h3>Minhas listas</h3>
-          <p>Repertórios de culto, show, ministração e ensaio organizados por contexto.</p>
+        <a class='feature-card lists feature-card-premium' href='minhas-listas.html'>
+          <span class='card-tag'>Organização</span>
+          <h3>Repertórios</h3>
+          <p>Monte setlists por evento, controle tonalidade, duração e o estado de ensaio de cada música.</p>
+          <strong class='feature-cta'>Organizar setlist →</strong>
         </a>
       </section>
 
-      <section class='visual-section'>
-        <article class='highlight-card'>
-          <span class='visual-badge'>Acesso rápido</span>
-          <h3>Entradas imediatas para o que mais importa no dia a dia do músico</h3>
-          <div class='quick-actions'>
-            <a class='quick-action' href='modo-live.html'>
-              <strong>Começar no palco</strong>
-              <span>Abrir visual ao vivo e leitura de cifra</span>
-            </a>
-            <a class='quick-action' href='login-cifra.html'>
-              <strong>Abrir editor</strong>
-              <span>Entrar no fluxo de criação ou edição</span>
-            </a>
-            <a class='quick-action' href='minhas-listas.html'>
-              <strong>Montar setlist</strong>
-              <span>Organizar repertório para evento</span>
-            </a>
-            <a class='quick-action' href='configuracoes.html'>
-              <strong>Ajustar leitura</strong>
-              <span>Fonte, contraste, rolagem e preferências</span>
-            </a>
-          </div>
-        </article>
-        <article class='splash-card'>
-          <span class='visual-badge'>Sugestões rápidas</span>
-          <div class='chips-row'>
-            <button class='chip-btn' type='button' data-fill-search='Grandes sucessos'>Grandes sucessos</button>
-            <button class='chip-btn' type='button' data-fill-search='Louvor e adoração'>Louvor e adoração</button>
-            <button class='chip-btn' type='button' data-fill-search='Acústico'>Acústico</button>
-            <button class='chip-btn' type='button' data-fill-search='Ministração'>Ministração</button>
-            <button class='chip-btn' type='button' data-fill-search='Rock worship'>Rock worship</button>
-          </div>
-          <p class='section-subtitle'>Esses chips já simulam a futura experiência de busca rápida diretamente da home.</p>
-          <img src='assets/illustrations/home-reference.png' alt='Referência visual do app Stage Music' />
-        </article>
-      </section>
+      <section class='dashboard-grid home-dashboard-grid'>
+        <div class='dashboard-stack'>
+          <article class='section-card'>
+            <div class='section-head'>
+              <div>
+                <span class='visual-badge'>Retomar agora</span>
+                <h3>Cifras recentes</h3>
+              </div>
+              <a class='mini-link' href='buscar-cifra.html'>Ir para biblioteca</a>
+            </div>
+            <div class='song-list premium-list' id='home-recent-songs'>
+              <div class='song-row empty-home-row'>
+                <div class='song-meta'>
+                  <strong>Sua biblioteca ainda está vazia</strong>
+                  <small>Crie ou importe sua primeira cifra para ver atalhos rápidos aqui.</small>
+                </div>
+                <div class='song-actions'>
+                  <a class='soft-btn' href='login-cifra.html'>Criar cifra</a>
+                </div>
+              </div>
+            </div>
+          </article>
 
-      <section class='dashboard-grid'>
+          <article class='section-card'>
+            <div class='section-head'>
+              <div>
+                <span class='visual-badge'>Ações rápidas</span>
+                <h3>Seu fluxo em um toque</h3>
+              </div>
+            </div>
+            <div class='quick-actions premium-quick-actions'>
+              <a class='quick-action' href='modo-live.html'>
+                <strong>Continuar ao vivo</strong>
+                <span>Volte direto ao modo leitura de palco.</span>
+              </a>
+              <a class='quick-action' href='buscar-cifra.html'>
+                <strong>Pesquisar música</strong>
+                <span>Busque por artista, tom, tag ou trecho.</span>
+              </a>
+              <a class='quick-action' href='minhas-listas.html'>
+                <strong>Preparar setlist</strong>
+                <span>Monte repertórios por culto, show ou ensaio.</span>
+              </a>
+              <a class='quick-action' href='configuracoes.html'>
+                <strong>Ajustar leitura</strong>
+                <span>Fonte, contraste, rolagem e preferências.</span>
+              </a>
+            </div>
+          </article>
+        </div>
+
         <div class='dashboard-stack'>
           <article class='section-card' id='recentes'>
             <div class='section-head'>
               <div>
-                <span class='visual-badge'>Recentes</span>
-                <h3>Cifras e repertórios mais acessados</h3>
-              </div>
-              <a class='mini-link' href='buscar-cifra.html'>Ir para busca</a>
-            </div>
-            <div class='song-list'>
-              <div class='song-row'>
-                <div class='song-meta'>
-                  <strong>Milagre da Colheita</strong>
-                  <small>Ariane Mazur • Tom G • Worship Rock</small>
-                </div>
-                <div class='song-actions'>
-                  <button class='soft-btn' type='button'>Live</button>
-                  <button class='soft-btn' type='button'>Lista</button>
-                </div>
-              </div>
-              <div class='song-row'>
-                <div class='song-meta'>
-                  <strong>Não Desista</strong>
-                  <small>Ariane Mazur • Tom A • Worship</small>
-                </div>
-                <div class='song-actions'>
-                  <button class='soft-btn' type='button'>Live</button>
-                  <button class='soft-btn' type='button'>Editar</button>
-                </div>
-              </div>
-              <div class='song-row'>
-                <div class='song-meta'>
-                  <strong>Nunca Vi Amor Assim</strong>
-                  <small>Stage Music Demo • Tom D • Rock Soul</small>
-                </div>
-                <div class='song-actions'>
-                  <button class='soft-btn' type='button'>Prévia</button>
-                  <button class='soft-btn' type='button'>Lista</button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class='section-card'>
-            <div class='section-head'>
-              <div>
-                <span class='visual-badge'>Minhas listas</span>
-                <h3>Modelos de repertório prontos</h3>
+                <span class='visual-badge'>Repertórios</span>
+                <h3>Listas recentes</h3>
               </div>
               <a class='mini-link' href='minhas-listas.html'>Abrir listas</a>
             </div>
-            <div class='list-grid'>
-              <div class='list-card'>
-                <strong>Culto da noite</strong>
-                <small>5 músicas • abertura, ministração e encerramento</small>
-                <div class='list-badges'><span>Louvor</span><span>Palco</span><span>Ordem pronta</span></div>
-              </div>
-              <div class='list-card'>
-                <strong>Show acústico</strong>
-                <small>8 músicas • fluxo intimista e leitura rápida</small>
-                <div class='list-badges'><span>Acústico</span><span>Eventos</span></div>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <div class='dashboard-stack'>
-          <article class='section-card'>
-            <div class='section-head'>
-              <div>
-                <span class='visual-badge'>Fluxo do músico</span>
-                <h3>Como a experiência vai funcionar</h3>
-              </div>
-            </div>
-            <div class='stage-flow'>
-              <div class='stage-step'>
-                <strong>Entrar online ou local</strong>
-                <small>Escolha usar o dispositivo rapidamente ou sincronizar sua conta.</small>
-              </div>
-              <div class='stage-step'>
-                <strong>Criar ou buscar cifra</strong>
-                <small>Base local e online vão trabalhar juntas para acelerar o uso.</small>
-              </div>
-              <div class='stage-step'>
-                <strong>Montar listas</strong>
-                <small>Organize repertório por culto, show, ensaio ou apresentação.</small>
-              </div>
-              <div class='stage-step'>
-                <strong>Abrir modo live</strong>
-                <small>Leitura final limpa, prática e pensada para execução ao vivo.</small>
+            <div class='list-grid premium-list-grid' id='home-setlists'>
+              <div class='list-card empty-home-card'>
+                <strong>Nenhum repertório criado</strong>
+                <small>Monte seu primeiro setlist para culto, show, ministração ou ensaio.</small>
+                <div class='list-badges'><span>Começar</span><span>Organização</span></div>
               </div>
             </div>
           </article>
@@ -233,40 +243,90 @@
           <article class='section-card'>
             <div class='section-head'>
               <div>
-                <span class='visual-badge'>Roadmap próximo</span>
-                <h3>O que entra na próxima build</h3>
+                <span class='visual-badge'>Diferenciais</span>
+                <h3>O que torna o Stage Music especial</h3>
               </div>
             </div>
-            <div class='update-grid'>
-              <div class='update-card'>
-                <strong>Login real com Firebase</strong>
-                <small>Pré-página passa a ter fluxo funcional com sessão do usuário.</small>
+            <div class='benefit-cards'>
+              <div class='benefit-card'>
+                <strong>Foco em palco</strong>
+                <small>Não é só catálogo de cifras. É leitura pronta para execução ao vivo.</small>
               </div>
-              <div class='update-card'>
-                <strong>Persistência inicial</strong>
-                <small>Base pronta para salvar preferências e preparar os dados locais.</small>
+              <div class='benefit-card'>
+                <strong>Offline first</strong>
+                <small>Biblioteca, repertórios e preferências permanecem disponíveis sem internet.</small>
               </div>
-              <div class='update-card'>
-                <strong>Transição para editor</strong>
-                <small>O acesso de Inserir Cifra passa a apontar para um fluxo mais real de criação.</small>
+              <div class='benefit-card'>
+                <strong>Sem anúncios</strong>
+                <small>Experiência limpa, sem interrupção visual no palco ou durante o ensaio.</small>
               </div>
             </div>
           </article>
         </div>
       </section>
 
-      <section class='roadmap-strip'>
+      <section class='visual-section home-visual-section'>
+        <article class='highlight-card home-highlight-card'>
+          <span class='visual-badge'>Fluxo ideal do músico</span>
+          <h3>Da preparação até o palco, sem perder tempo.</h3>
+          <div class='stage-flow'>
+            <div class='stage-step'>
+              <strong>1. Buscar ou criar cifra</strong>
+              <small>Encontre rápido na biblioteca ou escreva no editor musical.</small>
+            </div>
+            <div class='stage-step'>
+              <strong>2. Ajustar tom e estrutura</strong>
+              <small>Transponha, organize seções, defina capo e notas por instrumento.</small>
+            </div>
+            <div class='stage-step'>
+              <strong>3. Montar o repertório</strong>
+              <small>Ordene as músicas, defina duração e marque o que já está pronto.</small>
+            </div>
+            <div class='stage-step'>
+              <strong>4. Abrir o Live</strong>
+              <small>Leitura com contraste, seções, rolagem, metrônomo e retomada rápida.</small>
+            </div>
+          </div>
+        </article>
+
+        <article class='splash-card home-splash-card'>
+          <span class='visual-badge'>Atalhos inteligentes</span>
+          <div class='chips-row'>
+            <button class='chip-btn' type='button' data-fill-search='Louvor e adoração'>Louvor e adoração</button>
+            <button class='chip-btn' type='button' data-fill-search='Acústico'>Acústico</button>
+            <button class='chip-btn' type='button' data-fill-search='Ministração'>Ministração</button>
+            <button class='chip-btn' type='button' data-fill-search='Rock worship'>Rock worship</button>
+            <button class='chip-btn' type='button' data-fill-search='Show ao vivo'>Show ao vivo</button>
+          </div>
+          <div class='spotlight-panel'>
+            <div class='spotlight-line'>
+              <strong>Visual premium</strong>
+              <span>Mais contraste, mais profundidade e melhor hierarquia de informação.</span>
+            </div>
+            <div class='spotlight-line'>
+              <strong>Porta de entrada melhor</strong>
+              <span>Agora a Home comunica o produto, seus diferenciais e sua utilidade real.</span>
+            </div>
+            <div class='spotlight-line'>
+              <strong>Próxima etapa</strong>
+              <span>Conta, nuvem e sincronização usando recursos gratuitos do Firebase.</span>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class='roadmap-strip home-roadmap-strip'>
         <article>
           <strong>Agora</strong>
-          <p>Home mais madura, com entradas rápidas, repertórios de exemplo e visão do produto.</p>
+          <p>Home premium, entrada estratégica e identidade visual mais forte e coerente.</p>
         </article>
         <article>
           <strong>Próximo</strong>
-          <p>Login funcional com Firebase Auth e primeira lógica real de sessão do usuário.</p>
+          <p>Conta, nuvem e sincronização com Firebase gratuito, sem perder o modo offline local.</p>
         </article>
         <article>
           <strong>Depois</strong>
-          <p>Editor local com base de cifra, preview e início do salvamento híbrido.</p>
+          <p>Sala Live sincronizada e colaboração entre músicos com foco em apresentações reais.</p>
         </article>
       </section>
     </main>
@@ -281,11 +341,13 @@
   </nav>
 
   <footer class='app-footer'>
-    <span id="build-info" data-build-info>Carregando informações da build…</span>
+    <span id='build-info' data-build-info>Carregando informações da build…</span>
   </footer>
 
   <script src='js/build-info.js'></script>
   <script src='js/resilience.js'></script>
+  <script src='js/local-db.js'></script>
   <script src='js/app.js'></script>
+  <script src='js/home-dashboard.js'></script>
 </body>
 </html>

@@ -1,49 +1,13 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stage Music • Modo Live</title>
-  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
-  <link rel="stylesheet" href="css/global.css" />
-  <link rel="stylesheet" href="css/live.css" />
-</head>
-<body data-page="modo-live">
-  <main class="page-shell">
-    <header class="page-header">
-      <a href="index.html" class="back-link">← Início</a>
-      <span class="visual-badge">Leitura ao vivo</span>
-      <h1>Modo Live</h1>
-      <p>Base visual da leitura ao vivo com estética refinada para palco. Fases futuras integrarão cifras reais, auto rolagem, transposição e setlists.</p>
-    </header>
-
-    <section class="two-column">
-      <section class="live-stage-card">
-        <div class="live-topbar">
-          <span class="live-chip">Modo Live</span>
-          <span class="live-chip soft">Tom G</span>
-          <span class="live-chip soft">72 BPM</span>
-        </div>
-        <div class="lyrics-preview">
-          <p class="chords">G &nbsp;&nbsp;&nbsp; C &nbsp;&nbsp;&nbsp; G &nbsp;&nbsp;&nbsp; D</p>
-          <p>Tu és Santo, Tu és digno de louvor</p>
-          <p class="chords">D &nbsp;&nbsp;&nbsp; Em &nbsp;&nbsp;&nbsp; C</p>
-          <p>Tu és forte, Tu és grande, Tu és o Senhor</p>
-        </div>
-        <div class="live-controls">
-          <button class="btn btn-secondary">Fonte</button>
-          <button class="btn btn-secondary">Rolagem</button>
-          <button class="btn btn-primary">Tocar lista</button>
-        </div>
-      </section>
-      <article class="mockup-card">
-        <img src="assets/illustrations/live-reference.png" alt="Referência visual do modo live" />
-      </article>
-    </section>
-  </main>
-  <footer class="app-footer"><span id="build-info" data-build-info>Carregando informações da build…</span></footer>
-  <script src="js/build-info.js"></script>
-  <script src="js/resilience.js"></script>
-  <script src="js/app.js"></script>
-</body>
-</html>
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070b"><title>Stage Music • Modo Live</title><link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg"><link rel="stylesheet" href="css/global.css"><link rel="stylesheet" href="css/live.css"></head>
+<body data-page="modo-live" class="live-body"><main class="live-app" id="live-app">
+<header class="live-header" id="live-header"><div class="live-brand"><a href="minhas-listas.html" class="live-exit" aria-label="Sair">←</a><div><span class="eyebrow">MODO AO VIVO</span><strong id="live-setlist-name">Repertório</strong></div></div><div class="live-status"><span id="live-position">0 / 0</span><span id="live-clock">--:--</span><span id="live-online" class="status-dot">offline</span></div><button class="live-icon-btn" id="live-lock-btn" title="Bloquear controles">🔓</button></header>
+<section class="live-song-head" id="live-song-head"><div><p id="live-artist">Sem artista</p><h1 id="live-title">Nenhum repertório ativo</h1></div><div class="live-meta"><span>Tom <b id="live-key">—</b></span><span><b id="live-bpm">—</b> BPM</span><span id="live-capo-wrap">Capo <b id="live-capo">0</b></span></div></section>
+<section class="live-progress-wrap" aria-label="Progresso da cifra"><div class="live-progress"><span id="live-progress-bar"></span></div><span id="live-progress-label">0%</span></section>
+<section class="live-section-strip" id="live-section-strip" aria-label="Seções da música"><button id="section-prev">← Parte</button><div id="section-buttons" class="section-buttons"><span>Sem seções</span></div><button id="section-next">Parte →</button></section>
+<section id="instrument-note-banner" class="instrument-note-banner" hidden><span id="instrument-note-icon">🎼</span><div><small id="instrument-note-profile">PERFIL</small><strong id="instrument-note-text"></strong></div></section><section class="live-reader" id="live-reader" tabindex="0" aria-live="polite"><div id="live-empty" class="live-empty"><strong>Nenhuma apresentação ativa</strong><p>Abra “Meus repertórios”, selecione uma lista com músicas e toque em “Iniciar Live”.</p><a class="btn btn-primary" href="minhas-listas.html">Abrir repertórios</a></div><pre id="live-content" class="live-content" hidden></pre></section>
+<aside class="live-next" id="live-next"><span>PRÓXIMA</span><strong id="live-next-title">Fim do repertório</strong></aside>
+<nav class="live-controls" id="live-controls"><button class="live-control" id="live-prev-btn"><span>←</span><small>Anterior</small></button><button class="live-control" id="live-font-down"><span>A−</span><small>Fonte</small></button><button class="live-control primary" id="live-scroll-toggle"><span id="scroll-icon">▶</span><small id="scroll-label">Rolar</small></button><button class="live-control" id="live-font-up"><span>A+</span><small>Fonte</small></button><button class="live-control" id="live-next-btn"><span>→</span><small>Próxima</small></button></nav>
+<section class="live-scroll-tools" id="live-scroll-tools"><button id="scroll-slower">−</button><span>Velocidade <b id="scroll-speed-label">3</b></span><input id="scroll-speed" type="range" min="1" max="10" step="1" value="3" aria-label="Velocidade da rolagem"><button id="scroll-faster">+</button><button id="section-repeat" aria-pressed="false">Repetir parte</button><button id="live-fullscreen">Tela cheia</button></section>
+<section class="live-tools" id="live-tools"><button data-theme="stage">Palco</button><button data-theme="paper">Claro</button><button data-theme="amber">Âmbar</button><button id="live-focus-btn">Foco</button><button id="live-wake-btn">Tela ativa</button><button id="instrument-profile-open">Instrumento</button><button id="music-tools-open">Ferramentas</button><button id="live-reset-btn">Reiniciar</button></section>
+<dialog id="instrument-profile-dialog" class="instrument-profile-dialog"><form method="dialog" class="instrument-profile-card"><header><div><span class="eyebrow">PERFIL DO MÚSICO</span><h2>Visualização por instrumento</h2></div><button class="tool-close" value="cancel" aria-label="Fechar">×</button></header><div class="instrument-grid" id="instrument-grid"></div><section class="instrument-editor"><div class="instrument-summary"><span id="instrument-icon">🎼</span><div><small>PERFIL ATIVO</small><strong id="instrument-name">Direção musical</strong><p id="instrument-help">Orientações gerais da execução.</p></div></div><label>Nota privada para esta música<textarea id="instrument-note" maxlength="600" rows="5" placeholder="Ex.: entrar somente no segundo refrão, timbre pad suave, virada no compasso 4..."></textarea></label><div class="instrument-quick" id="instrument-quick"></div><label class="instrument-toggle"><input id="instrument-note-visible" type="checkbox" checked> Mostrar lembrete acima da cifra no Modo Live</label></section><footer><span>Notas separadas por música e instrumento • salvas offline</span><button type="button" id="instrument-save">Salvar perfil</button></footer></form></dialog><dialog id="music-tools-dialog" class="music-tools-dialog"><form method="dialog" class="music-tools-card"><header><div><span class="eyebrow">KIT MUSICAL</span><h2>Ferramentas ao vivo</h2></div><button class="tool-close" value="cancel" aria-label="Fechar">×</button></header><div class="tool-grid"><section class="tool-box"><h3>Metrônomo</h3><div class="tempo-display"><strong id="tool-bpm">120</strong><span>BPM</span></div><input id="tool-bpm-range" type="range" min="40" max="240" value="120"><div class="tool-actions"><button type="button" id="metronome-toggle">▶ Iniciar</button><button type="button" id="tap-tempo">Tap Tempo</button><button type="button" id="count-in">Contar 4</button></div><div id="beat-lights" class="beat-lights"><i></i><i></i><i></i><i></i></div></section><section class="tool-box"><h3>Gerador de tom</h3><div class="tone-row"><select id="tone-note" aria-label="Nota"><option>C</option><option>C#</option><option>D</option><option>D#</option><option>E</option><option>F</option><option>F#</option><option>G</option><option>G#</option><option>A</option><option>A#</option><option>B</option></select><select id="tone-octave" aria-label="Oitava"><option>3</option><option selected>4</option><option>5</option></select><button type="button" id="tone-toggle">Ouvir tom</button></div><p id="tone-frequency">C4 • 261,63 Hz</p></section><section class="tool-box"><h3>Capo inteligente</h3><p>Tom atual: <b id="capo-current-key">—</b></p><label>Forma desejada<select id="capo-shape"><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>A</option><option>B</option></select></label><div id="capo-result" class="tool-result">Escolha uma forma para calcular.</div></section><section class="tool-box"><h3>Visualização harmônica</h3><div class="tool-actions"><button type="button" id="harmonic-toggle">Mostrar graus</button></div><div id="harmonic-summary" class="tool-result">Os acordes serão convertidos em graus relativos ao tom da música.</div></section></div><footer><span>Áudio gerado localmente • funciona offline</span><button value="cancel">Concluir</button></footer></form></dialog><footer class="live-footer"><span data-build-info>Carregando build…</span><span id="live-saved">Sessão protegida</span></footer></main><div id="stage-toast" class="stage-toast" role="status"></div>
+<script src="js/build-info.js"></script><script src="js/resilience.js"></script><script src="js/local-db.js"></script><script src="js/live-mode.js"></script><script src="js/instrument-profiles.js"></script><script src="js/music-tools.js"></script><script src="js/app.js"></script></body></html>
