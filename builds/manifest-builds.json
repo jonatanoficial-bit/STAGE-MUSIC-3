@@ -1,20 +1,35 @@
 {
   "current": {
     "app": "Stage Music",
-    "version": "v2.5.0",
-    "versionNumber": "2.5.0",
-    "phase": 20,
-    "phaseLabel": "Fase 20",
-    "phaseName": "Auditoria Mobile e Tablet",
+    "version": "v2.6.0",
+    "versionNumber": "2.6.0",
+    "phase": 21,
+    "phaseLabel": "Fase 21",
+    "phaseName": "Onboarding, login prioritário e Live imersivo",
     "date": "10/06/2026",
     "isoDate": "2026-06-10",
-    "time": "22:02",
-    "stamp": "20260610-2202",
+    "time": "19:32",
+    "stamp": "20260610-1932",
     "environment": "production",
     "costStrategy": "firebase-spark-free-first",
-    "resilience": "anti-break-v22"
+    "resilience": "anti-break-v23"
   },
   "builds": [
+    {
+      "app": "Stage Music",
+      "version": "v2.6.0",
+      "versionNumber": "2.6.0",
+      "phase": 21,
+      "phaseLabel": "Fase 21",
+      "phaseName": "Onboarding, login prioritário e Live imersivo",
+      "date": "10/06/2026",
+      "isoDate": "2026-06-10",
+      "time": "19:32",
+      "stamp": "20260610-1932",
+      "environment": "production",
+      "costStrategy": "firebase-spark-free-first",
+      "resilience": "anti-break-v23"
+    },
     {
       "app": "Stage Music",
       "version": "v2.5.0",
@@ -224,21 +239,6 @@
       "environment": "production",
       "costStrategy": "free-first",
       "resilience": "anti-break-v9"
-    },
-    {
-      "app": "Stage Music",
-      "version": "v1.4.0",
-      "versionNumber": "1.4.0",
-      "phase": 9,
-      "phaseLabel": "Fase 9",
-      "phaseName": "Perfis por Instrumento",
-      "date": "09/06/2026",
-      "isoDate": "2026-06-09",
-      "time": "13:56",
-      "stamp": "20260609-1356",
-      "environment": "production",
-      "costStrategy": "free-first",
-      "resilience": "anti-break-v8"
     }
   ]
 }

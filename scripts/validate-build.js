@@ -40,5 +40,13 @@ if(info.phase>=20){
   for(const file of htmls){const html=fs.readFileSync(path.join(root,file),'utf8');for(const token of ['viewport-fit=cover','css/mobile-audit.css','js/mobile-audit.js'])if(!html.includes(token))errors.push(`Fase 20 ${file}: ausente ${token}`)}
   const mobileCss=fs.readFileSync(path.join(root,'css/mobile-audit.css'),'utf8');for(const token of ['mobile-audit-nav','editor-actions','setlist-song-row','env(safe-area-inset-bottom)'])if(!mobileCss.includes(token))errors.push('Fase 20 CSS incompleto: '+token);
 }
+
+if(info.phase>=21){
+  for(const required of ['js/home-auth-sync.js','docs/AUDITORIA-FASE-21.md','docs/TESTES-FASE-21.md'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 21 arquivo ausente: '+required);
+  const home=fs.readFileSync(path.join(root,'index.html'),'utf8');for(const token of ['home-auth-gateway','home-login-primary','home-sync-now','js/home-auth-sync.js'])if(!home.includes(token))errors.push('Fase 21 Home incompleta: '+token);
+  const livePage=fs.readFileSync(path.join(root,'modo-live.html'),'utf8');for(const token of ['live-ui-toggle','js/live-mode.js'])if(!livePage.includes(token))errors.push('Fase 21 Live incompleto: '+token);
+  const liveJs=fs.readFileSync(path.join(root,'js/live-mode.js'),'utf8');for(const token of ['live-immersive','immersive','Mostrar controles','Ocultar controles'])if(!liveJs.includes(token))errors.push('Fase 21 Live JS incompleto: '+token);
+  const mobile=fs.readFileSync(path.join(root,'js/mobile-audit.js'),'utf8');if(!mobile.includes('login-priority'))errors.push('Fase 21 menu mobile sem login prioritário.');
+}
 if(errors.length){console.error('AUDITORIA REPROVADA\n'+errors.join('\n'));process.exit(1)}console.log(`AUDITORIA APROVADA — ${info.app} ${info.version} | ${htmls.length} páginas | ${info.date} ${info.time}`);if(warnings.length)console.warn(warnings.join('\n'));
 
