@@ -42,3 +42,119 @@
 .smart-assistant-card{margin:18px 0;padding:18px;border:1px solid rgba(118,217,255,.22);border-radius:20px;background:linear-gradient(145deg,rgba(32,48,78,.72),rgba(10,15,27,.88));box-shadow:inset 0 1px rgba(255,255,255,.04)}
 .smart-assistant-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}.smart-assistant-head h3{margin:10px 0 6px;font-size:1.3rem}.smart-assistant-head p{margin:0;color:var(--muted)}.smart-action-row{display:flex;flex-wrap:wrap;gap:9px;margin:16px 0}.smart-inline-status{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}.smart-inline-status span{padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.06);color:#cbd5ea;font-size:.8rem}.smart-analysis-results{padding:16px;border:1px solid rgba(255,255,255,.08);border-radius:17px;background:rgba(5,8,15,.48)}.smart-analysis-results>p{margin:0;color:var(--muted)}.smart-summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.smart-summary-grid article{padding:13px;border-radius:14px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.06)}.smart-summary-grid span{display:block;font-size:.76rem;color:var(--muted);margin-bottom:5px}.smart-summary-grid strong{display:block;font-size:1.08rem}.smart-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.smart-detail-grid section{padding:14px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.055)}.smart-detail-grid h4{margin:0 0 10px}.smart-detail-grid ul{margin:0;padding-left:18px;color:#cbd5ea}.smart-detail-grid li+li{margin-top:6px}.smart-wide{grid-column:1/-1}.smart-chips{display:flex;flex-wrap:wrap;gap:7px}.smart-chips span{padding:7px 9px;border-radius:999px;background:rgba(127,92,255,.15);color:#d8ceff;font-size:.78rem}
 @media(max-width:760px){.smart-assistant-head{flex-direction:column}.smart-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.smart-detail-grid{grid-template-columns:1fr}.smart-wide{grid-column:auto}.smart-action-row .btn{flex:1 1 45%}}
+
+/* v2.3.2 — HOTFIX DE LEGIBILIDADE DO EDITOR
+   Apenas contraste visual. Não altera lógica, Firebase ou persistência. */
+.editor-card,
+.editor-side-card {
+  background: linear-gradient(145deg, rgba(22,29,50,.96), rgba(11,16,29,.96));
+  border-color: rgba(255,255,255,.14);
+}
+
+.editor-card label > span,
+.editor-area-label > span,
+.editor-grid label > span,
+.toolbox-row label > span {
+  color: #f4f6ff;
+  font-weight: 750;
+}
+
+.editor-card input,
+.editor-card select,
+.editor-card textarea {
+  background: #090e1b;
+  color: #f8f9ff;
+  border-color: rgba(255,255,255,.18);
+  caret-color: #7fdcff;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.025);
+}
+
+.editor-card input::placeholder,
+.editor-card textarea::placeholder {
+  color: #7783a4;
+  opacity: 1;
+}
+
+.editor-card input:focus,
+.editor-card select:focus,
+.editor-card textarea:focus {
+  border-color: #5acfff;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(68,199,255,.16), inset 0 1px 0 rgba(255,255,255,.03);
+}
+
+.editor-card select option {
+  background: #0b1120;
+  color: #f8f9ff;
+}
+
+.editor-status {
+  background: rgba(139,108,255,.17);
+  color: #dcd4ff;
+  border: 1px solid rgba(139,108,255,.28);
+}
+
+.editor-stat-card,
+.session-card,
+.library-item,
+.library-empty,
+.preview-block {
+  background: rgba(7,11,21,.82);
+  border-color: rgba(255,255,255,.12);
+  color: #f5f7ff;
+}
+
+.editor-stat-card strong,
+.session-card strong,
+.library-item strong,
+.library-empty strong,
+.preview-block pre {
+  color: #f8f9ff;
+}
+
+.editor-stat-card small,
+.session-card small,
+.library-item small,
+.library-empty small {
+  color: #aeb8d2;
+}
+
+.preview-block {
+  min-height: 320px;
+}
+
+.preview-block pre,
+#song-preview {
+  color: #f4f7ff !important;
+  background: transparent;
+  text-shadow: none;
+}
+
+#song-content {
+  color: #f8f9ff;
+  background: #070c17;
+  line-height: 1.72;
+}
+
+.music-toolbox,
+.smart-assistant-card,
+.smart-analysis-results {
+  color: #f5f7ff;
+}
+
+.editor-actions {
+  padding-top: 4px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.editor-actions .btn-primary {
+  box-shadow: 0 14px 34px rgba(139,108,255,.28);
+}
+
+@media (max-width: 640px) {
+  .editor-card input,
+  .editor-card select,
+  .editor-card textarea {
+    font-size: 16px;
+  }
+}

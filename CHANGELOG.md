@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v2.3.2 — Fase 18.2 — 10/06/2026 18:06
+- Corrigido contraste de inputs, selects, textarea, cards e prévia do editor.
+- Texto digitado e placeholders agora ficam legíveis no tema escuro.
+- Nenhuma lógica do Firebase, autenticação, Firestore ou sincronização foi alterada.
+- Configuração do projeto stage-music-96cc1 preservada integralmente.
+- Anti-break v19 e auditoria de regressão.
+
 ## v2.3.1 — Fase 18.1 — 10/06/2026 17:21
 - Hotfix do Firebase: caminhos privados agora usam o UID real do Firebase Authentication.
 - Removido o identificador derivado do e-mail em `cloud-sync.js`.
