@@ -1,53 +1,142 @@
 (function(){
 'use strict';
-const ROOMS_KEY='stage_music_live_rooms_v1',CURRENT_KEY='stage_music_current_room',SETLIST_KEY='stage_music_setlists_v1',TEAMS_KEY='stage_music_teams_v1',ACTIVE='stage_music_active_setlist';
-const $=id=>document.getElementById(id),now=()=>new Date().toISOString();
+const ROOMS_KEY='stage_music_live_rooms_v1',CURRENT_KEY='stage_music_current_room',SETLIST_KEY='stage_music_setlists_v1',TEAMS_KEY='stage_music_teams_v1',ACTIVE='stage_music_active_setlist',PROFILE_KEY='stage_music_live_profile';
+const $=id=>document.getElementById(id),now=()=>new Date().toISOString(),sharing=window.StageMusicLiveSharing;
 const safeParse=(v,f)=>{try{return JSON.parse(v)??f}catch{return f}};
 const read=(k,f)=>window.StageMusicSafeStorage?.get?.(k,f)??safeParse(localStorage.getItem(k),f);
 const write=(k,v)=>window.StageMusicSafeStorage?.set?.(k,v)??(localStorage.setItem(k,JSON.stringify(v)),true);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-const code=()=>`LIVE-${Math.random().toString(36).slice(2,6).toUpperCase()}`;
-const memberId=()=>`member_${Date.now()}_${Math.random().toString(36).slice(2,6)}`;
+const normalizeCode=value=>sharing?.normalizeCode?.(value)||String(value||'').trim().toUpperCase();
+const generateCode=()=>sharing?.generateCode?.()||`LIVE-${Math.random().toString(36).slice(2,6).toUpperCase()}`;
 const channel='BroadcastChannel'in window?new BroadcastChannel('stage-music-live-room'):null;
-let rooms=read(ROOMS_KEY,{}),current=read(CURRENT_KEY,null),heartbeat=null,remoteUnsubscribe=null,remoteApplying=false;
-const toast=t=>{const e=$('room-toast');if(!e)return;e.textContent=t;e.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('show'),2200)};
-const saveRooms=()=>{write(ROOMS_KEY,rooms);channel?.postMessage({type:'rooms-updated',at:now()});render();const r=room();if(r&&!remoteApplying&&window.StageMusicFirebaseLive?.isReady?.()&&window.StageMusicAuth?.getState?.().mode==='online'){window.StageMusicFirebaseLive.putRoom(r).catch(error=>console.warn('Sala Live online:',error?.message||error))}};
+let rooms=read(ROOMS_KEY,{}),current=read(CURRENT_KEY,null),heartbeat=null,remoteUnsubscribe=null,remoteApplying=false,lastQrCode='';
+const toast=t=>{const e=$('room-toast');if(!e)return;e.textContent=t;e.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('show'),2600)};
 const getSetlists=()=>{const x=read(SETLIST_KEY,[]);return Array.isArray(x)?x:[]};
 const getTeams=()=>{const x=read(TEAMS_KEY,[]);return Array.isArray(x)?x:[]};
+const getProfile=()=>sharing?.safeProfile?.(window.StageMusicAuth?.getState?.(),read(PROFILE_KEY,{}))||read(PROFILE_KEY,{name:'Músico',instrument:'Outro'});
+const saveProfile=()=>write(PROFILE_KEY,{name:$('room-display-name')?.value.trim()||getProfile().name,instrument:$('room-instrument')?.value||getProfile().instrument,updatedAt:now()});
 const room=()=>current?.code?rooms[current.code]||null:null;
 const activeMember=()=>room()?.members?.find(m=>m.id===current?.memberId)||null;
 const modeLabels={normal:'Normal',repeat:'Repetir seção',vamp:'Vamp contínuo',ministry:'Ministração',spontaneous:'Espontâneo',ending:'Preparar final'};
 const dynamicsLabels={normal:'Normal',soft:'Suave',build:'Crescendo',full:'Banda completa',drop:'Corte / somente voz'};
 function defaultFlow(){return{section:'',mode:'normal',dynamics:'normal',modulation:0,cue:'',updatedAt:'',history:[]}}
-function normalizeRoom(r){return{id:r.id||`room_${Date.now()}`,code:r.code||code(),name:r.name||'Sala Live',setlistId:r.setlistId||'',teamId:r.teamId||'',directorId:r.directorId||'',index:Number(r.index)||0,command:r.command||'',commandAt:r.commandAt||'',flow:Object.assign(defaultFlow(),r.flow||{}),status:r.status||'active',createdAt:r.createdAt||now(),updatedAt:r.updatedAt||now(),members:Array.isArray(r.members)?r.members:[]}}
+function normalizeRoom(r){return{id:r.id||`room_${Date.now()}`,code:normalizeCode(r.code||generateCode()),name:r.name||'Sala Live',setlistId:r.setlistId||r.sharedSetlist?.sourceSetlistId||'',sharedSetlist:r.sharedSetlist||null,sharingVersion:Number(r.sharingVersion)||1,teamId:r.teamId||'',directorId:r.directorId||'',ownerUid:r.ownerUid||'',ownerEmail:r.ownerEmail||'',index:Number(r.index)||0,command:r.command||'',commandAt:r.commandAt||'',flow:Object.assign(defaultFlow(),r.flow||{}),status:r.status||'active',createdAt:r.createdAt||now(),updatedAt:r.updatedAt||now(),expiresAt:r.expiresAt||'',members:Array.isArray(r.members)?r.members:[]}}
 Object.keys(rooms).forEach(k=>rooms[k]=normalizeRoom(rooms[k]));
-function currentSetlist(r=room()){return getSetlists().find(x=>x.id===r?.setlistId)||null}
+function currentSetlist(r=room()){return sharing?.resolveRoomSetlist?.(r,getSetlists())||getSetlists().find(x=>x.id===r?.setlistId)||null}
 function currentSong(r=room()){const list=currentSetlist(r);return list?.songs?.[r?.index||0]||null}
+function buildSnapshot(list){return sharing?.snapshotSetlist?.(list,id=>window.StageMusicLocalDB?.getSongById?.(id))||list}
+function activateRoomSetlist(r=room()){
+ const list=currentSetlist(r);if(!list?.songs?.length)return false;
+ const active={...list,id:list.id||`shared_${r.code}`,roomCode:r.code,roomName:r.name,source:'live-room',startedAt:now()};
+ write(ACTIVE,active);return true;
+}
 function extractSections(song){const text=String(song?.content||'');const found=[];text.split('\n').forEach(line=>{const m=line.trim().match(/^\[([^\]]+)\]$|^(Intro|Verso(?:\s*\d+)?|Pré-Refrão|Pre-Refrão|Refrão|Refrao|Ponte|Solo|Interlúdio|Interludio|Ministração|Ministracao|Final)\s*:?$/i);const name=(m?.[1]||m?.[2]||'').trim();if(name&&!found.some(x=>x.toLowerCase()===name.toLowerCase()))found.push(name)});return found}
-function setCurrentRoom(codeValue,memberIdValue,role){current={code:codeValue,memberId:memberIdValue,role};write(CURRENT_KEY,current);startHeartbeat();startRemoteSubscription();render()}
+function memberId(role){const auth=window.StageMusicAuth?.getState?.()||{};if(auth.uid&&auth.mode==='online')return `${role==='director'?'director':'member'}_${auth.uid}`;return `${role}_${Date.now()}_${Math.random().toString(36).slice(2,6)}`}
+async function copyText(value,message){try{await navigator.clipboard.writeText(value);toast(message||'Copiado.');return true}catch{const input=document.createElement('textarea');input.value=value;input.style.position='fixed';input.style.opacity='0';document.body.appendChild(input);input.select();const ok=document.execCommand('copy');input.remove();toast(ok?(message||'Copiado.'):'Não foi possível copiar.');return ok}}
+function shareUrl(r=room()){return r?sharing?.buildShareUrl?.(r.code,location.href)||`${location.origin}${location.pathname}?room=${encodeURIComponent(r.code)}`:''}
+async function renderQr(r){
+ const canvas=$('room-qr-canvas');if(!canvas||!r||lastQrCode===r.code)return;lastQrCode=r.code;
+ const url=shareUrl(r);
+ try{if(window.QRCode?.toCanvas)await window.QRCode.toCanvas(canvas,url,{width:232,margin:1,color:{dark:'#090d1a',light:'#ffffff'}});else throw new Error('QR indisponível')}catch(error){const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#11172a';ctx.font='700 18px sans-serif';ctx.textAlign='center';ctx.fillText(r.code,canvas.width/2,canvas.height/2);console.warn('QR Code:',error?.message||error)}
+}
+function setCurrentRoom(codeValue,memberIdValue,role){current={code:normalizeCode(codeValue),memberId:memberIdValue,role};write(CURRENT_KEY,current);startHeartbeat();startRemoteSubscription();render()}
 function clearCurrent(){current=null;write(CURRENT_KEY,null);clearInterval(heartbeat);heartbeat=null;remoteUnsubscribe?.();remoteUnsubscribe=null;render()}
-
 function startRemoteSubscription(){
  remoteUnsubscribe?.();remoteUnsubscribe=null;
  if(!current?.code||!window.StageMusicFirebaseLive?.isReady?.()||window.StageMusicAuth?.getState?.().mode!=='online')return;
- remoteUnsubscribe=window.StageMusicFirebaseLive.subscribe(current.code,(remote)=>{if(!remote)return;remoteApplying=true;rooms[current.code]=normalizeRoom(remote);write(ROOMS_KEY,rooms);remoteApplying=false;render();channel?.postMessage({type:'rooms-updated',at:now(),remote:true})},error=>console.warn('Escuta da Sala Live online:',error?.message||error));
+ remoteUnsubscribe=window.StageMusicFirebaseLive.subscribe(current.code,(remote)=>{if(!remote)return;remoteApplying=true;rooms[current.code]=normalizeRoom(remote);write(ROOMS_KEY,rooms);activateRoomSetlist(rooms[current.code]);remoteApplying=false;render();channel?.postMessage({type:'rooms-updated',at:now(),remote:true})},error=>console.warn('Escuta da Sala Live online:',error?.message||error));
+}
+function saveRooms(){
+ write(ROOMS_KEY,rooms);channel?.postMessage({type:'rooms-updated',at:now()});render();const r=room();
+ if(r&&!remoteApplying&&window.StageMusicFirebaseLive?.isReady?.()&&window.StageMusicAuth?.getState?.().mode==='online')return window.StageMusicFirebaseLive.putRoom(r).catch(error=>{console.warn('Sala Live online:',error?.message||error);throw error});
+ return Promise.resolve();
 }
 function startHeartbeat(){clearInterval(heartbeat);if(!current)return;heartbeat=setInterval(()=>{const r=room(),m=activeMember();if(!r||!m)return;m.lastSeenAt=now();r.updatedAt=now();write(ROOMS_KEY,rooms);channel?.postMessage({type:'heartbeat',code:r.code})},8000)}
-async function createRoom(){const setlistId=$('room-setlist-select').value,name=$('room-display-name').value.trim()||'Diretor musical';if(!setlistId)return toast('Crie ou selecione um repertório primeiro.');const c=code(),mid=memberId(),list=getSetlists().find(x=>x.id===setlistId),auth=window.StageMusicAuth?.getState?.()||{};const r=normalizeRoom({code:c,name:`${list?.name||'Repertório'} • Sala Live`,setlistId,teamId:$('room-team-select').value,directorId:mid,ownerUid:auth.uid||'',ownerEmail:auth.email||'',members:[{id:mid,name,instrument:$('room-instrument').value,role:'director',joinedAt:now(),lastSeenAt:now()}]});rooms[c]=r;write(ACTIVE,{...list,startedAt:now()});setCurrentRoom(c,mid,'director');saveRooms();if(window.StageMusicFirebaseLive?.isReady?.()&&auth.mode==='online'){try{await window.StageMusicFirebaseLive.putRoom(r);toast('Sala Live online criada.')}catch(error){toast('Sala criada localmente; nuvem indisponível.')}}else toast('Sala Live criada localmente.')}
-async function joinRoom(){const c=$('join-room-code').value.trim().toUpperCase();let r=rooms[c];if((!r||r.status!=='active')&&window.StageMusicFirebaseLive?.isReady?.()){try{const remote=await window.StageMusicFirebaseLive.getRoom(c);if(remote){r=normalizeRoom(remote);rooms[c]=r;write(ROOMS_KEY,rooms)}}catch(error){console.warn('Busca online da sala:',error?.message||error)}}if(!r||r.status!=='active')return toast('Sala não encontrada localmente nem na nuvem.');const mid=memberId(),name=$('room-display-name').value.trim()||'Músico';r.members=(r.members||[]).filter(m=>m.id!==mid);r.members.push({id:mid,name,instrument:$('room-instrument').value,role:'member',joinedAt:now(),lastSeenAt:now()});r.updatedAt=now();setCurrentRoom(c,mid,'member');const list=currentSetlist(r);if(list)write(ACTIVE,{...list,startedAt:now()});saveRooms();toast(window.StageMusicFirebaseLive?.isReady?.()?'Você entrou na Sala Live online.':'Você entrou na Sala Live local.')}
-function leaveRoom(){const r=room();if(r&&current){r.members=(r.members||[]).filter(m=>m.id!==current.memberId);r.updatedAt=now();if(current.role==='director')r.status='ended';saveRooms()}clearCurrent();toast('Você saiu da sala.')}
-async function endRoom(){const r=room();if(!r)return;r.status='ended';r.updatedAt=now();saveRooms();if(window.StageMusicFirebaseLive?.isReady?.()){try{await window.StageMusicFirebaseLive.putRoom(r)}catch(error){console.warn('Encerramento online:',error?.message||error)}}clearCurrent();toast('Sala encerrada.')}
-function move(step){const r=room(),list=currentSetlist(r);if(!r||!list)return;const next=Math.max(0,Math.min((list.songs?.length||1)-1,r.index+step));if(next===r.index)return toast(step<0?'Início do repertório':'Fim do repertório');r.index=next;r.command='';r.commandAt='';r.flow=defaultFlow();r.updatedAt=now();write(ACTIVE,{...list,startedAt:now()});saveRooms();window.dispatchEvent(new CustomEvent('stage-room-position',{detail:{index:next,room:r}}))}
-function sendCommand(text){const r=room();if(!r||!String(text||'').trim())return;r.command=String(text).trim();r.commandAt=now();r.updatedAt=now();saveRooms();if($('director-message'))$('director-message').value='';toast('Aviso enviado aos músicos.')}
+async function findAvailableCode(){
+ for(let attempt=0;attempt<5;attempt++){
+  const c=generateCode();if(rooms[c])continue;
+  if(window.StageMusicFirebaseLive?.isReady?.()&&window.StageMusicAuth?.getState?.().mode==='online'){
+   try{if(await window.StageMusicFirebaseLive.getRoom(c))continue}catch{}
+  }
+  return c;
+ }
+ return generateCode();
+}
+async function createRoom(){
+ const setlistId=$('room-setlist-select').value,name=$('room-display-name').value.trim()||getProfile().name||'Diretor musical';
+ if(!setlistId)return toast('Crie ou selecione um repertório primeiro.');
+ const list=getSetlists().find(x=>x.id===setlistId);if(!list?.songs?.length)return toast('Adicione músicas ao repertório antes de criar a sala.');
+ const sharedSetlist=buildSnapshot(list);if(!sharedSetlist?.songs?.every(song=>String(song.content||'').trim()))toast('Atenção: alguma música está sem cifra completa.');
+ const auth=window.StageMusicAuth?.getState?.()||{};
+ if(window.StageMusicFirebaseLive?.isReady?.()&&auth.mode!=='online'){
+  sessionStorage.setItem('stage_music_after_login','sala-live.html');location.href='login-cifra.html';return;
+ }
+ const c=await findAvailableCode(),mid=memberId('director');saveProfile();
+ const r=normalizeRoom({code:c,name:`${list.name||'Repertório'} • Sala Live`,setlistId,sharedSetlist,sharingVersion:2,teamId:$('room-team-select').value,directorId:mid,ownerUid:auth.uid||'',ownerEmail:auth.email||'',expiresAt:new Date(Date.now()+18*60*60*1000).toISOString(),members:[{id:mid,uid:auth.uid||'',name,instrument:$('room-instrument').value,role:'director',joinedAt:now(),lastSeenAt:now()}]});
+ const bytes=sharing?.payloadBytes?.(r)||JSON.stringify(r).length;if(bytes>850000)return toast('Este repertório está grande demais para uma única Sala Live. Divida-o em duas listas.');
+ rooms[c]=r;activateRoomSetlist(r);setCurrentRoom(c,mid,'director');
+ try{await saveRooms();toast(window.StageMusicFirebaseLive?.isReady?.()?'Sala criada. Convite pronto para compartilhar.':'Sala local criada. Convite pronto.') }catch{toast('Sala criada localmente, mas a nuvem não respondeu.')}
+}
+async function loadRoomByCode(c){
+ let r=rooms[c];
+ if((!r||r.status!=='active')&&window.StageMusicFirebaseLive?.isReady?.()){
+  const auth=window.StageMusicAuth?.getState?.()||{};
+  if(auth.mode!=='online')return null;
+  try{const remote=await window.StageMusicFirebaseLive.getRoom(c);if(remote){r=normalizeRoom(remote);rooms[c]=r;write(ROOMS_KEY,rooms)}}catch(error){console.warn('Busca online da sala:',error?.message||error)}
+ }
+ return r?.status==='active'?r:null;
+}
+async function joinRoom(options={}){
+ const c=normalizeCode($('join-room-code').value);$('join-room-code').value=c;if(!c)return toast('Digite o código da sala.');
+ const auth=window.StageMusicAuth?.getState?.()||{};
+ if(window.StageMusicFirebaseLive?.isReady?.()&&auth.mode!=='online'&&!rooms[c]){
+  const returnPath=`sala-live.html?room=${encodeURIComponent(c)}`;sessionStorage.setItem('stage_music_after_login',returnPath);location.href='login-cifra.html';return;
+ }
+ const r=await loadRoomByCode(c);if(!r)return toast('Sala não encontrada. Confira o código e tente novamente.');
+ if(!currentSetlist(r)?.songs?.length)return toast('Esta sala antiga não contém as cifras compartilhadas. Peça ao diretor para recriar ou atualizar a sala.');
+ const mid=memberId('member'),profile=getProfile(),name=$('room-display-name').value.trim()||profile.name||'Músico',instrument=$('room-instrument').value||profile.instrument||'Outro';saveProfile();
+ r.members=(r.members||[]).filter(m=>m.id!==mid&&!(auth.uid&&m.uid===auth.uid));
+ r.members.push({id:mid,uid:auth.uid||'',name,instrument,role:'member',joinedAt:now(),lastSeenAt:now()});r.updatedAt=now();rooms[c]=r;
+ setCurrentRoom(c,mid,'member');activateRoomSetlist(r);
+ try{await saveRooms();toast('Conectado. Abrindo a cifra sincronizada...')}catch{toast('Conectado localmente; a nuvem não respondeu.')}
+ if(options.navigate!==false)setTimeout(()=>location.href='modo-live.html',450);
+}
+function leaveRoom(){const r=room();if(r&&current){r.members=(r.members||[]).filter(m=>m.id!==current.memberId);r.updatedAt=now();if(current.role==='director')r.status='ended';saveRooms().catch(()=>{})}clearCurrent();toast('Você saiu da sala.')}
+async function endRoom(){const r=room();if(!r)return;r.status='ended';r.updatedAt=now();try{await saveRooms()}catch{}clearCurrent();toast('Sala encerrada.')}
+async function refreshSharedContent(){const r=room();if(!r||current?.role!=='director')return;const list=getSetlists().find(x=>x.id===r.setlistId);if(!list)return toast('Repertório original não encontrado neste dispositivo.');r.sharedSetlist=buildSnapshot(list);r.sharingVersion=2;r.updatedAt=now();activateRoomSetlist(r);try{await saveRooms();toast('Cifras compartilhadas atualizadas.')}catch{toast('Atualização local concluída; nuvem indisponível.')}}
+function move(step){const r=room(),list=currentSetlist(r);if(!r||!list)return;const next=Math.max(0,Math.min((list.songs?.length||1)-1,r.index+step));if(next===r.index)return toast(step<0?'Início do repertório':'Fim do repertório');r.index=next;r.command='';r.commandAt='';r.flow=defaultFlow();r.updatedAt=now();activateRoomSetlist(r);saveRooms().catch(()=>{});window.dispatchEvent(new CustomEvent('stage-room-position',{detail:{index:next,room:r}}))}
+function sendCommand(text){const r=room();if(!r||!String(text||'').trim())return;r.command=String(text).trim();r.commandAt=now();r.updatedAt=now();saveRooms().catch(()=>{});if($('director-message'))$('director-message').value='';toast('Aviso enviado aos músicos.')}
 function pushFlowHistory(r,label){const item={id:`flow_${Date.now()}`,label,at:now()};r.flow.history=[item,...(r.flow.history||[])].slice(0,12)}
-function applyFlow(patch,label){const r=room();if(!r||current?.role!=='director')return toast('Somente o diretor pode alterar o Worship Flow.');r.flow=Object.assign(defaultFlow(),r.flow||{},patch||{}, {updatedAt:now()});pushFlowHistory(r,label||'Fluxo atualizado');r.command=label||'Fluxo atualizado';r.commandAt=now();r.updatedAt=now();saveRooms();toast(label||'Worship Flow atualizado.')}
+function applyFlow(patch,label){const r=room();if(!r||current?.role!=='director')return toast('Somente o diretor pode alterar o Worship Flow.');r.flow=Object.assign(defaultFlow(),r.flow||{},patch||{}, {updatedAt:now()});pushFlowHistory(r,label||'Fluxo atualizado');r.command=label||'Fluxo atualizado';r.commandAt=now();r.updatedAt=now();saveRooms().catch(()=>{});toast(label||'Worship Flow atualizado.')}
 function flowFromControls(){return{section:$('flow-section-select')?.value||'',dynamics:$('flow-dynamics')?.value||'normal',modulation:Number($('flow-modulation')?.value||0),mode:$('flow-mode')?.value||'normal'}}
 function handleFlowAction(action){const base=flowFromControls();if(action==='apply')return applyFlow(base,'Fluxo musical atualizado');if(action==='repeat')return applyFlow({...base,mode:'repeat'},`Repetir ${base.section||'seção atual'}`);if(action==='vamp')return applyFlow({...base,mode:'vamp'},`Vamp contínuo em ${base.section||'seção atual'}`);if(action==='ministry')return applyFlow({...base,mode:'ministry',dynamics:'soft'},'Entrar em ministração');if(action==='build')return applyFlow({...base,dynamics:'build'},'Crescendo progressivo');if(action==='drop')return applyFlow({...base,dynamics:'drop'},'Corte total / somente voz');if(action==='band')return applyFlow({...base,dynamics:'full'},'Banda completa entra');if(action==='ending')return applyFlow({...base,mode:'ending'},'Preparar final agora')}
 function renderSelects(){const lists=getSetlists(),teams=getTeams();$('room-setlist-select').innerHTML=lists.length?lists.map(x=>`<option value="${esc(x.id)}">${esc(x.name)} • ${(x.songs||[]).length} músicas</option>`).join(''):'<option value="">Nenhum repertório disponível</option>';$('room-team-select').innerHTML='<option value="">Sem equipe</option>'+teams.map(x=>`<option value="${esc(x.id)}">${esc(x.name)}</option>`).join('')}
 function renderFlow(r,isDirector){const flow=Object.assign(defaultFlow(),r?.flow||{}),song=currentSong(r),sections=extractSections(song),sectionSelect=$('flow-section-select');if(sectionSelect){const selected=flow.section||sectionSelect.value||'';sectionSelect.innerHTML='<option value="">Automática / atual</option>'+sections.map(name=>`<option value="${esc(name)}">${esc(name)}</option>`).join('');sectionSelect.value=sections.includes(selected)?selected:''}if($('flow-dynamics'))$('flow-dynamics').value=flow.dynamics||'normal';if($('flow-modulation'))$('flow-modulation').value=String(Number(flow.modulation)||0);if($('flow-mode'))$('flow-mode').value=flow.mode||'normal';if($('flow-live-state'))$('flow-live-state').textContent=flow.mode==='normal'&&flow.dynamics==='normal'&&!flow.modulation&&!flow.section?'Fluxo normal':`${modeLabels[flow.mode]||flow.mode} ativo`;if($('flow-summary-section'))$('flow-summary-section').textContent=flow.section||'Automática';if($('flow-summary-mode'))$('flow-summary-mode').textContent=modeLabels[flow.mode]||'Normal';if($('flow-summary-dynamics'))$('flow-summary-dynamics').textContent=dynamicsLabels[flow.dynamics]||'Normal';if($('flow-summary-modulation'))$('flow-summary-modulation').textContent=Number(flow.modulation)?`${Number(flow.modulation)>0?'+':''}${flow.modulation} semitom${Math.abs(Number(flow.modulation))===1?'':'s'}`:'Original';if($('flow-history'))$('flow-history').innerHTML=(flow.history||[]).length?(flow.history||[]).map(item=>`<article><strong>${esc(item.label)}</strong><small>${new Date(item.at).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}</small></article>`).join(''):'<p class="section-subtitle">Nenhum comando avançado enviado.</p>';if($('worship-flow-panel'))$('worship-flow-panel').classList.toggle('readonly',!isDirector)}
-function render(){if(!document.body.matches('[data-page="sala-live"]'))return;const r=room(),list=currentSetlist(r),member=activeMember(),isDirector=current?.role==='director'&&r?.directorId===current?.memberId;const active=r&&r.status==='active';$('room-stat-status').textContent=active?'Ativa':'Inativa';$('room-stat-code').textContent=active?r.code:'—';$('room-stat-members').textContent=active?(r.members||[]).length:0;$('room-stat-position').textContent=active&&list?`${Math.min(r.index+1,list.songs.length)} / ${list.songs.length}`:'0 / 0';$('room-role-badge').textContent=isDirector?'Diretor musical':active?'Músico conectado':'Sem sala';$('room-role-badge').dataset.role=isDirector?'director':active?'member':'';$('director-panel').hidden=!isDirector;$('end-room-btn').disabled=!isDirector;$('copy-room-code').disabled=!active;$('leave-room-btn').disabled=!active;$('create-room-btn').disabled=!!active;$('join-room-btn').disabled=!!active;$('joined-room-summary').hidden=!active||isDirector;if(active){$('joined-room-name').textContent=r.name;$('joined-room-song').textContent=list?.songs?.[r.index]?.title?`Música atual: ${list.songs[r.index].title}`:'Aguardando direção musical...';const banner=$('room-command-banner');banner.hidden=!r.command;banner.textContent=r.command||''}if(isDirector&&list){const song=list.songs?.[r.index];$('director-current-title').textContent=song?.title||'Sem música';$('director-current-meta').textContent=song?`${song.artist||'Sem artista'} • Tom ${song.key||song.originalKey||'—'} • ${r.index+1}/${list.songs.length}`:'—';$('director-prev').disabled=r.index<=0;$('director-next').disabled=r.index>=list.songs.length-1}
- const members=r?.members||[];$('room-member-list').innerHTML=members.length?members.map(m=>`<article class="room-member"><div><strong>${esc(m.name)}</strong><small>${esc(m.instrument)} • ${m.role==='director'?'Diretor':'Músico'}</small></div><span class="room-member-status">conectado</span></article>`).join(''):'<p class="section-subtitle">Nenhum participante conectado.</p>';if(member){$('room-display-name').value=member.name||'';$('room-instrument').value=member.instrument||'Outro'}renderFlow(r,isDirector)}
-function bind(){renderSelects();$('create-room-btn').onclick=createRoom;$('join-room-btn').onclick=joinRoom;$('leave-room-btn').onclick=leaveRoom;$('end-room-btn').onclick=endRoom;$('copy-room-code').onclick=async()=>{const r=room();if(!r)return;try{await navigator.clipboard.writeText(r.code);toast('Código copiado.')}catch{toast(`Código: ${r.code}`)}};$('director-prev').onclick=()=>move(-1);$('director-next').onclick=()=>move(1);$('director-send-message').onclick=()=>sendCommand($('director-message').value);$('quick-command-grid').onclick=e=>{const b=e.target.closest('[data-command]');if(b)sendCommand(b.dataset.command)};$('worship-flow-panel')?.addEventListener('click',e=>{const b=e.target.closest('[data-flow-action]');if(b)handleFlowAction(b.dataset.flowAction)});channel?.addEventListener('message',()=>{rooms=read(ROOMS_KEY,{});Object.keys(rooms).forEach(k=>rooms[k]=normalizeRoom(rooms[k]));render()});window.addEventListener('storage',e=>{if(e.key===ROOMS_KEY){rooms=read(ROOMS_KEY,{});Object.keys(rooms).forEach(k=>rooms[k]=normalizeRoom(rooms[k]));render()}})}
-document.addEventListener('DOMContentLoaded',()=>{if(!document.body.matches('[data-page="sala-live"]'))return;bind();startHeartbeat();render()});
-window.StageMusicLiveRoom={getCurrent:()=>room(),getContext:()=>current,move,sendCommand,applyFlow};
+function renderInvite(r,isDirector){const panel=$('room-invite-panel');if(!panel)return;panel.hidden=!(r&&r.status==='active'&&isDirector);if(panel.hidden)return;const url=shareUrl(r);$('room-share-code').textContent=r.code;$('room-share-url').value=url;$('whatsapp-room-link').href=`https://wa.me/?text=${encodeURIComponent(`Entre na minha Sala Live do Stage Music. Código: ${r.code}\n${url}`)}`;renderQr(r)}
+function render(){
+ if(!document.body.matches('[data-page="sala-live"]'))return;
+ const r=room(),list=currentSetlist(r),member=activeMember(),isDirector=current?.role==='director'&&r?.directorId===current?.memberId,active=r&&r.status==='active';
+ $('room-stat-status').textContent=active?'Ativa':'Inativa';$('room-stat-code').textContent=active?r.code:'—';$('room-stat-members').textContent=active?(r.members||[]).length:0;$('room-stat-position').textContent=active&&list?`${Math.min(r.index+1,list.songs.length)} / ${list.songs.length}`:'0 / 0';
+ $('room-role-badge').textContent=isDirector?'Diretor musical':active?'Músico conectado':'Sem sala';$('room-role-badge').dataset.role=isDirector?'director':active?'member':'';
+ $('director-panel').hidden=!isDirector;$('end-room-btn').disabled=!isDirector;$('copy-room-code').disabled=!active;$('leave-room-btn').disabled=!active;$('create-room-btn').disabled=!!active;$('join-room-btn').disabled=!!active;$('joined-room-summary').hidden=!active||isDirector;
+ renderInvite(r,isDirector);
+ if(active){$('joined-room-name').textContent=r.name;$('joined-room-song').textContent=list?.songs?.[r.index]?.title?`Música atual: ${list.songs[r.index].title}`:'Aguardando direção musical...';const banner=$('room-command-banner');banner.hidden=!r.command;banner.textContent=r.command||''}
+ if(isDirector&&list){const song=list.songs?.[r.index];$('director-current-title').textContent=song?.title||'Sem música';$('director-current-meta').textContent=song?`${song.artist||'Sem artista'} • Tom ${song.key||song.originalKey||'—'} • ${r.index+1}/${list.songs.length}`:'—';$('director-prev').disabled=r.index<=0;$('director-next').disabled=r.index>=list.songs.length-1}
+ const members=r?.members||[];$('room-member-list').innerHTML=members.length?members.map(m=>`<article class="room-member"><div><strong>${esc(m.name)}</strong><small>${esc(m.instrument)} • ${m.role==='director'?'Diretor':'Músico'}</small></div><span class="room-member-status">conectado</span></article>`).join(''):'<p class="section-subtitle">Nenhum participante conectado.</p>';
+ const profile=member?{name:member.name,instrument:member.instrument}:getProfile();$('room-display-name').value=profile.name||'';$('room-instrument').value=profile.instrument||'Outro';$('join-profile-name').textContent=profile.name||'Músico';$('join-profile-instrument').textContent=`${profile.instrument||'Outro'} • altere acima se necessário`;
+ renderFlow(r,isDirector)
+}
+function bind(){
+ renderSelects();const profile=getProfile();$('room-display-name').value=profile.name;$('room-instrument').value=profile.instrument;
+ $('room-display-name').addEventListener('input',()=>{$('join-profile-name').textContent=$('room-display-name').value.trim()||'Músico'});$('room-instrument').addEventListener('change',()=>{$('join-profile-instrument').textContent=`${$('room-instrument').value} • altere acima se necessário`;saveProfile()});
+ $('join-room-code').addEventListener('input',event=>{const caret=event.target.selectionStart;event.target.value=normalizeCode(event.target.value);event.target.setSelectionRange?.(Math.min(caret+1,event.target.value.length),Math.min(caret+1,event.target.value.length))});
+ $('create-room-btn').onclick=createRoom;$('join-room-btn').onclick=()=>joinRoom({navigate:true});$('leave-room-btn').onclick=leaveRoom;$('end-room-btn').onclick=endRoom;$('refresh-room-content').onclick=refreshSharedContent;
+ $('copy-room-code').onclick=()=>{const r=room();if(r)copyText(r.code,'Código copiado.')};$('copy-room-link').onclick=()=>{const r=room();if(r)copyText(shareUrl(r),'Link do convite copiado.')};
+ $('share-room-link').onclick=async()=>{const r=room();if(!r)return;const url=shareUrl(r),text=`Entre na minha Sala Live do Stage Music. Código: ${r.code}`;if(navigator.share){try{await navigator.share({title:'Sala Live • Stage Music',text,url});return}catch(error){if(error?.name==='AbortError')return}}await copyText(`${text}\n${url}`,'Convite copiado.')};
+ $('director-prev').onclick=()=>move(-1);$('director-next').onclick=()=>move(1);$('director-send-message').onclick=()=>sendCommand($('director-message').value);$('quick-command-grid').onclick=e=>{const b=e.target.closest('[data-command]');if(b)sendCommand(b.dataset.command)};$('worship-flow-panel')?.addEventListener('click',e=>{const b=e.target.closest('[data-flow-action]');if(b)handleFlowAction(b.dataset.flowAction)});
+ channel?.addEventListener('message',()=>{rooms=read(ROOMS_KEY,{});Object.keys(rooms).forEach(k=>rooms[k]=normalizeRoom(rooms[k]));render()});window.addEventListener('storage',e=>{if(e.key===ROOMS_KEY){rooms=read(ROOMS_KEY,{});Object.keys(rooms).forEach(k=>rooms[k]=normalizeRoom(rooms[k]));render()}})
+}
+async function handleInviteFromUrl(){const raw=new URLSearchParams(location.search).get('room')||new URLSearchParams(location.search).get('code');if(!raw)return;const c=normalizeCode(raw);$('join-room-code').value=c;$('join-invite-hint').hidden=false;const auth=window.StageMusicAuth?.getState?.()||{};if(window.StageMusicFirebaseLive?.isReady?.()&&auth.mode!=='online'){sessionStorage.setItem('stage_music_after_login',`sala-live.html?room=${encodeURIComponent(c)}`);setTimeout(()=>location.href='login-cifra.html',500);return}setTimeout(()=>joinRoom({navigate:true,automatic:true}),700)}
+document.addEventListener('DOMContentLoaded',()=>{if(!document.body.matches('[data-page="sala-live"]'))return;bind();startHeartbeat();render();handleInviteFromUrl()});
+window.StageMusicLiveRoom={getCurrent:()=>room(),getContext:()=>current,move,sendCommand,applyFlow,joinRoom,createRoom,activateRoomSetlist,currentSetlist};
 })();

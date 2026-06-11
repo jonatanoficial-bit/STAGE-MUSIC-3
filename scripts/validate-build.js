@@ -48,5 +48,14 @@ if(info.phase>=21){
   const liveJs=fs.readFileSync(path.join(root,'js/live-mode.js'),'utf8');for(const token of ['live-immersive','immersive','Mostrar controles','Ocultar controles'])if(!liveJs.includes(token))errors.push('Fase 21 Live JS incompleto: '+token);
   const mobile=fs.readFileSync(path.join(root,'js/mobile-audit.js'),'utf8');if(!mobile.includes('login-priority'))errors.push('Fase 21 menu mobile sem login prioritário.');
 }
+
+if(info.phase>=22){
+  for(const required of ['js/live-sharing-core.js','js/vendor/qrcode.min.js','js/vendor/qrcode.LICENSE.txt','scripts/test-live-sharing.js','scripts/verify-firebase-integrity.js','docs/AUDITORIA-FASE-22.md','docs/TESTES-FASE-22.md'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 22 arquivo ausente: '+required);
+  const page=fs.readFileSync(path.join(root,'sala-live.html'),'utf8');for(const token of ['room-invite-panel','room-qr-canvas','room-share-code','copy-room-link','share-room-link','whatsapp-room-link','Entrar e abrir cifra','js/live-sharing-core.js','js/vendor/qrcode.min.js'])if(!page.includes(token))errors.push('Fase 22 Sala Live incompleta: '+token);
+  const roomJs=fs.readFileSync(path.join(root,'js/live-room.js'),'utf8');for(const token of ['sharedSetlist','buildSnapshot','activateRoomSetlist','buildShareUrl','payloadBytes','refreshSharedContent'])if(!roomJs.includes(token))errors.push('Fase 22 compartilhamento incompleto: '+token);
+  const client=fs.readFileSync(path.join(root,'js/live-room-client.js'),'utf8');for(const token of ['StageMusicLiveSharing','resolveRoomSetlist','roomCode'])if(!client.includes(token))errors.push('Fase 22 cliente incompleto: '+token);
+  const livePage=fs.readFileSync(path.join(root,'modo-live.html'),'utf8');if(!livePage.includes('js/live-sharing-core.js'))errors.push('Fase 22 core ausente no Modo Live.');
+  for(const token of ['./js/live-sharing-core.js','./js/vendor/qrcode.min.js'])if(!sw.includes(token))errors.push('Fase 22 cache ausente: '+token);
+}
 if(errors.length){console.error('AUDITORIA REPROVADA\n'+errors.join('\n'));process.exit(1)}console.log(`AUDITORIA APROVADA — ${info.app} ${info.version} | ${htmls.length} páginas | ${info.date} ${info.time}`);if(warnings.length)console.warn(warnings.join('\n'));
 
