@@ -1,20 +1,50 @@
 {
   "current": {
     "app": "Stage Music",
-    "version": "v2.6.0",
-    "versionNumber": "2.6.0",
-    "phase": 21,
-    "phaseLabel": "Fase 21",
-    "phaseName": "Onboarding, login prioritário e Live imersivo",
-    "date": "10/06/2026",
-    "isoDate": "2026-06-10",
-    "time": "19:32",
-    "stamp": "20260610-1932",
+    "version": "v2.7.0",
+    "versionNumber": "2.7.0",
+    "phase": 22,
+    "phaseLabel": "Fase 22",
+    "phaseName": "Compartilhamento intuitivo com QR Code e repertório sincronizado",
+    "date": "11/06/2026",
+    "isoDate": "2026-06-11",
+    "time": "16:37",
+    "stamp": "20260611-1637",
     "environment": "production",
     "costStrategy": "firebase-spark-free-first",
-    "resilience": "anti-break-v23"
+    "resilience": "anti-break-v25"
   },
   "builds": [
+    {
+      "app": "Stage Music",
+      "version": "v2.7.0",
+      "versionNumber": "2.7.0",
+      "phase": 22,
+      "phaseLabel": "Fase 22",
+      "phaseName": "Compartilhamento intuitivo com QR Code e repertório sincronizado",
+      "date": "11/06/2026",
+      "isoDate": "2026-06-11",
+      "time": "16:37",
+      "stamp": "20260611-1637",
+      "environment": "production",
+      "costStrategy": "firebase-spark-free-first",
+      "resilience": "anti-break-v25"
+    },
+    {
+      "app": "Stage Music",
+      "version": "v2.6.1",
+      "versionNumber": "2.6.1",
+      "phase": 21.1,
+      "phaseLabel": "Fase 21.1",
+      "phaseName": "Hotfix de comandos acessíveis no Modo Live mobile",
+      "date": "10/06/2026",
+      "isoDate": "2026-06-10",
+      "time": "22:50",
+      "stamp": "20260610-2250",
+      "environment": "production",
+      "costStrategy": "firebase-spark-free-first",
+      "resilience": "anti-break-v24"
+    },
     {
       "app": "Stage Music",
       "version": "v2.6.0",
@@ -224,21 +254,6 @@
       "environment": "production",
       "costStrategy": "firebase-spark-free-first",
       "resilience": "anti-break-v10"
-    },
-    {
-      "app": "Stage Music",
-      "version": "v1.5.0",
-      "versionNumber": "1.5.0",
-      "phase": 10,
-      "phaseLabel": "Fase 10",
-      "phaseName": "Home Premium AAA e Refinamento Visual Global",
-      "date": "10/06/2026",
-      "isoDate": "2026-06-10",
-      "time": "10:24",
-      "stamp": "20260610-1024",
-      "environment": "production",
-      "costStrategy": "free-first",
-      "resilience": "anti-break-v9"
     }
   ]
 }

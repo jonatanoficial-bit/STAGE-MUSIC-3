@@ -27,3 +27,102 @@
 .live-app.live-immersive .live-controls{grid-row:2;position:fixed;left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom));z-index:110;padding:7px;border:1px solid rgba(255,255,255,.12);border-radius:20px;background:rgba(6,9,16,.9);box-shadow:0 16px 44px rgba(0,0,0,.5);backdrop-filter:blur(16px)}
 .live-app.live-immersive .live-control{height:54px}.live-app.live-immersive .live-control small{display:none}.live-app.live-immersive .live-control span{font-size:1.1rem}
 @media(max-width:800px){.live-ui-toggle{font-size:.75rem}.live-app:not(.live-immersive) .live-tools{max-height:34dvh;overflow:auto}.live-app:not(.live-immersive) .live-reader{min-height:42dvh}.live-content{padding-bottom:24px}}
+
+/* Hotfix v2.6.1 — painel de comandos acessível no mobile */
+.live-command-panel{display:contents}
+@media(max-width:800px){
+  .live-body{overflow:auto;overscroll-behavior-y:contain}
+  .live-app:not(.live-immersive){
+    height:auto;
+    min-height:100dvh;
+    display:flex;
+    flex-direction:column;
+    overflow:visible;
+    padding-bottom:calc(18px + env(safe-area-inset-bottom));
+  }
+  .live-app:not(.live-immersive) .live-header,
+  .live-app:not(.live-immersive) .live-song-head,
+  .live-app:not(.live-immersive) .live-progress-wrap,
+  .live-app:not(.live-immersive) .live-section-strip,
+  .live-app:not(.live-immersive) .instrument-note-banner,
+  .live-app:not(.live-immersive) .live-room-banner,
+  .live-app:not(.live-immersive) .live-worship-flow,
+  .live-app:not(.live-immersive) .live-reader,
+  .live-app:not(.live-immersive) .live-next{flex:0 0 auto}
+  .live-app:not(.live-immersive) .live-reader{
+    height:48dvh;
+    min-height:320px;
+    max-height:560px;
+  }
+  .live-app:not(.live-immersive) .live-command-panel{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    position:sticky;
+    bottom:0;
+    z-index:105;
+    max-height:48dvh;
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    margin:8px -4px 0;
+    padding:10px 8px calc(12px + env(safe-area-inset-bottom));
+    border-top:1px solid rgba(255,255,255,.13);
+    border-radius:20px 20px 0 0;
+    background:rgba(5,8,15,.96);
+    box-shadow:0 -18px 50px rgba(0,0,0,.5);
+    backdrop-filter:blur(18px);
+    scrollbar-width:thin;
+  }
+  .live-app:not(.live-immersive) .live-controls{
+    position:sticky;
+    top:0;
+    z-index:2;
+    flex:0 0 auto;
+    padding:4px 0 8px;
+    background:linear-gradient(180deg,rgba(5,8,15,.98),rgba(5,8,15,.9));
+  }
+  .live-app:not(.live-immersive) .live-scroll-tools{
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    gap:8px;
+    padding:8px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:16px;
+    background:rgba(255,255,255,.04);
+  }
+  .live-app:not(.live-immersive) .live-scroll-tools input{
+    width:100%;
+    min-width:0;
+  }
+  .live-app:not(.live-immersive) .live-scroll-tools span{
+    display:block;
+    grid-column:1/-1;
+    text-align:center;
+  }
+  .live-app:not(.live-immersive) .live-scroll-tools #section-repeat,
+  .live-app:not(.live-immersive) .live-scroll-tools #live-fullscreen{
+    grid-column:span 1;
+  }
+  .live-app:not(.live-immersive) .live-tools{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+    max-height:none;
+    overflow:visible;
+    padding:0;
+  }
+  .live-app:not(.live-immersive) .live-tools button{
+    min-height:46px;
+    white-space:normal;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.06);
+  }
+  .live-app:not(.live-immersive) .live-footer{display:flex;padding:8px 4px 0}
+  .live-app.live-immersive .live-command-panel{display:contents}
+}
+@media(max-width:380px){
+  .live-app:not(.live-immersive) .live-reader{height:44dvh;min-height:280px}
+  .live-app:not(.live-immersive) .live-command-panel{max-height:52dvh}
+  .live-app:not(.live-immersive) .live-control{height:52px}
+  .live-app:not(.live-immersive) .live-tools{grid-template-columns:1fr}
+}
