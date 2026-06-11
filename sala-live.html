@@ -10,16 +10,23 @@
   <link rel="stylesheet" href="css/mobile-audit.css" />
 </head>
 <body data-page="sala-live">
+  <!-- Base Firebase real preservada desde a Fase 18 -->
   <main class="page-shell live-room-page">
     <header class="page-header live-room-header">
       <div>
         <a href="index.html" class="back-link">← Início</a>
-        <span class="visual-badge">Fase 18 • Firebase real e Sala Live online</span>
-        <h1>Sala Live</h1>
-        <p>Conduza repertório, seções, dinâmica, vamp, ministração e modulações entre celulares e computadores conectados pela nuvem.</p>
+        <span class="visual-badge">Fase 22 • Compartilhamento simples e visual</span>
+        <h1>Compartilhe o palco em segundos.</h1>
+        <p>Crie uma sala, mostre o QR Code ou envie o código. Cada músico abre o mesmo repertório, acompanha a mesma música e recebe os comandos da direção em tempo real.</p>
       </div>
       <a class="btn btn-outline" href="modo-live.html">Abrir leitor Live</a>
     </header>
+
+    <section class="sharing-steps" aria-label="Como funciona">
+      <article><span>1</span><div><strong>Crie a sala</strong><small>Escolha o repertório que será compartilhado.</small></div></article>
+      <article><span>2</span><div><strong>Envie o convite</strong><small>QR Code, link ou código curto.</small></div></article>
+      <article><span>3</span><div><strong>Toquem juntos</strong><small>Todos veem a mesma música e os sinais do diretor.</small></div></article>
+    </section>
 
     <section class="room-stats-grid">
       <article><strong id="room-stat-status">Inativa</strong><small>Status</small></article>
@@ -28,27 +35,57 @@
       <article><strong id="room-stat-position">0 / 0</strong><small>Música atual</small></article>
     </section>
 
-    <section class="room-layout">
+    <section class="room-layout room-layout-primary">
       <article class="section-card room-control-card">
         <div class="section-head">
-          <div><span class="eyebrow">Direção musical</span><h2>Criar ou controlar sessão</h2></div>
+          <div><span class="eyebrow">Criador / diretor</span><h2>Criar sala para a banda</h2></div>
           <span id="room-role-badge" class="status-pill">Sem sala</span>
         </div>
+        <p class="section-subtitle">O repertório é copiado para a sala como uma versão de apresentação. Os músicos não precisam ter suas cifras salvas antes de entrar.</p>
+
         <div class="room-form-grid">
-          <label><span>Repertório</span><select id="room-setlist-select"></select></label>
+          <label><span>Repertório a compartilhar</span><select id="room-setlist-select"></select></label>
           <label><span>Equipe</span><select id="room-team-select"></select></label>
-          <label><span>Seu nome</span><input id="room-display-name" maxlength="60" placeholder="Ex.: Jonatan" /></label>
-          <label><span>Instrumento</span><select id="room-instrument"><option>Direção musical</option><option>Vocal</option><option>Teclado</option><option>Guitarra</option><option>Violão</option><option>Baixo</option><option>Bateria</option><option>Sopros</option><option>Outro</option></select></label>
+          <label><span>Seu nome</span><input id="room-display-name" maxlength="60" autocomplete="name" placeholder="Ex.: Jonatan" /></label>
+          <label><span>Seu instrumento</span><select id="room-instrument"><option>Direção musical</option><option>Vocal</option><option>Teclado</option><option>Guitarra</option><option>Violão</option><option>Baixo</option><option>Bateria</option><option>Sopros</option><option>Outro</option></select></label>
         </div>
         <div class="room-actions">
-          <button id="create-room-btn" class="btn btn-primary" type="button">Criar Sala Live</button>
+          <button id="create-room-btn" class="btn btn-primary room-main-cta" type="button">Criar sala e gerar convite</button>
           <button id="end-room-btn" class="btn btn-danger" type="button" disabled>Encerrar sala</button>
-          <button id="copy-room-code" class="btn btn-outline" type="button" disabled>Copiar código</button>
         </div>
+
+        <section id="room-invite-panel" class="room-invite-panel" hidden>
+          <div class="invite-title-row">
+            <div>
+              <span class="eyebrow">Convide sua banda</span>
+              <h3>Mostre o QR ou envie o código</h3>
+            </div>
+            <span class="live-dot">Sala ativa</span>
+          </div>
+          <div class="invite-main-grid">
+            <div class="room-code-display">
+              <small>CÓDIGO DA SALA</small>
+              <strong id="room-share-code">—</strong>
+              <p>O músico digita este código e toca em <b>Entrar e abrir cifra</b>.</p>
+            </div>
+            <div class="room-qr-card">
+              <canvas id="room-qr-canvas" width="232" height="232" aria-label="QR Code da Sala Live"></canvas>
+              <small>Aponte a câmera do celular</small>
+            </div>
+          </div>
+          <label class="share-link-field"><span>Link do convite</span><input id="room-share-url" readonly /></label>
+          <div class="invite-actions">
+            <button id="copy-room-code" class="btn btn-outline" type="button" disabled>Copiar código</button>
+            <button id="copy-room-link" class="btn btn-outline" type="button">Copiar link</button>
+            <button id="share-room-link" class="btn btn-primary" type="button">Compartilhar convite</button>
+            <a id="whatsapp-room-link" class="btn btn-secondary" target="_blank" rel="noopener">Enviar no WhatsApp</a>
+          </div>
+          <button id="refresh-room-content" class="text-link" type="button">Atualizar cifras compartilhadas com a versão mais recente</button>
+        </section>
 
         <div id="director-panel" class="director-panel" hidden>
           <div class="current-song-card">
-            <span>MÚSICA ATUAL</span>
+            <span>MÚSICA QUE TODOS ESTÃO VENDO</span>
             <strong id="director-current-title">—</strong>
             <small id="director-current-meta">—</small>
           </div>
@@ -101,37 +138,56 @@
         </div>
       </article>
 
-      <article class="section-card room-join-card">
-        <div class="section-head">
-          <div><span class="eyebrow">Músico</span><h2>Entrar com código</h2></div>
-        </div>
-        <label><span>Código da sala</span><input id="join-room-code" maxlength="10" placeholder="LIVE-1234" /></label>
-        <div class="room-actions single">
-          <button id="join-room-btn" class="btn btn-primary" type="button">Entrar na sala</button>
-          <button id="leave-room-btn" class="btn btn-outline" type="button" disabled>Sair da sala</button>
-        </div>
-        <div class="joined-room-summary" id="joined-room-summary" hidden>
-          <span>SALA CONECTADA</span>
-          <strong id="joined-room-name">—</strong>
-          <p id="joined-room-song">Aguardando direção musical...</p>
-          <div id="room-command-banner" class="room-command-banner" hidden></div>
-          <a class="btn btn-secondary wide" href="modo-live.html">Abrir leitura sincronizada</a>
-        </div>
-      </article>
+      <aside class="room-side-column">
+        <article class="section-card room-join-card">
+          <div class="section-head">
+            <div><span class="eyebrow">Músico convidado</span><h2>Entrar com código</h2></div>
+          </div>
+          <div id="join-invite-hint" class="join-invite-hint" hidden>Convite encontrado. Confirme para abrir a cifra sincronizada.</div>
+          <label class="join-code-label"><span>Código da sala</span><input id="join-room-code" maxlength="10" inputmode="text" autocapitalize="characters" autocomplete="off" placeholder="ABC-123" /></label>
+          <div class="join-profile-summary">
+            <span>Você entrará como</span>
+            <strong id="join-profile-name">Músico</strong>
+            <small id="join-profile-instrument">Outro • pode alterar acima</small>
+          </div>
+          <div class="room-actions single">
+            <button id="join-room-btn" class="btn btn-primary room-main-cta" type="button">Entrar e abrir cifra</button>
+            <button id="leave-room-btn" class="btn btn-outline" type="button" disabled>Sair da sala</button>
+          </div>
+          <div class="joined-room-summary" id="joined-room-summary" hidden>
+            <span>SALA CONECTADA</span>
+            <strong id="joined-room-name">—</strong>
+            <p id="joined-room-song">Aguardando direção musical...</p>
+            <div id="room-command-banner" class="room-command-banner" hidden></div>
+            <a class="btn btn-secondary wide" href="modo-live.html">Abrir leitura sincronizada</a>
+          </div>
+        </article>
 
-      <article class="section-card room-members-card">
-        <div class="section-head"><div><span class="visual-badge">Conectados</span><h3>Participantes da sala</h3></div></div>
-        <div id="room-member-list" class="room-member-list"><p class="section-subtitle">Nenhum participante conectado.</p></div>
-      </article>
+        <article class="section-card shared-view-card">
+          <div class="section-head"><div><span class="visual-badge">O que o músico verá</span><h3>A mesma apresentação do diretor</h3></div></div>
+          <div class="shared-view-list">
+            <div><span>✓</span><p><strong>Mesmo repertório</strong><small>Títulos, ordem, tom, BPM e cifra completa.</small></p></div>
+            <div><span>✓</span><p><strong>Mesma música atual</strong><small>Quando o diretor avança, todos acompanham.</small></p></div>
+            <div><span>✓</span><p><strong>Comandos em tempo real</strong><small>Seção, dinâmica, vamp, ministração e modulação.</small></p></div>
+            <div><span>✓</span><p><strong>Leitura pessoal</strong><small>Cada músico controla sua fonte, tema e rolagem sem atrapalhar os outros.</small></p></div>
+          </div>
+        </article>
+
+        <article class="section-card room-members-card">
+          <div class="section-head"><div><span class="visual-badge">Conectados</span><h3>Participantes da sala</h3></div></div>
+          <div id="room-member-list" class="room-member-list"><p class="section-subtitle">Nenhum participante conectado.</p></div>
+        </article>
+      </aside>
 
       <article class="section-card room-connection-card">
-        <div class="section-head"><div><span class="visual-badge">Conexão</span><h3>Modo de sincronização</h3></div></div>
+        <div class="section-head"><div><span class="visual-badge">Conexão</span><h3>Sincronização protegida</h3></div></div>
         <div class="connection-status-grid">
           <div><span>Local</span><strong>BroadcastChannel + armazenamento protegido</strong></div>
           <div><span>Nuvem</span><strong data-cloud-config>Firebase não configurado</strong></div>
+          <div><span>Conteúdo</span><strong>Snapshot do repertório dentro da sala</strong></div>
           <div><span>Fallback</span><strong>App continua funcional offline</strong></div>
         </div>
-        <p class="section-subtitle">Com Firebase configurado e login online, a sala sincroniza entre dispositivos diferentes em tempo real. Sem configuração, o modo local continua disponível como contingência.</p>
+        <p class="section-subtitle">A sala compartilha somente o repertório usado na apresentação. A biblioteca privada completa do criador não é enviada aos convidados.</p>
       </article>
     </section>
   </main>
@@ -146,6 +202,8 @@
   <script src="js/auth.js"></script>
   <script src="js/local-db.js"></script>
   <script src="js/cloud-sync.js"></script>
+  <script src="js/vendor/qrcode.min.js"></script>
+  <script src="js/live-sharing-core.js"></script>
   <script src="js/live-room.js"></script>
   <script src="js/app.js"></script>
   <script src="js/mobile-audit.js"></script>

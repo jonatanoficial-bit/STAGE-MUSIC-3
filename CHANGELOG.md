@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## v2.7.0 — Fase 22 — 11/06/2026 16:37
+- Sala Live redesenhada com fluxo visual em três etapas.
+- Código curto estilo reunião no formato ABC-123.
+- QR Code local e link direto de convite.
+- Compartilhamento por copiar código, copiar link, menu nativo e WhatsApp.
+- Snapshot do repertório e das cifras incluído na própria sala.
+- Músicos passam a ver o mesmo repertório mesmo sem biblioteca local.
+- Entrada por convite abre automaticamente o Modo Live sincronizado.
+- Firebase e regras preservados byte a byte.
+- Anti-break v25 e auditoria dedicada de compartilhamento.
+
+## v2.6.1 — Fase 21.1 — 10/06/2026 22:50
+- Corrige comandos inacessíveis no Modo Live mobile.
+- Adiciona painel inferior rolável para todos os controles.
+- Mantém controles principais sempre visíveis dentro do painel.
+- Preserva modo imersivo, Firebase e sincronização.
+
 ## v2.6.0 — Fase 21 — 10/06/2026 19:32
 - Login com Google transformado em ação principal da Home.
 - Botão de conta destacado no menu inferior mobile.

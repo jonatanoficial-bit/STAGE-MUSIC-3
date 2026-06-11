@@ -1,15 +1,15 @@
 {
   "app": "Stage Music",
-  "version": "v2.6.0",
-  "versionNumber": "2.6.0",
-  "phase": 21,
-  "phaseLabel": "Fase 21",
-  "phaseName": "Onboarding, login prioritário e Live imersivo",
-  "date": "10/06/2026",
-  "isoDate": "2026-06-10",
-  "time": "19:32",
-  "stamp": "20260610-1932",
+  "version": "v2.7.0",
+  "versionNumber": "2.7.0",
+  "phase": 22,
+  "phaseLabel": "Fase 22",
+  "phaseName": "Compartilhamento intuitivo com QR Code e repertório sincronizado",
+  "date": "11/06/2026",
+  "isoDate": "2026-06-11",
+  "time": "16:37",
+  "stamp": "20260611-1637",
   "environment": "production",
   "costStrategy": "firebase-spark-free-first",
-  "resilience": "anti-break-v23"
+  "resilience": "anti-break-v25"
 }

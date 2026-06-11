@@ -1,11 +1,13 @@
 {
   "name": "stage-music",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "private": true,
   "scripts": {
     "start": "npx serve .",
     "build": "npm run check",
-    "check": "npm run audit",
-    "audit": "node scripts/validate-build.js"
+    "check": "npm run audit && npm run test:sharing && npm run test:firebase-integrity",
+    "audit": "node scripts/validate-build.js",
+    "test:sharing": "node scripts/test-live-sharing.js",
+    "test:firebase-integrity": "node scripts/verify-firebase-integrity.js"
   }
 }
