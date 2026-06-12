@@ -57,5 +57,13 @@ if(info.phase>=22){
   const livePage=fs.readFileSync(path.join(root,'modo-live.html'),'utf8');if(!livePage.includes('js/live-sharing-core.js'))errors.push('Fase 22 core ausente no Modo Live.');
   for(const token of ['./js/live-sharing-core.js','./js/vendor/qrcode.min.js'])if(!sw.includes(token))errors.push('Fase 22 cache ausente: '+token);
 }
+
+if(info.phase>=23){
+  for(const required of ['diagnostico.html','css/diagnostics.css','css/release-candidate.css','js/diagnostics.js','js/onboarding.js','scripts/test-release-candidate.js','docs/AUDITORIA-FASE-23.md','docs/TESTES-FASE-23.md'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 23 arquivo ausente: '+required);
+  const home=fs.readFileSync(path.join(root,'index.html'),'utf8');for(const token of ['onboarding-dialog','open-onboarding','diagnostico.html','js/onboarding.js'])if(!home.includes(token))errors.push('Fase 23 Home incompleta: '+token);
+  const diagnostics=fs.readFileSync(path.join(root,'diagnostico.html'),'utf8');for(const token of ['technical-checks','setup-checks','readiness-score','install-stage-music','js/diagnostics.js'])if(!diagnostics.includes(token))errors.push('Fase 23 diagnóstico incompleto: '+token);
+  const settings=fs.readFileSync(path.join(root,'configuracoes.html'),'utf8');for(const token of ['import-full-backup','backup-file-input','backup-import-mode','undo-last-restore'])if(!settings.includes(token))errors.push('Fase 23 backup incompleto: '+token);
+  for(const token of ['./diagnostico.html','./js/diagnostics.js','./js/onboarding.js','./css/diagnostics.css','./css/release-candidate.css'])if(!sw.includes(token))errors.push('Fase 23 cache ausente: '+token);
+}
 if(errors.length){console.error('AUDITORIA REPROVADA\n'+errors.join('\n'));process.exit(1)}console.log(`AUDITORIA APROVADA — ${info.app} ${info.version} | ${htmls.length} páginas | ${info.date} ${info.time}`);if(warnings.length)console.warn(warnings.join('\n'));
 
