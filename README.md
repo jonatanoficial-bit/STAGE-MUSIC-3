@@ -1,28 +1,36 @@
 # Stage Music
 
-**Build atual:** v2.7.0  
-**Fase:** 22 — Compartilhamento intuitivo com QR Code e repertório sincronizado  
-**Gerada em:** 11/06/2026 às 16:37 (America/Sao_Paulo)
+**Build atual:** v3.0.0-rc.1  
+**Fase:** 23 — Release Candidate comercial, onboarding, diagnóstico e recuperação  
+**Gerada em:** 11/06/2026 às 17:16 (America/Sao_Paulo)
 
-Aplicativo PWA mobile-first para cifras, repertórios e operação profissional ao vivo.
+Aplicativo PWA mobile-first para cifras, repertórios, bandas e apresentações ao vivo, com Firebase gratuito, funcionamento offline e Sala Live por código/QR Code.
 
 ## Destaques desta build
+- onboarding inicial em quatro passos;
+- tela de diagnóstico e prontidão do aparelho;
+- checklist de palco persistente;
+- backup completo em JSON;
+- restauração por mesclagem ou substituição;
+- cópia de recuperação antes de cada restauração;
+- opção para desfazer a última restauração;
+- atalhos PWA para Live, Biblioteca e Sala Live;
+- Firebase, Firestore e regras preservados byte a byte.
 
-- Sala Live com código curto no formato `ABC-123`;
-- QR Code gerado localmente no próprio app;
-- link de convite compartilhável;
-- compartilhamento pelo menu nativo e WhatsApp;
-- repertório e cifras enviados como snapshot da apresentação;
-- convidado não precisa possuir as músicas previamente;
-- abertura automática do mesmo repertório no Modo Live;
-- música atual, seção, dinâmica, modulação e comandos sincronizados;
-- preferências de leitura continuam individuais;
-- Firebase, Firestore e regras preservados sem alteração.
+## Executar localmente
 
-## Validar a build
+```bash
+npm start
+```
+
+## Auditoria completa
 
 ```bash
 npm run check
 ```
 
-O comando executa auditoria estrutural, testes do compartilhamento e verificação de integridade Firebase.
+## Publicação
+Extraia o conteúdo e publique os arquivos na raiz do GitHub Pages, Vercel ou Firebase Hosting. Não publique apenas o ZIP fechado.
+
+## Firebase
+A configuração validada do projeto `stage-music-96cc1` permanece em `js/firebase-config.js`. As regras estão em `firestore.rules`.

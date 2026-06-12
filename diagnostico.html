@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Stage Music • Diagnóstico</title>
+  <meta name="theme-color" content="#6d4aff" />
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/diagnostics.css" />
+  <link rel="stylesheet" href="css/release-candidate.css" />
+  <link rel="stylesheet" href="css/mobile-audit.css" />
+</head>
+<body data-page="diagnostico">
+  <main class="page-shell diagnostics-shell">
+    <header class="page-header diagnostics-header">
+      <a href="index.html" class="back-link">← Início</a>
+      <span class="visual-badge">Fase 23 • Release Candidate</span>
+      <h1>Diagnóstico e prontidão</h1>
+      <p>Confira se conta, nuvem, dados, PWA e recursos de palco estão preparados antes de um ensaio ou apresentação.</p>
+    </header>
+
+    <section class="readiness-hero section-card">
+      <div class="readiness-score-wrap">
+        <div class="readiness-ring" id="readiness-ring" style="--score:0">
+          <strong id="readiness-score">0%</strong>
+          <span>pronto</span>
+        </div>
+        <div>
+          <span class="eyebrow">STATUS GERAL</span>
+          <h2 id="readiness-title">Executando diagnóstico…</h2>
+          <p id="readiness-summary">Aguarde enquanto o Stage Music verifica este aparelho.</p>
+        </div>
+      </div>
+      <div class="diagnostics-actions">
+        <button class="btn btn-primary" type="button" id="run-diagnostics">Executar novamente</button>
+        <button class="btn btn-secondary" type="button" id="download-diagnostics">Baixar relatório</button>
+        <button class="btn btn-outline" type="button" id="install-stage-music" disabled>Instalar aplicativo</button>
+        <a class="btn btn-outline" href="configuracoes.html">Abrir configurações</a>
+      </div>
+    </section>
+
+    <section class="diagnostics-grid">
+      <article class="section-card diagnostic-panel">
+        <div class="section-head">
+          <div>
+            <span class="visual-badge">Saúde técnica</span>
+            <h3>Este aparelho</h3>
+          </div>
+          <span class="status-pill" id="technical-status">Verificando</span>
+        </div>
+        <div class="diagnostic-list" id="technical-checks" aria-live="polite"></div>
+      </article>
+
+      <article class="section-card diagnostic-panel">
+        <div class="section-head">
+          <div>
+            <span class="visual-badge">Preparação do músico</span>
+            <h3>Checklist de uso real</h3>
+          </div>
+          <span class="status-pill" id="setup-status">Verificando</span>
+        </div>
+        <div class="diagnostic-list" id="setup-checks" aria-live="polite"></div>
+      </article>
+    </section>
+
+    <section class="section-card release-checklist-card">
+      <div class="section-head">
+        <div>
+          <span class="visual-badge">Antes de tocar</span>
+          <h3>Checklist rápido de palco</h3>
+        </div>
+      </div>
+      <div class="stage-readiness-grid">
+        <label><input type="checkbox" data-stage-check="battery" /> Bateria do aparelho suficiente</label>
+        <label><input type="checkbox" data-stage-check="brightness" /> Brilho e tema ajustados</label>
+        <label><input type="checkbox" data-stage-check="setlist" /> Repertório revisado</label>
+        <label><input type="checkbox" data-stage-check="offline" /> Cifras abertas ao menos uma vez</label>
+        <label><input type="checkbox" data-stage-check="wake" /> Tela ativa testada</label>
+        <label><input type="checkbox" data-stage-check="room" /> Sala Live testada com outro aparelho</label>
+      </div>
+    </section>
+
+    <section class="section-card release-info-card">
+      <div>
+        <span class="visual-badge">Build atual</span>
+        <h3 data-build-phase>Fase 23 — Release Candidate</h3>
+        <p>Versão <strong data-build-version>v3.0.0-rc.1</strong>, com sistema anti-quebra, backup restaurável e diagnóstico local.</p>
+      </div>
+      <div class="release-info-actions">
+        <a class="btn btn-primary" href="sala-live.html">Testar Sala Live</a>
+        <a class="btn btn-secondary" href="modo-live.html">Abrir Modo Live</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer"><span id="build-info" data-build-info>Carregando informações da build…</span></footer>
+  <script src="js/build-info.js"></script>
+  <script src="js/resilience.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/firebase-runtime.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/local-db.js"></script>
+  <script src="js/cloud-sync.js"></script>
+  <script src="js/diagnostics.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/mobile-audit.js"></script>
+</body>
+</html>

@@ -9,6 +9,7 @@
   <link rel='manifest' href='manifest.json' />
   <link rel='stylesheet' href='css/global.css' />
   <link rel='stylesheet' href='css/home.css' />
+  <link rel='stylesheet' href='css/release-candidate.css' />
   <link rel="stylesheet" href="css/mobile-audit.css" />
 </head>
 <body data-page='home'>
@@ -33,10 +34,11 @@
         <a href='equipes.html'>Equipes</a>
         <a href='eventos.html'>Eventos</a>
         <a href='configuracoes.html'>Configurações</a>
+        <a href='diagnostico.html'>Diagnóstico</a>
       </nav>
 
       <div class='promo-card home-promo-card'>
-        <span class='visual-badge'>Fase 19 • Fundos Premium AAA</span>
+        <span class='visual-badge'>Fase 23 • Release Candidate</span>
         <h3>Centro de comando do palco</h3>
         <p>A entrada do app agora prioriza impacto visual, retomada rápida do repertório e ações imediatas para ensaio, culto e apresentação.</p>
         <div class='promo-status-list'>
@@ -58,6 +60,18 @@
         </div>
         <a class='icon-btn home-live-shortcut' href='modo-live.html' aria-label='Abrir modo live'>♫</a>
       </header>
+
+      <section class='home-release-entry' aria-label='Primeiros passos e diagnóstico'>
+        <div>
+          <span class='eyebrow'>RELEASE CANDIDATE</span>
+          <strong>Configure, teste e toque com segurança.</strong>
+          <small>Use o guia inicial ou execute um diagnóstico completo deste aparelho.</small>
+        </div>
+        <div class='home-release-actions'>
+          <button class='btn btn-secondary' type='button' id='open-onboarding'>Primeiros passos</button>
+          <a class='btn btn-outline' href='diagnostico.html'>Diagnóstico</a>
+        </div>
+      </section>
 
       <section class='home-auth-gateway' id='home-auth-gateway' aria-live='polite'>
         <div class='home-auth-copy'>
@@ -142,11 +156,11 @@
           <article class='mini-status-board'>
             <div class='mini-stat stat-board-item'>
               <span>Build</span>
-              <strong data-build-version>v1.5.0</strong>
+              <strong data-build-version>v3.0.0-rc.1</strong>
             </div>
             <div class='mini-stat stat-board-item'>
               <span>Status</span>
-              <strong data-build-phase>Fase 10 — Home Premium AAA</strong>
+              <strong data-build-phase>Fase 23 — Release Candidate comercial</strong>
             </div>
             <div class='mini-stat stat-board-item'>
               <span>Diferencial</span>
@@ -344,6 +358,54 @@
     </main>
   </div>
 
+  <dialog id='onboarding-dialog' class='onboarding-dialog'>
+    <div class='onboarding-shell'>
+      <div class='onboarding-top'>
+        <div>
+          <span class='eyebrow'>BEM-VINDO AO STAGE MUSIC</span>
+          <h2>Prepare seu palco em quatro passos.</h2>
+        </div>
+        <button class='icon-btn' type='button' id='close-onboarding' aria-label='Fechar'>✕</button>
+      </div>
+      <div class='onboarding-progress' aria-hidden='true'><span id='onboarding-progress-bar'></span></div>
+      <div class='onboarding-step' data-onboarding-step='0'>
+        <span class='onboarding-number'>1</span>
+        <h3>Entre com sua conta</h3>
+        <p>Use Google ou e-mail para proteger suas cifras e acessar o conteúdo em outros aparelhos.</p>
+        <span class='onboarding-state' id='onboarding-login-state'>Verificando conta…</span>
+      </div>
+      <div class='onboarding-step' data-onboarding-step='1' hidden>
+        <span class='onboarding-number'>2</span>
+        <h3>Atualize o conteúdo</h3>
+        <p>Baixe da nuvem as cifras, repertórios e equipes antes de começar a trabalhar neste aparelho.</p>
+        <span class='onboarding-state' id='onboarding-sync-state'>Verificando sincronização…</span>
+      </div>
+      <div class='onboarding-step' data-onboarding-step='2' hidden>
+        <span class='onboarding-number'>3</span>
+        <h3>Prepare as músicas</h3>
+        <p>Busque ou crie cifras, revise tom, BPM, capo e estrutura. Depois reúna tudo em um repertório.</p>
+        <span class='onboarding-state' id='onboarding-content-state'>Verificando biblioteca…</span>
+      </div>
+      <div class='onboarding-step' data-onboarding-step='3' hidden>
+        <span class='onboarding-number'>4</span>
+        <h3>Teste antes da apresentação</h3>
+        <p>Abra o Modo Live, teste a Sala Live por QR Code e execute o diagnóstico deste aparelho.</p>
+        <div class='onboarding-links'>
+          <a href='modo-live.html'>Modo Live</a>
+          <a href='sala-live.html'>Sala Live</a>
+          <a href='diagnostico.html'>Diagnóstico</a>
+        </div>
+      </div>
+      <div class='onboarding-bottom'>
+        <button class='btn btn-outline' type='button' id='onboarding-later'>Agora não</button>
+        <div class='onboarding-navigation'>
+          <button class='btn btn-secondary' type='button' id='onboarding-prev' disabled>Voltar</button>
+          <button class='btn btn-primary' type='button' id='onboarding-next'>Próximo</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
   <nav class='bottom-nav mobile-only'>
     <a class='active' href='index.html'>Início</a>
     <a href='modo-live.html'>Live</a>
@@ -368,6 +430,7 @@
   <script src='js/cloud-sync.js'></script>
   <script src='js/app.js'></script>
   <script src='js/home-dashboard.js'></script>
+  <script src='js/onboarding.js'></script>
   <script src='js/home-auth-sync.js'></script>
   <script src="js/mobile-audit.js"></script>
 </body>

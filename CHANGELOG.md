@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## v3.0.0-rc.1 — Fase 23 — 11/06/2026 17:16
+- Release Candidate comercial com onboarding inicial em quatro passos.
+- Nova página de diagnóstico técnico e prontidão para apresentação.
+- Checklist persistente de palco para bateria, brilho, repertório, offline, Wake Lock e Sala Live.
+- Backup local ampliado para cifras, repertórios, equipes, eventos e preferências.
+- Restauração de backup em modo mesclar ou substituir.
+- Snapshot automático antes da restauração e opção de desfazer.
+- Manifesto PWA com atalhos para Modo Live, Biblioteca e Sala Live.
+- Firebase, Firestore, Cloud Sync e regras preservados sem alterações.
+
 ## v2.7.0 — Fase 22 — 11/06/2026 16:37
 - Sala Live redesenhada com fluxo visual em três etapas.
 - Código curto estilo reunião no formato ABC-123.

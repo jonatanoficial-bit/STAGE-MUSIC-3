@@ -13,7 +13,7 @@
   <main class="page-shell settings-page-shell">
     <header class="page-header">
       <a href="index.html" class="back-link">← Início</a>
-      <span class="visual-badge">Fase 18 • Firebase real e multidispositivo</span>
+      <span class="visual-badge">Fase 23 • Release Candidate e recuperação</span>
       <h1>Configurações e sincronização</h1>
       <p>Gerencie sua conta, teste a conexão Firebase, sincronize dados e mantenha o Stage Music funcional mesmo sem internet.</p>
     </header>
@@ -86,10 +86,28 @@
           </div>
         </div>
         <p class="section-subtitle">Mesmo sem Firebase, você pode exportar um backup completo contendo cifras, repertórios, sessão e preferências de sincronização.</p>
-        <div class="settings-action-grid single-column">
+        <div class="settings-action-grid backup-action-grid">
           <button class="btn btn-primary" type="button" id="export-full-backup">Exportar backup completo</button>
-          <small class="section-subtitle">Arquivo JSON local, ideal para guardar seus dados antes de publicar novas builds.</small>
+          <button class="btn btn-secondary" type="button" id="import-full-backup">Restaurar backup</button>
+          <button class="btn btn-outline" type="button" id="undo-last-restore">Desfazer última restauração</button>
+          <input type="file" id="backup-file-input" accept="application/json,.json" hidden />
         </div>
+        <label class="setting-item backup-mode-control">
+          <div><strong>Modo de restauração</strong><small>Mesclar preserva itens locais; substituir recria os dados a partir do arquivo.</small></div>
+          <select id="backup-import-mode" class="plain-input"><option value="merge">Mesclar com dados atuais</option><option value="replace">Substituir dados locais</option></select>
+        </label>
+        <p class="section-subtitle" id="backup-status">Nenhum processo de backup em andamento.</p>
+      </article>
+
+      <article class="section-card settings-card release-diagnostic-card">
+        <div class="section-head">
+          <div>
+            <span class="visual-badge">Release Candidate</span>
+            <h3>Diagnóstico e prontidão</h3>
+          </div>
+        </div>
+        <p class="section-subtitle">Verifique PWA, armazenamento, conta, sincronização, cifras, repertórios e recursos de palco neste aparelho.</p>
+        <a class="btn btn-primary" href="diagnostico.html">Executar diagnóstico completo</a>
       </article>
 
       <article class="section-card settings-card">
