@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="css/global.css" />
   <link rel="stylesheet" href="css/live-room.css" />
   <link rel="stylesheet" href="css/workspace-cloud.css" />
+  <link rel="stylesheet" href="css/live-stability.css" />
   <script>if(new URLSearchParams(location.search).get('room')||new URLSearchParams(location.search).get('code'))document.documentElement.classList.add('room-invite-pending');</script>
   <link rel="stylesheet" href="css/mobile-audit.css" />
 </head>
@@ -36,6 +37,13 @@
       <article><strong id="room-stat-members">0</strong><small>Participantes</small></article>
       <article><strong id="room-stat-position">0 / 0</strong><small>Música atual</small></article>
     </section>
+
+    <section class="live-room-health-card" id="room-health-panel" aria-label="Saúde da Sala Live">
+      <article><strong>Verificando</strong><small>Internet</small></article>
+      <article><strong>0</strong><small>Alterações pendentes</small></article>
+      <article><strong>0</strong><small>Participantes locais</small></article>
+    </section>
+    <p id="room-sync-warning" class="live-sync-warning" hidden></p>
 
     <section class="room-layout room-layout-primary">
       <article class="section-card room-control-card">
@@ -239,6 +247,7 @@
   <script src="js/cloud-sync.js"></script><script src="js/workspace-cloud.js"></script>
   <script src="js/vendor/qrcode.min.js"></script>
   <script src="js/live-sharing-core.js"></script>
+  <script src="js/live-stability.js"></script>
   <script src="js/harmonic-engine.js"></script>
   <script src="js/live-room.js"></script>
   <script src="js/app.js"></script>

@@ -36,7 +36,7 @@ async function persistRoom(ctx,room){
  if(!ctx?.current?.code||!room)return;
  ctx.rooms[ctx.current.code]=room;write(ROOMS_KEY,ctx.rooms);channel?.postMessage({type:'rooms-updated',at:now()});
  if(window.StageMusicFirebaseLive?.isReady?.()&&window.StageMusicAuth?.getState?.().mode==='online'){
-  try{await window.StageMusicFirebaseLive.putRoom(room)}catch(error){console.warn('Central do Diretor:',error?.message||error);throw error}
+  try{await (window.StageMusicLiveStability?.safePutRoom?.(room,{source:'modo-live-diretor'})||window.StageMusicFirebaseLive.putRoom(room))}catch(error){console.warn('Central do Diretor:',error?.message||error);throw error}
  }
 }
 function defaultFlow(){return{section:'',mode:'normal',dynamics:'normal',modulation:0,targetKey:'',cue:'',updatedAt:'',history:[]}}
@@ -67,7 +67,7 @@ function ensureRemoteSubscription(){
  if(!code||!window.StageMusicFirebaseLive?.isReady?.()||window.StageMusicAuth?.getState?.().mode!=='online'){remoteStop?.();remoteStop=null;remoteCode='';return}
  if(remoteCode===code&&remoteStop)return;
  remoteStop?.();remoteCode=code;
- remoteStop=window.StageMusicFirebaseLive.subscribe(code,(remote)=>{if(!remote)return;const rooms=read(ROOMS_KEY,{});rooms[code]=remote;write(ROOMS_KEY,rooms);sync()},error=>console.warn('Sala Live online no leitor:',error?.message||error));
+ remoteStop=window.StageMusicFirebaseLive.subscribe(code,(remote)=>{if(!remote)return;window.StageMusicLiveStability?.markRemoteRoom?.(code);const rooms=read(ROOMS_KEY,{});rooms[code]=remote;write(ROOMS_KEY,rooms);sync()},error=>{console.warn('Sala Live online no leitor:',error?.message||error);window.StageMusicLiveStability?.renderStatus?.()});
 }
 function renderDirectorDock(ctx,list){
  const toggle=document.getElementById('director-dock-toggle'),dock=document.getElementById('director-live-dock'),director=isDirector(ctx);
@@ -90,6 +90,7 @@ async function setRoomIndex(target){
  const ctx=context();if(!isDirector(ctx))return;
  const list=resolveList(ctx.room),next=Math.max(0,Math.min(Number(target)||0,(list?.songs?.length||1)-1));
  if(next===Number(ctx.room.index||0))return;
+ if(window.StageMusicLiveStability?.isDuplicateAction?.(`live-index-${next}`,850))return;
  ctx.room.index=next;ctx.room.flow=defaultFlow();updateRoomCommand(ctx.room,'');await persistRoom(ctx,ctx.room).catch(()=>{});
 }
 async function applyDirectorKey(){
@@ -123,7 +124,7 @@ async function saveDirectorKey(){
 }
 async function sendDirectorMessageText(message,{clearInput=false}={}){
  const ctx=context();if(!isDirector(ctx))return window.StageMusicToast?.('Somente o diretor pode enviar avisos.');
- const text=String(message||'').trim();if(!text)return window.StageMusicToast?.('Digite uma mensagem para a banda.');
+ const text=String(message||'').trim();if(!text)return window.StageMusicToast?.('Digite uma mensagem para a banda.');if(window.StageMusicLiveStability?.isDuplicateAction?.(`director-message-${text}`,900))return window.StageMusicToast?.('Aviso já enviado.');
  const auth=window.StageMusicAuth?.getState?.()||{},author=auth.name||'Direção musical';
  ctx.room.command=text;ctx.room.commandAt=now();ctx.room.commandType='message';ctx.room.messages=[{id:`msg_${Date.now()}_${Math.random().toString(36).slice(2,6)}`,text,at:ctx.room.commandAt,author},...(ctx.room.messages||[])].slice(0,20);ctx.room.updatedAt=now();
  await persistRoom(ctx,ctx.room).catch(()=>{});
