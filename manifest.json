@@ -1,7 +1,7 @@
 {
   "name": "Stage Music",
   "short_name": "Stage Music",
-  "description": "Cifras, letras para vocalistas, Sala Live e feedback de teste para equipes de música.",
+  "description": "Cifras, letras para vocalistas, Sala Live, convite rápido pelo navegador e feedback de teste para equipes de música.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080b14",
@@ -47,6 +47,19 @@
       "short_name": "Cifras",
       "description": "Abrir a biblioteca",
       "url": "./buscar-cifra.html",
+      "icons": [
+        {
+          "src": "assets/icons/favicon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Entrar por convite",
+      "short_name": "Convite",
+      "description": "Abrir Sala Live recebida por link ou código",
+      "url": "./convite.html",
       "icons": [
         {
           "src": "assets/icons/favicon.svg",

@@ -1,15 +1,15 @@
 {
   "app": "Stage Music",
-  "version": "v4.0.0",
-  "versionNumber": "4.0.0",
-  "phase": 33,
-  "phaseLabel": "Fase 33",
-  "phaseName": "Beta pública, instalação no navegador e feedback estruturado",
+  "version": "v4.1.0",
+  "versionNumber": "4.1.0",
+  "phase": 34,
+  "phaseLabel": "Fase 34",
+  "phaseName": "Entrada por convite perfeita para banda e igreja",
   "date": "22/06/2026",
   "isoDate": "2026-06-22",
-  "time": "15:10",
-  "stamp": "20260622-1510",
+  "time": "15:36",
+  "stamp": "20260622-1536",
   "environment": "public-beta",
   "costStrategy": "firebase-spark-free-first",
-  "resilience": "anti-break-v37"
+  "resilience": "anti-break-v38"
 }

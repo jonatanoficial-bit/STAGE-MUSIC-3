@@ -49,7 +49,8 @@
           <label><span>Repertório a compartilhar</span><select id="room-setlist-select"></select></label>
           <label><span>Equipe</span><select id="room-team-select"></select></label>
           <label><span>Seu nome</span><input id="room-display-name" maxlength="60" autocomplete="name" placeholder="Ex.: Jonatan" /></label>
-          <label><span>Seu instrumento</span><select id="room-instrument"><option>Direção musical</option><option>Vocal</option><option>Teclado</option><option>Guitarra</option><option>Violão</option><option>Baixo</option><option>Bateria</option><option>Sopros</option><option>Outro</option></select></label>
+          <label><span>Seu instrumento</span><select id="room-instrument"><option>Direção musical</option><option>Vocal</option><option>Back vocal</option><option>Teclado</option><option>Guitarra</option><option>Violão</option><option>Baixo</option><option>Bateria</option><option>Sopros</option><option>Técnico de som</option><option>Outro</option></select></label>
+          <label><span>Visualização</span><select id="room-view-mode"><option value="auto">Automática pelo instrumento</option><option value="chords">Músico — cifra com acordes</option><option value="lyrics">Vocalista — letra limpa</option><option value="director">Diretor — cifra + comandos</option></select></label>
         </div>
         <div class="room-actions">
           <button id="create-room-btn" class="btn btn-primary room-main-cta" type="button">Criar sala e gerar convite</button>
@@ -167,8 +168,18 @@
           <div class="section-head">
             <div><span class="eyebrow">Músico convidado</span><h2>Entrar com código</h2></div>
           </div>
-          <div id="join-invite-hint" class="join-invite-hint" hidden>Convite encontrado. Confirme para abrir a cifra sincronizada.</div>
+          <div id="join-invite-hint" class="join-invite-hint" hidden>Convite encontrado. Escolha sua função e entre pelo navegador.</div>
+          <div id="room-guest-login-panel" class="room-guest-login-panel" hidden>
+            <strong>Esta sala está sincronizada na nuvem.</strong>
+            <small>Para abrir em outro celular sem perder a sincronização, entre rapidamente com Google. O app volta para esta sala automaticamente.</small>
+            <a id="room-guest-login-link" class="btn btn-primary wide" href="login-cifra.html">Entrar com Google e voltar para a sala</a>
+          </div>
           <label class="join-code-label"><span>Código da sala</span><input id="join-room-code" maxlength="10" inputmode="text" autocapitalize="characters" autocomplete="off" placeholder="ABC-123" /></label>
+          <div class="invite-role-switch" aria-label="Escolha rápida de função">
+            <button type="button" class="invite-role-option" data-invite-role="vocal" data-instrument="Vocal" data-view="lyrics"><strong>Vou cantar</strong><small>Letra limpa</small></button>
+            <button type="button" class="invite-role-option" data-invite-role="musico" data-instrument="Violão" data-view="chords"><strong>Vou tocar</strong><small>Cifra completa</small></button>
+            <button type="button" class="invite-role-option" data-invite-role="tecnico" data-instrument="Técnico de som" data-view="lyrics"><strong>Técnico</strong><small>Letra + avisos</small></button>
+          </div>
           <div class="join-profile-summary">
             <span>Você entrará como</span>
             <strong id="join-profile-name">Músico</strong>
