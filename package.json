@@ -1,11 +1,11 @@
 {
   "name": "stage-music",
-  "version": "4.3.0",
+  "version": "4.4.0",
   "private": true,
   "scripts": {
     "start": "npx serve .",
     "build": "npm run check",
-    "check": "npm run audit && npm run test:sharing && npm run test:release-candidate && npm run test:login-ux && npm run test:global-catalog && npm run test:harmonic && npm run test:director && npm run test:firebase-integrity && npm run test:workspace && npm run test:live-director-ux && npm run test:catalog-admin && npm run test:mass && npm run test:live-stability && npm run test:stage-reading",
+    "check": "npm run audit && npm run test:sharing && npm run test:release-candidate && npm run test:login-ux && npm run test:global-catalog && npm run test:harmonic && npm run test:director && npm run test:firebase-integrity && npm run test:workspace && npm run test:live-director-ux && npm run test:catalog-admin && npm run test:mass && npm run test:live-stability && npm run test:stage-reading && npm run test:international",
     "audit": "node scripts/validate-build.js",
     "test:sharing": "node scripts/test-live-sharing.js",
     "test:firebase-integrity": "node scripts/verify-firebase-integrity.js",
@@ -19,6 +19,7 @@
     "test:catalog-admin": "node scripts/test-catalog-admin.js",
     "test:mass": "node scripts/test-mass-journey.js",
     "test:live-stability": "node scripts/test-live-stability.js",
-    "test:stage-reading": "node scripts/test-stage-reading.js"
+    "test:stage-reading": "node scripts/test-stage-reading.js",
+    "test:international": "node scripts/test-international-product.js"
   }
 }

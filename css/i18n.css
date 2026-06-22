@@ -1,0 +1,64 @@
+/* Fase 37 — camada internacional e produto comercial */
+.language-switcher{
+  position:fixed;
+  right:calc(14px + env(safe-area-inset-right));
+  top:calc(14px + env(safe-area-inset-top));
+  z-index:90;
+  display:flex;
+  gap:4px;
+  padding:5px;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:999px;
+  background:rgba(8,12,23,.72);
+  backdrop-filter:blur(18px) saturate(120%);
+  -webkit-backdrop-filter:blur(18px) saturate(120%);
+  box-shadow:0 14px 34px rgba(0,0,0,.24);
+}
+.language-switcher button{
+  border:0;
+  border-radius:999px;
+  padding:7px 9px;
+  color:rgba(255,255,255,.78);
+  background:transparent;
+  font-size:.72rem;
+  font-weight:800;
+  letter-spacing:.04em;
+  cursor:pointer;
+}
+.language-switcher button.active{
+  color:white;
+  background:linear-gradient(135deg,#7c5cff,#22d3ee);
+  box-shadow:0 8px 20px rgba(109,74,255,.30);
+}
+.international-hero,
+.legal-hero,
+.help-hero{
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:28px;
+  padding:clamp(22px,5vw,46px);
+  background:linear-gradient(135deg,rgba(124,92,255,.20),rgba(34,211,238,.08)),rgba(10,14,26,.76);
+  box-shadow:0 24px 70px rgba(0,0,0,.24);
+}
+.international-grid,.legal-grid,.help-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:16px;
+  margin-top:18px;
+}
+.international-card,.legal-card,.help-card{
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:22px;
+  padding:18px;
+  background:rgba(255,255,255,.065);
+}
+.international-card h3,.legal-card h3,.help-card h3{margin:0 0 8px;font-size:1.04rem}
+.international-card p,.legal-card p,.help-card p{margin:0;color:rgba(255,255,255,.78);line-height:1.5}
+.language-content{display:none}.language-content.active{display:block}
+.language-content h2{margin-top:22px}
+.quick-legal-nav,.quick-help-nav{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+@media(max-width:760px){
+ .language-switcher{top:auto;bottom:calc(80px + env(safe-area-inset-bottom));right:10px}
+ body[data-page="modo-live"] .language-switcher{bottom:calc(20px + env(safe-area-inset-bottom))}
+ .international-grid,.legal-grid,.help-grid{grid-template-columns:1fr}
+ .international-hero,.legal-hero,.help-hero{border-radius:22px;padding:20px}
+}

@@ -1,23 +1,28 @@
-# Stage Music — v4.3.0
+# Stage Music — v4.4.0
 
-Fase 36: leitura profissional de palco, com perfis para vocalista e músico, auto-scroll inteligente e título fixo para uso ao vivo pelo navegador em qualquer celular.
+Stage Music é um app web para músicos, vocalistas, diretores musicais e equipes de adoração. Funciona pelo navegador em Android, iPhone, tablet e computador.
 
-# Stage Music v4.3.0
+## Fase 37 — Produto internacional
 
-Fase 35 — Estabilidade de culto ao vivo e reconexão da Sala Live.
+- Camada de idioma PT / EN / ES.
+- Página pública de produto: `produto.html`.
+- Ajuda rápida: `ajuda.html`.
+- Política de privacidade simples: `privacidade.html`.
+- Termos de uso simples: `termos.html`.
+- Seletor de idioma persistente no navegador.
+- PWA e cache atualizados.
+- Firebase preservado.
 
-Esta build fortalece o uso real em ensaio/culto: a Sala Live continua legível quando a internet oscila, guarda alterações pendentes localmente, tenta reenviar automaticamente e reduz comandos duplicados por toques acidentais.
+## Uso
 
-## Não alterar Firebase
+Abra `index.html` ou publique no GitHub Pages.
 
-Arquivos preservados:
+## Firebase
+
+Os arquivos de conexão foram preservados nesta fase:
 
 - `js/firebase-config.js`
 - `js/firebase-runtime.js`
 - `js/firebase-live.js`
 - `js/cloud-sync.js`
 - `firestore.rules`
-
-## Upload
-
-Suba o conteúdo da pasta extraída no repositório GitHub Pages do Stage Music.

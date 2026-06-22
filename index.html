@@ -11,6 +11,7 @@
   <link rel='stylesheet' href='css/home.css' />
   <link rel='stylesheet' href='css/release-candidate.css' />
   <link rel="stylesheet" href="css/mobile-audit.css" />
+  <link rel="stylesheet" href="css/i18n.css" />
   <link rel="stylesheet" href="css/workspace-cloud.css" />
   <link rel='stylesheet' href='css/teste-massa.css' />
 </head>
@@ -28,19 +29,23 @@
       <nav class='side-nav'>
         <a class='active' href='index.html'>Início</a>
         <a class='side-login-link' href='login-cifra.html' data-home-login-link>Entrar com Google</a>
-        <a href='modo-live.html'>Modo Live</a>
-        <a href='convite.html'>Entrar por convite</a>
-        <a href='sala-live.html'>Sala Live</a>
-        <a href='buscar-cifra.html'>Buscar cifra</a>
+        <a href='modo-live.html' data-i18n='Modo Live'>Modo Live</a>
+        <a href='convite.html' data-i18n='Entrar por convite'>Entrar por convite</a>
+        <a href='sala-live.html' data-i18n='Sala Live'>Sala Live</a>
+        <a href='buscar-cifra.html' data-i18n='Buscar cifra'>Buscar cifra</a>
         <a href='login-cifra.html'>Inserir cifra</a>
-        <a href='minhas-listas.html'>Minhas listas</a>
-        <a href='equipes.html'>Equipes</a>
-        <a href='eventos.html'>Eventos</a>
-        <a href='configuracoes.html'>Configurações</a>
-        <a href='diagnostico.html'>Diagnóstico</a>
-        <a href='teste-massa.html'>Teste em grupo</a>
-        <a href='instalar.html'>Instalar no celular</a>
-        <a href='feedback.html'>Enviar feedback</a>
+        <a href='minhas-listas.html' data-i18n='Minhas listas'>Minhas listas</a>
+        <a href='equipes.html' data-i18n='Equipes'>Equipes</a>
+        <a href='eventos.html' data-i18n='Eventos'>Eventos</a>
+        <a href='configuracoes.html' data-i18n='Configurações'>Configurações</a>
+        <a href='diagnostico.html' data-i18n='Diagnóstico'>Diagnóstico</a>
+        <a href='teste-massa.html' data-i18n='Teste em grupo'>Teste em grupo</a>
+        <a href='instalar.html' data-i18n='Instalar no celular'>Instalar no celular</a>
+        <a href='feedback.html' data-i18n='Enviar feedback'>Enviar feedback</a>
+        <a href='produto.html' data-i18n='Produto internacional'>Produto internacional</a>
+        <a href='ajuda.html' data-i18n='Ajuda'>Ajuda</a>
+        <a href='privacidade.html' data-i18n='Privacidade'>Privacidade</a>
+        <a href='termos.html' data-i18n='Termos'>Termos</a>
       </nav>
 
       <div class='promo-card home-promo-card'>
@@ -75,8 +80,8 @@
         </div>
         <div class='home-release-actions'>
           <button class='btn btn-secondary' type='button' id='open-onboarding'>Primeiros passos</button>
-          <a class='btn btn-outline' href='teste-massa.html'>Teste em grupo</a>
-          <a class='btn btn-outline' href='instalar.html'>Instalar no celular</a>
+          <a class='btn btn-outline' href='teste-massa.html' data-i18n='Teste em grupo'>Teste em grupo</a>
+          <a class='btn btn-outline' href='instalar.html' data-i18n='Instalar no celular'>Instalar no celular</a>
         </div>
       </section>
 
@@ -123,10 +128,12 @@
           <p>O objetivo é facilitar o serviço de músicos, cantores e diretores musicais. Use em navegador comum no celular, tablet ou computador e envie retorno após o teste.</p>
         </div>
         <div class='journey-assist-actions'>
-          <a class='btn btn-primary' href='convite.html'>Entrar por convite</a>
-          <a class='btn btn-outline' href='instalar.html'>Instalar no celular</a>
-          <a class='btn btn-outline' href='feedback.html'>Enviar feedback</a>
+          <a class='btn btn-primary' href='convite.html' data-i18n='Entrar por convite'>Entrar por convite</a>
+          <a class='btn btn-outline' href='instalar.html' data-i18n='Instalar no celular'>Instalar no celular</a>
+          <a class='btn btn-outline' href='feedback.html' data-i18n='Enviar feedback'>Enviar feedback</a>
           <a class='btn btn-outline' href='diagnostico.html'>Diagnóstico do aparelho</a>
+          <a class='btn btn-outline' href='produto.html' data-i18n='Produto internacional'>Produto internacional</a>
+          <a class='btn btn-outline' href='ajuda.html' data-i18n='Ajuda'>Ajuda</a>
         </div>
       </section>
 
@@ -137,7 +144,7 @@
           <p class='hero-commercial-copy'>Escolha uma ação e comece agora.</p>
 
           <div class='hero-actions'>
-            <a class='btn btn-primary' href='convite.html'>Entrar por convite</a>
+            <a class='btn btn-primary' href='convite.html' data-i18n='Entrar por convite'>Entrar por convite</a>
             <a class='btn btn-outline' href='modo-live.html'>Abrir leitura</a>
             <a class='btn btn-secondary' href='minhas-listas.html'>Criar repertório</a>
           </div>
@@ -435,9 +442,9 @@
         <h3>Teste antes da apresentação</h3>
         <p>Abra o Modo Live, teste a Sala Live por QR Code e execute o diagnóstico deste aparelho.</p>
         <div class='onboarding-links'>
-          <a href='modo-live.html'>Modo Live</a>
-          <a href='sala-live.html'>Sala Live</a>
-          <a href='diagnostico.html'>Diagnóstico</a>
+          <a href='modo-live.html' data-i18n='Modo Live'>Modo Live</a>
+          <a href='sala-live.html' data-i18n='Sala Live'>Sala Live</a>
+          <a href='diagnostico.html' data-i18n='Diagnóstico'>Diagnóstico</a>
         </div>
       </div>
       <div class='onboarding-bottom'>
@@ -464,6 +471,7 @@
 
   <script src='js/build-info.js'></script>
   <script src='js/resilience.js'></script>
+  <script src='js/i18n.js'></script>
   <script src='js/firebase-config.js'></script>
   <script src='js/auth.js'></script>
   <script src='js/firebase-runtime.js'></script>

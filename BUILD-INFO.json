@@ -1,15 +1,15 @@
 {
   "app": "Stage Music",
-  "version": "v4.3.0",
-  "versionNumber": "4.3.0",
-  "phase": 36,
-  "phaseLabel": "Fase 36",
-  "phaseName": "Leitura profissional de palco, auto-scroll inteligente e visual de vocalista/músico",
+  "version": "v4.4.0",
+  "versionNumber": "4.4.0",
+  "phase": 37,
+  "phaseLabel": "Fase 37",
+  "phaseName": "Produto internacional, ajuda rápida, termos de uso e privacidade",
   "date": "22/06/2026",
   "isoDate": "2026-06-22",
-  "time": "16:23",
-  "stamp": "20260622-1623",
-  "environment": "public-beta",
+  "time": "18:04",
+  "stamp": "20260622-1804",
+  "environment": "public-beta-international",
   "costStrategy": "firebase-spark-free-first",
-  "resilience": "anti-break-v40"
+  "resilience": "anti-break-v41"
 }
