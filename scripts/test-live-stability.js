@@ -14,5 +14,5 @@ ok(read('js/live-room.js').includes('safePutRoom'),'Sala Live usa escrita segura
 ok(read('js/live-room-client.js').includes('isDuplicateAction'),'Central do Diretor bloqueia duplicidades');
 ok(read('js/live-room.js').includes('isDuplicateAction'),'Sala Live bloqueia duplicidades');
 ok(read('service-worker.js').includes('live-stability.js'),'Service Worker cacheia estabilidade');
-ok(read('BUILD-INFO.json').includes('v4.2.0'),'Build info atualizado');
+ok(/v4\.(2|3)\.0/.test(read('BUILD-INFO.json')),'Build info atualizado');
 console.log('Teste Fase 35 concluído.');

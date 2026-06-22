@@ -1,7 +1,7 @@
 {
   "name": "Stage Music",
   "short_name": "Stage Music",
-  "description": "Cifras, letras para vocalistas, Sala Live com convite rápido, estabilidade ao vivo e uso pelo navegador em qualquer celular.",
+  "description": "Cifras, letras para vocalistas, leitura profissional de palco, Sala Live com convite rápido e uso pelo navegador em qualquer celular.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080b14",

@@ -1,4 +1,8 @@
-# Stage Music v4.2.0
+# Stage Music — v4.3.0
+
+Fase 36: leitura profissional de palco, com perfis para vocalista e músico, auto-scroll inteligente e título fixo para uso ao vivo pelo navegador em qualquer celular.
+
+# Stage Music v4.3.0
 
 Fase 35 — Estabilidade de culto ao vivo e reconexão da Sala Live.
 

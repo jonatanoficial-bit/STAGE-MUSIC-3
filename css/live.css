@@ -306,3 +306,89 @@
   .director-dock-quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .director-quick-rail button{width:42px;min-height:41px}.director-quick-rail button small{font-size:.5rem}
 }
+
+
+/* Fase 36 — leitura profissional de palco */
+.live-reading-stage .live-reader,
+.live-reading-vocal .live-reader,
+.live-reading-musician .live-reader{
+  overscroll-behavior-y:contain;
+  scroll-behavior:smooth;
+  touch-action:pan-y;
+}
+.live-reading-stage .live-song-head,
+.live-reading-vocal .live-song-head,
+.live-reading-musician .live-song-head{
+  position:sticky;
+  top:calc(58px + env(safe-area-inset-top));
+  z-index:112;
+  border-color:rgba(255,255,255,.16);
+  background:linear-gradient(135deg,rgba(7,10,18,.94),rgba(15,21,38,.88));
+  backdrop-filter:blur(18px);
+  box-shadow:0 16px 44px rgba(0,0,0,.38);
+}
+.live-reading-vocal .lyrics-only-reader{
+  max-width:820px;
+  font-size:calc(var(--live-font,30px) * 1.16);
+  line-height:1.62;
+  font-weight:760;
+  letter-spacing:.008em;
+}
+.live-reading-musician .live-content{
+  font-size:calc(var(--live-font,30px) * .96);
+  line-height:1.32;
+}
+.live-reading-stage .live-content{
+  line-height:1.38;
+}
+.lyric-cue{
+  display:inline-block;
+  margin:.22em 0;
+  padding:.18em .55em;
+  border:1px solid rgba(255,193,90,.28);
+  border-radius:999px;
+  color:#ffe3ad;
+  background:rgba(255,193,90,.09);
+  font-size:.86em;
+  font-weight:900;
+}
+#live-autoscroll-mode[aria-pressed="true"]{
+  border-color:rgba(67,214,160,.44);
+  color:#c7ffe4;
+  background:rgba(67,214,160,.1);
+}
+#live-reading-profile{
+  border-color:rgba(139,108,255,.38);
+  background:linear-gradient(135deg,rgba(139,108,255,.15),rgba(68,199,255,.09));
+}
+.live-autoscroll-smart #live-scroll-toggle.primary{
+  box-shadow:0 0 0 1px rgba(67,214,160,.26),0 18px 44px rgba(0,0,0,.28);
+}
+.live-next{
+  backdrop-filter:blur(16px);
+}
+.live-reading-vocal .live-next{
+  opacity:.72;
+  border-color:rgba(67,214,160,.24);
+}
+.live-reading-vocal .live-section-strip{
+  position:sticky;
+  top:calc(154px + env(safe-area-inset-top));
+  z-index:100;
+  background:rgba(7,10,18,.76);
+  backdrop-filter:blur(14px);
+  border-radius:16px;
+}
+@media(max-width:700px){
+  .live-reading-stage .live-song-head,
+  .live-reading-vocal .live-song-head,
+  .live-reading-musician .live-song-head{top:calc(50px + env(safe-area-inset-top));padding:10px 11px;border-radius:18px}
+  .live-reading-vocal .lyrics-only-reader{font-size:calc(var(--live-font,30px) * 1.18);line-height:1.68;padding-bottom:70px}
+  .live-reading-vocal .live-section-strip{top:calc(138px + env(safe-area-inset-top))}
+  .live-reading-musician .chord-lyric-row{row-gap:.5em;margin-bottom:.66em}
+  .live-reading-musician .live-meta span{font-size:.72rem}
+}
+@media(max-width:390px){
+  .live-reading-vocal .lyrics-only-reader{font-size:calc(var(--live-font,30px) * 1.1);line-height:1.62}
+  #live-autoscroll-mode{font-size:.76rem;padding-inline:8px}
+}
