@@ -266,3 +266,43 @@
   .live-app.live-immersive .live-meta{max-width:38%;gap:5px}
   .live-app.live-immersive .live-meta span{padding:5px 7px}
 }
+
+/* Fase 30 — Modo Cantor e Modo Músico */
+.lyrics-only-reader{display:grid;gap:.28em;max-width:980px;margin:0 auto;padding:10px 0 42px;font-size:calc(var(--live-font,30px) * 1.04);line-height:1.5;font-weight:680;letter-spacing:.005em}
+.lyric-section-title{margin:1.15em 0 .35em;color:#9aebc9;font-size:.72em;letter-spacing:.16em;text-transform:uppercase;border-left:4px solid rgba(67,214,160,.75);padding-left:.7em}
+.lyric-line{margin:.05em 0;color:#fff;text-wrap:pretty}.lyric-space{height:.72em}.live-lyrics-mode #live-content{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.live-lyrics-mode .live-song-head{border-color:rgba(67,214,160,.32);box-shadow:0 14px 44px rgba(67,214,160,.08)}.live-lyrics-mode .live-meta span:last-child{background:rgba(67,214,160,.16);border-color:rgba(67,214,160,.28);color:#bdf4dc}.live-director-view-mode .live-meta span:last-child{background:rgba(139,108,255,.16);border-color:rgba(139,108,255,.28);color:#d7ceff}
+@media(max-width:700px){.lyrics-only-reader{font-size:calc(var(--live-font,30px) * 1.08);line-height:1.55;padding-inline:2px}.lyric-section-title{font-size:.64em;margin-top:1em}.live-meta span:last-child{display:inline-flex}}
+
+/* Fase 31 — Central do Diretor Mobile AAA */
+.director-dock-quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:2px}
+.director-dock-quick-grid button{min-height:42px;border-color:rgba(67,214,160,.22)!important;background:linear-gradient(135deg,rgba(67,214,160,.14),rgba(139,108,255,.13))!important;font-size:.82rem;letter-spacing:.01em}
+.director-dock-quick-grid button:active{transform:scale(.98)}
+.director-quick-rail{touch-action:manipulation;filter:drop-shadow(0 14px 28px rgba(0,0,0,.42))}
+.director-quick-rail button{position:relative;overflow:hidden}
+.director-quick-rail button::after{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(67,214,160,.18),rgba(139,108,255,.13));opacity:0;transition:opacity .18s ease}
+.director-quick-rail button:active::after,.director-quick-rail button:focus-visible::after{opacity:1}
+.director-quick-rail #director-quick-next{border-color:rgba(67,214,160,.42);background:rgba(18,44,39,.78)}
+.director-quick-rail #director-quick-message{border-color:rgba(255,211,107,.42);background:rgba(48,35,12,.78)}
+.director-quick-rail #director-quick-key{border-color:rgba(139,108,255,.48);background:rgba(28,20,58,.78)}
+.director-live-dock.open{animation:directorDockIn .18s ease-out both}
+@keyframes directorDockIn{from{opacity:.72;transform:translateY(18px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.director-dock-open .director-quick-rail{opacity:.14;pointer-events:none}
+.live-room-director .live-song-head{padding-right:64px}
+@media(max-width:900px){
+  .director-quick-rail{top:auto;bottom:calc(96px + env(safe-area-inset-bottom));right:5px;transform:none;opacity:.28;gap:6px}
+  .director-quick-rail:focus-within,.director-quick-rail:active{opacity:1}
+  .director-quick-rail button{width:46px;min-height:43px;border-radius:14px;padding:4px}
+  .director-quick-rail button span{font-size:1rem}.director-quick-rail button small{font-size:.52rem}
+  .director-live-dock{border-radius:24px 24px 0 0;left:0;right:0;bottom:0;width:auto;max-height:84dvh;padding:15px 14px 16px}
+  .director-live-dock header{position:sticky;top:-15px;z-index:2;background:linear-gradient(180deg,rgba(7,10,18,.99),rgba(7,10,18,.91));margin:-15px -14px 10px;padding:15px 14px 12px;border-radius:24px 24px 0 0}
+  .director-dock-song{position:sticky;top:58px;z-index:1;background:rgba(7,10,18,.94);margin:0 -6px;padding:12px 6px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .director-dock-key select{min-height:56px;font-size:1.15rem;text-align:center}
+  .director-dock-key-actions button,.director-dock-nav button,#director-live-send-message{min-height:52px}
+  .director-dock-quick-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .director-dock-quick-grid button{min-height:44px;font-size:.74rem;padding:7px 6px}
+  .live-room-director .live-reader{padding-right:58px}
+}
+@media(max-width:380px){
+  .director-dock-quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .director-quick-rail button{width:42px;min-height:41px}.director-quick-rail button small{font-size:.5rem}
+}

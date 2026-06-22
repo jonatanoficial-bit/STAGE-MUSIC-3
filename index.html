@@ -11,7 +11,9 @@
   <link rel='stylesheet' href='css/home.css' />
   <link rel='stylesheet' href='css/release-candidate.css' />
   <link rel="stylesheet" href="css/mobile-audit.css" />
-<link rel="stylesheet" href="css/workspace-cloud.css" /></head>
+  <link rel="stylesheet" href="css/workspace-cloud.css" />
+  <link rel='stylesheet' href='css/teste-massa.css' />
+</head>
 <body data-page='home'>
   <div class='app-shell'>
     <aside class='sidebar desktop-only'>
@@ -35,16 +37,17 @@
         <a href='eventos.html'>Eventos</a>
         <a href='configuracoes.html'>Configurações</a>
         <a href='diagnostico.html'>Diagnóstico</a>
+        <a href='teste-massa.html'>Teste em grupo</a>
       </nav>
 
       <div class='promo-card home-promo-card'>
-        <span class='visual-badge'>Teste aberto</span>
-        <h3>Centro de comando do palco</h3>
-        <p>Organize repertórios, acesse cifras e conduza sua equipe com segurança em qualquer aparelho.</p>
+        <span class='visual-badge'>Produto em teste público</span>
+        <h3>Toque com sua equipe em poucos passos</h3>
+        <p>Entre com Google, crie ou acesse uma Sala Live e teste cifra, letra, tom e avisos do diretor.</p>
         <div class='promo-status-list'>
-          <span>Offline first</span>
+          <span>Gratuito</span>
           <span>Sem anúncios</span>
-          <span>Versão de testes</span>
+          <span>Funciona no navegador</span>
         </div>
       </div>
     </aside>
@@ -63,13 +66,13 @@
 
       <section class='home-release-entry' aria-label='Primeiros passos e diagnóstico'>
         <div>
-          <span class='eyebrow'>STAGE MUSIC</span>
-          <strong>Entre, organize e toque com segurança.</strong>
-          <small>Use sua conta Google para manter cifras, repertórios e equipes salvos.</small>
+          <span class='eyebrow'>GUIA RÁPIDO</span>
+          <strong>Abra, entre na sala e toque com segurança.</strong>
+          <small>Escolha seu caminho: diretor, músico, vocalista ou teste da equipe.</small>
         </div>
         <div class='home-release-actions'>
           <button class='btn btn-secondary' type='button' id='open-onboarding'>Primeiros passos</button>
-          <a class='btn btn-outline' href='diagnostico.html'>Diagnóstico</a>
+          <a class='btn btn-outline' href='teste-massa.html'>Teste em grupo</a>
         </div>
       </section>
 
@@ -86,6 +89,41 @@
         </div>
       </section>
 
+
+      <section class='simple-journey-grid' aria-label='Caminhos rápidos para começar'>
+        <a class='journey-card' data-step='1' href='sala-live.html?join=1'>
+          <h3>Fui convidado</h3>
+          <p>Digite o código da sala ou abra o link recebido. Escolha vocalista para ver letra ou músico para ver cifra.</p>
+          <span class='btn btn-primary'>Entrar em Sala Live</span>
+        </a>
+        <a class='journey-card' data-step='2' href='minhas-listas.html'>
+          <h3>Sou diretor</h3>
+          <p>Monte o repertório, salve o tom de cada música e crie a Sala Live para a equipe.</p>
+          <span class='btn btn-secondary'>Preparar repertório</span>
+        </a>
+        <a class='journey-card' data-step='3' href='modo-live.html'>
+          <h3>Vou tocar ou cantar</h3>
+          <p>Abra o Modo Live com título fixo, cifra ou letra limpa e comandos destacados do diretor.</p>
+          <span class='btn btn-outline'>Abrir leitura</span>
+        </a>
+        <a class='journey-card' data-step='4' href='teste-massa.html'>
+          <h3>Teste com a equipe</h3>
+          <p>Use um checklist simples para validar celular, tablet, QR Code, tom, letra e avisos ao vivo.</p>
+          <span class='btn btn-outline'>Abrir roteiro</span>
+        </a>
+      </section>
+
+      <section class='journey-assist-card' aria-label='Teste público gratuito'>
+        <div>
+          <h3>Stage Music está em teste aberto e gratuito.</h3>
+          <p>O objetivo é facilitar o serviço de músicos, cantores e diretores musicais. Use em navegador comum no celular, tablet ou computador e envie retorno após o teste.</p>
+        </div>
+        <div class='journey-assist-actions'>
+          <a class='btn btn-primary' href='sala-live.html'>Criar ou entrar em sala</a>
+          <a class='btn btn-outline' href='diagnostico.html'>Diagnóstico do aparelho</a>
+        </div>
+      </section>
+
       <section class='hero-card home-command-hero'>
         <div class='hero-copy'>
           <span class='eyebrow'>STAGE MUSIC</span>
@@ -93,8 +131,8 @@
           <p class='hero-commercial-copy'>Escolha uma ação e comece agora.</p>
 
           <div class='hero-actions'>
-            <a class='btn btn-primary' href='modo-live.html'>Continuar no palco</a>
-            <a class='btn btn-outline' href='buscar-cifra.html'>Buscar cifra</a>
+            <a class='btn btn-primary' href='sala-live.html'>Criar ou entrar em Sala Live</a>
+            <a class='btn btn-outline' href='modo-live.html'>Abrir leitura</a>
             <a class='btn btn-secondary' href='minhas-listas.html'>Criar repertório</a>
           </div>
 
@@ -155,16 +193,16 @@
 
           <article class='mini-status-board'>
             <div class='mini-stat stat-board-item'>
-              <span>Build</span>
-              <strong data-build-version>v3.6.0</strong>
+              <span>Para músicos</span>
+              <strong>Cifra completa com tom transposto</strong>
             </div>
             <div class='mini-stat stat-board-item'>
-              <span>Status</span>
-              <strong data-build-phase>Live Premium seguro</strong>
+              <span>Para cantores</span>
+              <strong>Letra limpa com título fixo</strong>
             </div>
             <div class='mini-stat stat-board-item'>
-              <span>Diferencial</span>
-              <strong>Leitura ao vivo + setlists + foco em palco</strong>
+              <span>Para diretores</span>
+              <strong>Sala Live, QR Code e avisos em destaque</strong>
             </div>
           </article>
         </div>
@@ -408,12 +446,9 @@
 
   <nav class='bottom-nav mobile-only'>
     <a class='active' href='index.html'>Início</a>
-    <a href='modo-live.html'>Live</a>
     <a href='sala-live.html'>Sala</a>
-    <a href='buscar-cifra.html'>Buscar</a>
-    <a href='minhas-listas.html'>Listas</a>
-    <a href='equipes.html'>Equipes</a>
-    <a href='eventos.html'>Eventos</a>
+    <a href='modo-live.html'>Live</a>
+    <a href='buscar-cifra.html'>Cifras</a>
     <a class='bottom-login-link' href='login-cifra.html'>Entrar</a>
   </nav>
 

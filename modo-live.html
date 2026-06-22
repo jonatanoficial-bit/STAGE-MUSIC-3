@@ -2,9 +2,11 @@
 </head>
 <body data-page="modo-live" class="live-body"><main class="live-app" id="live-app">
 <aside id="live-director-alert" class="live-director-alert" role="alert" aria-live="assertive" hidden><span>DIREÇÃO MUSICAL</span><strong id="live-director-alert-text"></strong><small id="live-director-alert-time"></small></aside>
-<nav id="director-quick-rail" class="director-quick-rail" aria-label="Atalhos do diretor" hidden>
+<nav id="director-quick-rail" class="director-quick-rail" aria-label="Atalhos rápidos do diretor" hidden>
   <button id="director-quick-key" type="button" aria-label="Trocar tom"><span>♪</span><small>Tom</small></button>
   <button id="director-quick-message" type="button" aria-label="Enviar aviso"><span>!</span><small>Aviso</small></button>
+  <button id="director-quick-repeat" type="button" aria-label="Enviar comando repetir refrão"><span>↺</span><small>Repetir</small></button>
+  <button id="director-quick-voice" type="button" aria-label="Enviar comando somente vozes"><span>V</span><small>Voz</small></button>
   <button id="director-quick-next" type="button" aria-label="Próxima música"><span>→</span><small>Próxima</small></button>
 </nav>
 <button class="live-ui-toggle" id="live-ui-toggle" type="button" aria-expanded="true" aria-label="Ocultar ou mostrar controles">Ocultar controles</button><button id="director-dock-toggle" class="director-dock-toggle" type="button" hidden aria-expanded="false">Direção</button>
@@ -23,6 +25,14 @@
   <section class="director-dock-message">
     <label><span>Aviso em destaque para a banda</span><input id="director-live-message" maxlength="140" placeholder="Ex.: repetir refrão, só voz, final agora..."></label>
     <button id="director-live-send-message" type="button">Enviar para todos</button>
+    <div class="director-dock-quick-grid" id="director-dock-quick-grid" aria-label="Comandos rápidos do diretor">
+      <button type="button" data-director-message="Repetir refrão">Repetir refrão</button>
+      <button type="button" data-director-message="Somente vozes">Somente vozes</button>
+      <button type="button" data-director-message="Banda entra agora">Banda entra</button>
+      <button type="button" data-director-message="Segurar nesta parte">Segurar</button>
+      <button type="button" data-director-message="Final agora">Final agora</button>
+      <button type="button" data-director-message="Ponte novamente">Ponte</button>
+    </div>
     <div id="director-live-message-history" class="director-live-message-history"><small>Nenhum aviso enviado.</small></div>
   </section>
   <div class="director-dock-nav">
@@ -35,7 +45,7 @@
 <section class="live-song-head" id="live-song-head"><div><p id="live-artist">Sem artista</p><h1 id="live-title">Nenhum repertório ativo</h1></div><div class="live-meta"><span>Tom <b id="live-key">—</b></span><span><b id="live-bpm">—</b> BPM</span><span id="live-capo-wrap">Capo <b id="live-capo">0</b></span></div></section>
 <section class="live-progress-wrap" aria-label="Progresso da cifra"><div class="live-progress"><span id="live-progress-bar"></span></div><span id="live-progress-label">0%</span></section>
 <section class="live-section-strip" id="live-section-strip" aria-label="Seções da música"><button id="section-prev">← Parte</button><div id="section-buttons" class="section-buttons"><span>Sem seções</span></div><button id="section-next">Parte →</button></section>
-<section id="instrument-note-banner" class="instrument-note-banner" hidden><span id="instrument-note-icon">🎼</span><div><small id="instrument-note-profile">PERFIL</small><strong id="instrument-note-text"></strong></div></section><section class="live-reader" id="live-reader" tabindex="0" aria-live="polite"><div id="live-empty" class="live-empty"><strong>Aguardando apresentação</strong><p>Quando uma Sala Live ou repertório for aberto, o título da música e a cifra aparecerão aqui automaticamente.</p></div><div id="live-content" class="live-content" hidden></div></section>
+<section id="instrument-note-banner" class="instrument-note-banner" hidden><span id="instrument-note-icon">🎼</span><div><small id="instrument-note-profile">PERFIL</small><strong id="instrument-note-text"></strong></div></section><section class="live-reader" id="live-reader" tabindex="0" aria-live="polite"><div id="live-empty" class="live-empty"><strong>Nenhuma apresentação ativa</strong><p>Abra “Meus repertórios”, selecione uma lista com músicas e toque em “Iniciar Live”.</p><a class="btn btn-primary" href="minhas-listas.html">Abrir repertórios</a></div><div id="live-content" class="live-content" hidden></div></section>
 <aside class="live-next" id="live-next"><span>PRÓXIMA</span><strong id="live-next-title">Fim do repertório</strong></aside>
 <section class="live-command-panel" id="live-command-panel" aria-label="Painel de comandos do Modo Live"><nav class="live-controls" id="live-controls"><button class="live-control" id="live-prev-btn"><span>←</span><small>Anterior</small></button><button class="live-control" id="live-font-down"><span>A−</span><small>Fonte</small></button><button class="live-control primary" id="live-scroll-toggle"><span id="scroll-icon">▶</span><small id="scroll-label">Rolar</small></button><button class="live-control" id="live-font-up"><span>A+</span><small>Fonte</small></button><button class="live-control" id="live-next-btn"><span>→</span><small>Próxima</small></button></nav>
 <section class="live-scroll-tools" id="live-scroll-tools"><button id="scroll-slower">−</button><span>Velocidade <b id="scroll-speed-label">3</b></span><input id="scroll-speed" type="range" min="1" max="10" step="1" value="3" aria-label="Velocidade da rolagem"><button id="scroll-faster">+</button><button id="section-repeat" aria-pressed="false">Repetir parte</button><button id="live-fullscreen">Tela cheia</button></section>

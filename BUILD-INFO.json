@@ -1,15 +1,15 @@
 {
   "app": "Stage Music",
-  "version": "v3.6.0",
-  "versionNumber": "3.6.0",
-  "phase": 29,
-  "phaseLabel": "Fase 29",
-  "phaseName": "Live Premium seguro, limpeza comercial e título fixo",
-  "date": "17/06/2026",
-  "isoDate": "2026-06-17",
-  "time": "15:40",
-  "stamp": "20260617-1540",
+  "version": "v3.9.0",
+  "versionNumber": "3.9.0",
+  "phase": 32,
+  "phaseLabel": "Fase 32",
+  "phaseName": "Jornada simples para músicos e teste em grupo",
+  "date": "22/06/2026",
+  "isoDate": "2026-06-22",
+  "time": "14:42",
+  "stamp": "20260622-1442",
   "environment": "public-test",
   "costStrategy": "firebase-spark-free-first",
-  "resilience": "anti-break-v33"
+  "resilience": "anti-break-v36"
 }

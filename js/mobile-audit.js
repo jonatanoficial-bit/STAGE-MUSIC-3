@@ -5,7 +5,7 @@
   ['index.html','⌂','Início','home',''],
   ['sala-live.html','◎','Sala','sala-live',''],
   ['buscar-cifra.html','⌕','Cifras','buscar-cifra',''],
-  ['minhas-listas.html','☷','Listas','minhas-listas',''],
+  ['teste-massa.html','✓','Teste','teste-massa',''],
   [logged?'configuracoes.html':'login-cifra.html',logged?'●':'G',logged?'Conta':'Entrar',logged?'configuracoes':'login-cifra','login-priority']
  ]}
  function mount(){

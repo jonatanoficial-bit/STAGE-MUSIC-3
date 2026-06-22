@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Teste em Grupo | Stage Music</title>
+  <meta name="theme-color" content="#6d4aff" />
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/mobile-audit.css" />
+  <link rel="stylesheet" href="css/teste-massa.css" />
+</head>
+<body data-page="teste-massa">
+  <main class="page-shell test-page">
+    <header class="test-hero">
+      <a href="index.html" class="back-link">← Início</a>
+      <span class="eyebrow">TESTE EM GRUPO</span>
+      <h1>Valide o Stage Music com sua equipe.</h1>
+      <p>Este roteiro ajuda uma pessoa leiga a testar o fluxo real: diretor cria sala, músicos entram pelo QR Code, vocalistas veem letra limpa, instrumentistas veem cifra, e todos recebem os comandos ao vivo.</p>
+      <div class="first-use-strip">
+        <div><strong>Como usar</strong><span>Marque cada etapa durante um ensaio ou culto teste. O progresso fica salvo neste aparelho e pode ser exportado no final.</span></div>
+        <a class="btn btn-primary" href="sala-live.html">Criar ou entrar em Sala Live</a>
+      </div>
+    </header>
+
+    <section class="test-progress" aria-label="Resumo do teste">
+      <article><span>Etapas</span><strong id="test-total">0</strong></article>
+      <article><span>Concluídas</span><strong id="test-done">0</strong></article>
+      <article><span>Progresso</span><strong id="test-percent">0%</strong></article>
+      <article><span>Status</span><strong id="test-status">Iniciar</strong></article>
+    </section>
+
+    <section class="test-layout">
+      <div class="section-card test-checklist" id="test-checklist" aria-label="Checklist de teste em massa">
+        <label class="test-item"><input type="checkbox" data-test="login"><div><strong>Login confirmado</strong><small>Diretor e participantes conseguem entrar ou continuar como convidados conforme o fluxo da sala.</small></div><span class="status-pill">Conta</span></label>
+        <label class="test-item"><input type="checkbox" data-test="setlist"><div><strong>Repertório preparado</strong><small>O diretor possui uma lista com pelo menos duas músicas e conteúdo de cifra completo.</small></div><span class="status-pill">Lista</span></label>
+        <label class="test-item"><input type="checkbox" data-test="room"><div><strong>Sala Live criada</strong><small>A sala mostra código, QR Code e link para convidar a equipe.</small></div><span class="status-pill">Sala</span></label>
+        <label class="test-item"><input type="checkbox" data-test="vocal"><div><strong>Vocalista em letra limpa</strong><small>Quem escolhe Vocal ou Back vocal vê título fixo e letra sem acordes.</small></div><span class="status-pill">Letra</span></label>
+        <label class="test-item"><input type="checkbox" data-test="musician"><div><strong>Instrumentista em cifra</strong><small>Quem escolhe instrumento vê acordes, tom atual e cifra completa.</small></div><span class="status-pill">Cifra</span></label>
+        <label class="test-item"><input type="checkbox" data-test="title"><div><strong>Título sempre visível</strong><small>Durante a leitura, a música atual aparece claramente no topo da tela.</small></div><span class="status-pill">Ao vivo</span></label>
+        <label class="test-item"><input type="checkbox" data-test="next"><div><strong>Troca de música segura</strong><small>O diretor troca de música por botão. A rolagem vertical não troca a música por acidente.</small></div><span class="status-pill">Navegação</span></label>
+        <label class="test-item"><input type="checkbox" data-test="key"><div><strong>Troca de tom real</strong><small>O diretor seleciona um tom como <code>G</code>, <code>Bb</code> ou <code>F#m</code> e a cifra muda de verdade para todos.</small></div><span class="status-pill">Tom</span></label>
+        <label class="test-item"><input type="checkbox" data-test="message"><div><strong>Aviso do diretor em destaque</strong><small>Mensagem como “Repetir refrão” aparece grande, clara e por alguns segundos nos aparelhos conectados.</small></div><span class="status-pill">Aviso</span></label>
+        <label class="test-item"><input type="checkbox" data-test="mobile"><div><strong>Mobile aprovado</strong><small>Testado em celular real, com botões laterais discretos e leitura sem elementos atrapalhando.</small></div><span class="status-pill">Celular</span></label>
+        <label class="test-item"><input type="checkbox" data-test="tablet"><div><strong>Tablet aprovado</strong><small>Leitura confortável em tablet na vertical ou horizontal.</small></div><span class="status-pill">Tablet</span></label>
+        <label class="test-item"><input type="checkbox" data-test="reconnect"><div><strong>Reconexão testada</strong><small>Participante fecha e abre novamente o link da sala, entra de novo e acompanha a mesma apresentação.</small></div><span class="status-pill">Internet</span></label>
+      </div>
+
+      <aside class="test-side">
+        <article class="test-note">
+          <h3>Teste mínimo recomendado</h3>
+          <ul>
+            <li>1 diretor no celular ou computador.</li>
+            <li>1 vocalista no celular.</li>
+            <li>1 instrumentista no celular ou tablet.</li>
+            <li>Pelo menos 2 músicas no repertório.</li>
+          </ul>
+        </article>
+        <article class="test-note">
+          <h3>Relatório rápido</h3>
+          <p>Use este texto para enviar retorno ao Jonatan Vale depois do teste.</p>
+          <div class="test-actions">
+            <button class="btn btn-primary" id="copy-test-report" type="button">Copiar relatório</button>
+            <button class="btn btn-outline" id="reset-test" type="button">Limpar checklist</button>
+          </div>
+          <pre id="test-report" class="test-report">Carregando relatório…</pre>
+        </article>
+        <article class="test-note">
+          <h3>Próximos passos</h3>
+          <p>Depois do teste, abra Diagnóstico no aparelho que apresentou problema e envie o resultado junto com o modelo do celular.</p>
+          <a class="btn btn-secondary wide" href="diagnostico.html">Abrir Diagnóstico</a>
+        </article>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="app-footer"><span data-build-info>Carregando versão…</span></footer>
+  <script src="js/build-info.js"></script>
+  <script src="js/resilience.js"></script>
+  <script src="js/teste-massa.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/mobile-audit.js"></script>
+</body>
+</html>

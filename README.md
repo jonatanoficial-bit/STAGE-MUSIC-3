@@ -1,7 +1,20 @@
+# Stage Music v3.9.0
+
+Build pública com jornada simples para usuários leigos, roteiro de teste em grupo, entrada mais clara para Sala Live e preservação da base Firebase.
+
+## Destaques da Fase 32
+- Home reorganizada por caminhos: convidado, diretor, músico/cantor e teste em equipe.
+- Nova página `teste-massa.html` com checklist para validação em celular, tablet e computador.
+- Relatório rápido copiável para retorno dos testes da igreja.
+- Textos públicos de fase substituídos por linguagem comercial e intuitiva.
+- Navegação mobile com atalho de teste em grupo.
+- Firebase, Firestore e regras preservados.
+
+
 # Stage Music
 
-**Build atual:** v3.6.0
-**Versão pública de teste:** Live Premium seguro, limpeza comercial e título fixo
+**Build atual:** v3.3.0  
+**Fase:** 26 — Central do Diretor, tons por repertório e operação mobile  
 **Gerada em:** 16/06/2026 às 18:26 (America/Sao_Paulo)
 
 Aplicativo PWA mobile-first para cifras, repertórios, catálogo global e operação profissional ao vivo.

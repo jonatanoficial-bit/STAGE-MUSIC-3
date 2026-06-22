@@ -1,12 +1,11 @@
-# Changelog — Stage Music
-
-## v3.6.0 — Fase 29 — Live Premium seguro — 17/06/2026 15:40
-- Limpeza comercial de textos públicos: marcas de fase e release foram removidas da experiência principal.
-- Modo Live mantém título da música visível, inclusive em leitura imersiva.
-- Tela vazia do Live não exibe mais botão grande de repertório para quem entra em apresentação.
-- Bloqueio de troca acidental de música ao rolar a cifra no celular: troca por gesto só acontece com swipe horizontal intencional.
-- Convite da Sala Live fica mais direto e sem distrações para músicos convidados.
-- Firebase, Firestore, Sala Live, catálogo global e sincronização foram preservados.
+## v3.9.0 — Fase 32 — Jornada simples e teste em massa — 22/06/2026 14:42
+- Criação da página `teste-massa.html` com checklist guiado para testes reais em igreja.
+- Home reorganizada com quatro caminhos claros: convidado, diretor, leitura e teste da equipe.
+- Linguagem pública limpa, reduzindo textos técnicos e de fase nas telas principais.
+- Relatório de teste copiável para retorno de músicos, vocalistas e diretores.
+- Navegação mobile com atalho para teste em grupo.
+- Service Worker atualizado para cache da nova página.
+- Firebase, Firestore, catálogo global, Sala Live e sincronização preservados.
 
 # Stage Music — Changelog
 

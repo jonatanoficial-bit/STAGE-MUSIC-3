@@ -34,3 +34,7 @@
 .room-invite-mode .room-stats-grid{display:none!important}
 .room-invite-mode .room-join-card{order:-1;border-color:rgba(67,214,160,.34);box-shadow:0 24px 70px rgba(0,0,0,.45)}
 .room-invite-mode .room-main-cta{background:linear-gradient(135deg,#43d6a0,#44c7ff);color:#06121a}
+
+/* Fase 30 — visualização por função */
+.member-view-select{display:grid;gap:4px;min-width:142px}.member-view-select span{font-size:.72rem;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.08em}.member-view-select select{min-height:38px;border:1px solid rgba(67,214,160,.24);border-radius:12px;background:rgba(7,10,18,.82);color:#fff;padding:0 10px;font-weight:800}.room-member{align-items:center}.room-form-grid label select#room-view-mode{border-color:rgba(67,214,160,.25)}
+@media(max-width:640px){.room-member{display:grid}.member-view-select{width:100%;min-width:0}.member-view-select select{width:100%}}

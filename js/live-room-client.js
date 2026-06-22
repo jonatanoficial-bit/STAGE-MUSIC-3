@@ -13,6 +13,9 @@ let lastCommandAt='',lastFlowAt='',remoteStop=null,remoteCode='',dockBound=false
 function now(){return new Date().toISOString()}
 function context(){const current=read(CURRENT_KEY,null),rooms=read(ROOMS_KEY,{});return current?.code?{current,room:rooms[current.code]||null,rooms}:null}
 function isDirector(ctx=context()){return !!(ctx?.room&&ctx.current?.role==='director'&&ctx.room.directorId===ctx.current.memberId)}
+function activeMember(ctx=context()){return ctx?.room?.members?.find(m=>m.id===ctx.current?.memberId)||null}
+function inferViewMode(member,ctx=context()){if(isDirector(ctx))return 'director';const mode=member?.viewMode;if(mode==='lyrics'||mode==='chords')return mode;const value=String(member?.instrument||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();return /(vocal|cantor|back|voz|soprano|alto|tenor|contralto)/.test(value)?'lyrics':'chords'}
+function viewModeLabel(mode){return mode==='lyrics'?'Letra':mode==='director'?'Direção':'Cifra'}
 function resolveList(room){const localLists=read(SETLIST_KEY,[]);return sharing?.resolveRoomSetlist?.(room,localLists)||(localLists.find(item=>item.id===room?.setlistId))||null}
 function roomSong(room,list=resolveList(room)){return list?.songs?.[Number(room?.index)||0]||null}
 function savedKey(room,list=resolveList(room)){const song=roomSong(room,list);return String(song?.key||song?.originalKey||'C')}
@@ -118,19 +121,25 @@ async function saveDirectorKey(){
  window.StageMusicToast?.(`Tom ${selected} salvo somente neste repertório.`);
  renderDirectorDock(ctx,resolveList(ctx.room));
 }
-async function sendDirectorMessage(){
+async function sendDirectorMessageText(message,{clearInput=false}={}){
  const ctx=context();if(!isDirector(ctx))return window.StageMusicToast?.('Somente o diretor pode enviar avisos.');
- const input=document.getElementById('director-live-message'),message=String(input?.value||'').trim();if(!message)return window.StageMusicToast?.('Digite uma mensagem para a banda.');
+ const text=String(message||'').trim();if(!text)return window.StageMusicToast?.('Digite uma mensagem para a banda.');
  const auth=window.StageMusicAuth?.getState?.()||{},author=auth.name||'Direção musical';
- ctx.room.command=message;ctx.room.commandAt=now();ctx.room.commandType='message';ctx.room.messages=[{id:`msg_${Date.now()}`,text:message,at:ctx.room.commandAt,author},...(ctx.room.messages||[])].slice(0,20);ctx.room.updatedAt=now();
- await persistRoom(ctx,ctx.room).catch(()=>{});if(input)input.value='';showDirectorAlert(ctx.room);renderDirectorDock(ctx,resolveList(ctx.room));window.StageMusicToast?.('Aviso enviado para todos.');
+ ctx.room.command=text;ctx.room.commandAt=now();ctx.room.commandType='message';ctx.room.messages=[{id:`msg_${Date.now()}_${Math.random().toString(36).slice(2,6)}`,text,at:ctx.room.commandAt,author},...(ctx.room.messages||[])].slice(0,20);ctx.room.updatedAt=now();
+ await persistRoom(ctx,ctx.room).catch(()=>{});
+ if(clearInput){const input=document.getElementById('director-live-message');if(input)input.value=''}
+ navigator.vibrate?.(38);showDirectorAlert(ctx.room);renderDirectorDock(ctx,resolveList(ctx.room));window.StageMusicToast?.('Aviso enviado para todos.');
 }
-function openDirectorDock(focusId){const dock=document.getElementById('director-live-dock'),toggle=document.getElementById('director-dock-toggle');if(!dock)return;dock.classList.add('open');dock.hidden=false;toggle?.setAttribute('aria-expanded','true');setTimeout(()=>document.getElementById(focusId)?.focus(),120)}
+async function sendDirectorMessage(){
+ const input=document.getElementById('director-live-message');
+ return sendDirectorMessageText(input?.value,{clearInput:true});
+}
+function openDirectorDock(focusId){const dock=document.getElementById('director-live-dock'),toggle=document.getElementById('director-dock-toggle');if(!dock)return;dock.classList.add('open');dock.hidden=false;toggle?.setAttribute('aria-expanded','true');document.body.classList.add('director-dock-open');setTimeout(()=>document.getElementById(focusId)?.focus(),120)}
 function bindDirectorDock(){
  if(dockBound)return;dockBound=true;
  const toggle=document.getElementById('director-dock-toggle'),dock=document.getElementById('director-live-dock');
- toggle?.addEventListener('click',()=>{dock.classList.toggle('open');toggle.setAttribute('aria-expanded',String(dock.classList.contains('open')));dock.hidden=!dock.classList.contains('open');sync()});
- document.getElementById('director-dock-close')?.addEventListener('click',()=>{dock.classList.remove('open');dock.hidden=true;toggle?.setAttribute('aria-expanded','false')});
+ toggle?.addEventListener('click',()=>{dock.classList.toggle('open');toggle.setAttribute('aria-expanded',String(dock.classList.contains('open')));dock.hidden=!dock.classList.contains('open');document.body.classList.toggle('director-dock-open',dock.classList.contains('open'));sync()});
+ document.getElementById('director-dock-close')?.addEventListener('click',()=>{dock.classList.remove('open');dock.hidden=true;toggle?.setAttribute('aria-expanded','false');document.body.classList.remove('director-dock-open')});
  document.getElementById('director-live-apply-key')?.addEventListener('click',applyDirectorKey);
  document.getElementById('director-live-save-key')?.addEventListener('click',saveDirectorKey);
  document.getElementById('director-live-reset-key')?.addEventListener('click',resetDirectorKey);
@@ -140,7 +149,10 @@ function bindDirectorDock(){
  document.getElementById('director-live-message')?.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();sendDirectorMessage()}});
  document.getElementById('director-quick-key')?.addEventListener('click',()=>openDirectorDock('director-live-key'));
  document.getElementById('director-quick-message')?.addEventListener('click',()=>openDirectorDock('director-live-message'));
+ document.getElementById('director-quick-repeat')?.addEventListener('click',()=>sendDirectorMessageText('Repetir refrão'));
+ document.getElementById('director-quick-voice')?.addEventListener('click',()=>sendDirectorMessageText('Somente vozes'));
  document.getElementById('director-quick-next')?.addEventListener('click',()=>window.StageMusicLiveMode?.goToIndex?.((window.StageMusicLiveMode?.getIndex?.()||0)+1));
+ document.getElementById('director-dock-quick-grid')?.addEventListener('click',event=>{const button=event.target.closest('[data-director-message]');if(button)sendDirectorMessageText(button.dataset.directorMessage)});
 }
 function sync(){
  ensureRemoteSubscription();
@@ -158,8 +170,9 @@ function sync(){
   if(changed){write(ACTIVE,target);if(window.StageMusicLiveMode?.getSetlist?.())window.StageMusicLiveMode.refreshSetlist(target);else{location.reload();return}}
   window.StageMusicLiveMode?.goToIndex?.(Number(room.index||0),{broadcast:false});
  }
- const director=isDirector(ctx);
- if(badge){badge.textContent=director?`Direção • ${room.code}`:`Acompanhando • ${room.code}`;badge.href='sala-live.html'}
+ const director=isDirector(ctx),member=activeMember(ctx),viewMode=inferViewMode(member,ctx);
+ window.StageMusicLiveMode?.setDisplayMode?.(viewMode);
+ if(badge){badge.textContent=director?`Direção • ${room.code}`:`${viewModeLabel(viewMode)} • ${room.code}`;badge.href='sala-live.html'}
  const prev=document.getElementById('live-prev-btn'),next=document.getElementById('live-next-btn');
  if(!director){if(prev)prev.disabled=true;if(next)next.disabled=true}
  if(room.command&&room.commandAt!==lastCommandAt){lastCommandAt=room.commandAt;banner.hidden=false;banner.textContent=room.command;showDirectorAlert(room);window.StageMusicToast?.(room.command);clearTimeout(sync.t);sync.t=setTimeout(()=>banner.hidden=true,6500)}
