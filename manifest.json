@@ -1,7 +1,7 @@
 {
   "name": "Stage Music",
   "short_name": "Stage Music",
-  "description": "Cifras, repertórios, letra para vocalistas e Sala Live sincronizada para equipes de música.",
+  "description": "Cifras, letras para vocalistas, Sala Live e feedback de teste para equipes de música.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080b14",
@@ -73,6 +73,32 @@
       "short_name": "Teste",
       "description": "Validar o app com a equipe",
       "url": "./teste-massa.html",
+      "icons": [
+        {
+          "src": "assets/icons/favicon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Enviar feedback",
+      "short_name": "Feedback",
+      "description": "Enviar retorno do teste",
+      "url": "./feedback.html",
+      "icons": [
+        {
+          "src": "assets/icons/favicon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Instalar no celular",
+      "short_name": "Instalar",
+      "description": "Ver como usar no navegador e adicionar à tela inicial",
+      "url": "./instalar.html",
       "icons": [
         {
           "src": "assets/icons/favicon.svg",

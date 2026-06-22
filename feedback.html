@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Feedback — Stage Music</title>
+  <meta name="theme-color" content="#6d4aff" />
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/mobile-audit.css" />
+  <link rel="stylesheet" href="css/teste-massa.css" />
+  <link rel="stylesheet" href="css/feedback.css" />
+</head>
+<body data-page="feedback">
+  <main class="main-content standalone-page feedback-page">
+    <section class="feedback-hero">
+      <span class="eyebrow">TESTE EM MASSA</span>
+      <h1>Envie um retorno simples sobre o Stage Music.</h1>
+      <p>Este formulário ajuda a entender o que funcionou, o que ficou confuso e o que precisa melhorar no celular, tablet ou computador.</p>
+      <div class="feedback-status" id="feedback-cloud-status">Feedback salvo neste aparelho. Entre com Conta Google para tentar salvar também na sua conta.</div>
+    </section>
+
+    <form class="feedback-form" id="feedback-form">
+      <fieldset>
+        <legend>Quem testou</legend>
+        <label>Nome ou apelido
+          <input id="tester-name" name="testerName" type="text" placeholder="Ex.: João, Maria, Back vocal 1" autocomplete="name" />
+        </label>
+        <label>Função no teste
+          <select id="tester-role" name="testerRole">
+            <option value="Diretor musical">Diretor musical</option>
+            <option value="Vocalista">Vocalista</option>
+            <option value="Back vocal">Back vocal</option>
+            <option value="Músico">Músico</option>
+            <option value="Técnico de som">Técnico de som</option>
+            <option value="Observador">Observador</option>
+          </select>
+        </label>
+        <label>Aparelho usado
+          <input id="device-info" name="deviceInfo" type="text" placeholder="Ex.: Samsung A15, iPhone 11, notebook Windows" />
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Resultado do uso</legend>
+        <label>Nota geral
+          <select id="overall-score" name="overallScore">
+            <option value="5">5 — Muito bom</option>
+            <option value="4">4 — Bom, com pequenos ajustes</option>
+            <option value="3">3 — Funciona, mas ficou confuso</option>
+            <option value="2">2 — Tive dificuldade</option>
+            <option value="1">1 — Não consegui usar</option>
+          </select>
+        </label>
+        <label>O que foi testado
+          <select id="tested-area" name="testedArea">
+            <option value="Sala Live">Sala Live</option>
+            <option value="Modo Live">Modo Live</option>
+            <option value="Letra para vocalista">Letra para vocalista</option>
+            <option value="Cifra para músico">Cifra para músico</option>
+            <option value="Criação de repertório">Criação de repertório</option>
+            <option value="Catálogo global">Catálogo global</option>
+            <option value="Teste geral">Teste geral</option>
+          </select>
+        </label>
+        <label>O que funcionou bem
+          <textarea id="worked-well" name="workedWell" rows="4" placeholder="Ex.: consegui entrar pelo QR Code, a letra ficou clara, o aviso apareceu bem..."></textarea>
+        </label>
+        <label>O que ficou confuso ou falhou
+          <textarea id="issue-found" name="issueFound" rows="4" placeholder="Ex.: não achei o botão, a tela ficou pequena, a sala não abriu..."></textarea>
+        </label>
+        <label>Sugestão de melhoria
+          <textarea id="suggestion" name="suggestion" rows="4" placeholder="Ex.: deixar tal botão maior, mudar nome de uma tela, melhorar leitura..."></textarea>
+        </label>
+      </fieldset>
+
+      <div class="feedback-actions">
+        <button class="btn btn-primary" type="submit">Enviar feedback</button>
+        <button class="btn btn-secondary" type="button" id="copy-feedback">Copiar feedback</button>
+        <button class="btn btn-outline" type="button" id="share-feedback">Compartilhar</button>
+      </div>
+    </form>
+
+    <section class="feedback-preview-card">
+      <h2>Texto pronto para enviar</h2>
+      <pre id="feedback-preview" class="feedback-preview">Preencha o formulário para gerar o retorno.</pre>
+    </section>
+  </main>
+
+  <nav class="bottom-nav mobile-only" aria-label="Navegação principal mobile">
+    <a href="index.html">Início</a>
+    <a href="sala-live.html">Sala</a>
+    <a href="teste-massa.html">Teste</a>
+    <a href="instalar.html">Instalar</a>
+    <a class="active" href="feedback.html">Feedback</a>
+  </nav>
+
+  <footer class="app-footer"><span data-build-info>Carregando versão…</span></footer>
+  <script src="js/build-info.js"></script>
+  <script src="js/resilience.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/firebase-runtime.js"></script>
+  <script src="js/feedback.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/mobile-audit.js"></script>
+</body>
+</html>
