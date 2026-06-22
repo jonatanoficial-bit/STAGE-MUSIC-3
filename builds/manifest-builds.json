@@ -1,20 +1,35 @@
 {
   "current": {
     "app": "Stage Music",
-    "version": "v4.0.0",
-    "versionNumber": "4.0.0",
-    "phase": 33,
-    "phaseLabel": "Fase 33",
-    "phaseName": "Beta pública, instalação no navegador e feedback estruturado",
+    "version": "v4.5.0",
+    "versionNumber": "4.5.0",
+    "phase": 38,
+    "phaseLabel": "Fase 38",
+    "phaseName": "Release Candidate final, homologação e limpeza de publicação",
     "date": "22/06/2026",
     "isoDate": "2026-06-22",
-    "time": "15:10",
-    "stamp": "20260622-1510",
-    "environment": "public-beta",
+    "time": "18:38",
+    "stamp": "20260622-1838",
+    "environment": "release-candidate-final",
     "costStrategy": "firebase-spark-free-first",
-    "resilience": "anti-break-v37"
+    "resilience": "anti-break-v42"
   },
   "builds": [
+    {
+      "app": "Stage Music",
+      "version": "v4.5.0",
+      "versionNumber": "4.5.0",
+      "phase": 38,
+      "phaseLabel": "Fase 38",
+      "phaseName": "Release Candidate final, homologação e limpeza de publicação",
+      "date": "22/06/2026",
+      "isoDate": "2026-06-22",
+      "time": "18:38",
+      "stamp": "20260622-1838",
+      "environment": "release-candidate-final",
+      "costStrategy": "firebase-spark-free-first",
+      "resilience": "anti-break-v42"
+    },
     {
       "app": "Stage Music",
       "version": "v4.2.0",

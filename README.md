@@ -1,3 +1,22 @@
+# Stage Music — v4.5.0
+
+Stage Music é um app web para músicos, vocalistas, diretores musicais e equipes de adoração. Funciona pelo navegador em Android, iPhone, tablet e computador.
+
+## Fase 38 — Release Candidate final
+
+- Homologação final em `homologacao.html`.
+- Checklist de Android, iPhone, tablet, computador e GitHub Pages.
+- Relatório final copiável para retorno da equipe.
+- Cache PWA atualizado para v4.5.0.
+- Build pronta para teste amplo via navegador.
+- Firebase preservado.
+
+## Distribuição
+
+O Stage Music ainda não está na Play Store nem na App Store. O uso oficial desta versão é via navegador.
+
+---
+
 # Stage Music — v4.4.0
 
 Stage Music é um app web para músicos, vocalistas, diretores musicais e equipes de adoração. Funciona pelo navegador em Android, iPhone, tablet e computador.

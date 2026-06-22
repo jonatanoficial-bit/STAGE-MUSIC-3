@@ -1,7 +1,7 @@
 {
   "name": "Stage Music",
   "short_name": "Stage Music",
-  "description": "Stage Music: live chord charts, lyrics, setlists, Live Room and director cues in Portuguese, English and Spanish, running in the browser on any phone.",
+  "description": "Stage Music: Release Candidate final for live chord charts, lyrics, setlists, Live Room and director cues in Portuguese, English and Spanish, running in the browser on Android, iPhone, tablets and computers.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080b14",
@@ -138,6 +138,19 @@
       "short_name": "Produto",
       "description": "Conhecer o Stage Music",
       "url": "./produto.html",
+      "icons": [
+        {
+          "src": "assets/icons/favicon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Homologação final",
+      "short_name": "Final",
+      "description": "Checklist final antes de divulgar",
+      "url": "./homologacao.html",
       "icons": [
         {
           "src": "assets/icons/favicon.svg",

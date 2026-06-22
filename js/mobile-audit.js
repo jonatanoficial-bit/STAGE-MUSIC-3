@@ -5,7 +5,7 @@
   ['index.html','⌂','Início','home',''],
   ['sala-live.html','◎','Sala','sala-live',''],
   ['buscar-cifra.html','⌕','Cifras','buscar-cifra',''],
-  ['ajuda.html','?','Ajuda','ajuda',''],
+  ['homologacao.html','✓','Final','homologacao',''],
   [logged?'configuracoes.html':'login-cifra.html',logged?'●':'G',logged?'Conta':'Entrar',logged?'configuracoes':'login-cifra','login-priority']
  ]}
  function mount(){

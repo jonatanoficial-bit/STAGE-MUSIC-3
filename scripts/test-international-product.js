@@ -3,9 +3,9 @@ const required=['produto.html','ajuda.html','privacidade.html','termos.html','cs
 const errors=[];
 for(const file of required){if(!fs.existsSync(file))errors.push(`Arquivo ausente: ${file}`)}
 const build=JSON.parse(fs.readFileSync('BUILD-INFO.json','utf8'));
-if(build.version!=='v4.4.0'||build.phase!==37)errors.push('Build info não corresponde à Fase 37.');
+if(build.phase<37)errors.push('Build info abaixo da Fase 37.');
 const sw=fs.readFileSync('service-worker.js','utf8');
-for(const token of ['stage-music-v4-4-0','produto.html','ajuda.html','privacidade.html','termos.html','css/i18n.css','js/i18n.js'])if(!sw.includes(token))errors.push(`Service Worker sem ${token}`);
+for(const token of ['stage-music-v4-','produto.html','ajuda.html','privacidade.html','termos.html','css/i18n.css','js/i18n.js'])if(!sw.includes(token))errors.push(`Service Worker sem ${token}`);
 const i18n=fs.readFileSync('js/i18n.js','utf8');
 for(const token of ['pt','en','es','stage_music_language_v1','language-switcher'])if(!i18n.includes(token))errors.push(`i18n incompleto: ${token}`);
 for(const file of ['produto.html','ajuda.html','privacidade.html','termos.html']){

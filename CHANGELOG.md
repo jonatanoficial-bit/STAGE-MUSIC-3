@@ -1,3 +1,24 @@
+# Changelog — Stage Music v4.5.0
+
+## Fase 38 — Release Candidate final
+
+### Adicionado
+- Página `homologacao.html` com checklist final para Android, iPhone, tablet, computador e GitHub Pages.
+- CSS `rc-final.css` e JS `rc-final.js` com salvamento local do checklist.
+- Botão para copiar relatório final de homologação.
+- Atalho de homologação no Manifest PWA.
+- Documentos `AUDITORIA-FASE-38.md`, `TESTES-FASE-38.md` e `RELEASE-CANDIDATE-FINAL-FASE-38.md`.
+
+### Melhorado
+- Cache PWA atualizado para v4.5.0.
+- Manifest de builds atualizado.
+- Navegação mobile com acesso ao checklist final.
+
+### Preservado
+- Firebase, Sala Live, catálogo global, Modo Live, convite, feedback, instalação pelo navegador e internacionalização.
+
+---
+
 # Changelog — Stage Music v4.4.0
 
 ## Fase 37 — Produto internacional

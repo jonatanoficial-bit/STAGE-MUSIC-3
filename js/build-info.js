@@ -1,15 +1,15 @@
 window.STAGE_MUSIC_BUILD = {
   "app": "Stage Music",
-  "version": "v4.2.0",
-  "versionNumber": "4.2.0",
-  "phase": 35,
-  "phaseLabel": "Fase 35",
-  "phaseName": "Estabilidade de culto ao vivo e reconexão da Sala Live",
+  "version": "v4.5.0",
+  "versionNumber": "4.5.0",
+  "phase": 38,
+  "phaseLabel": "Fase 38",
+  "phaseName": "Release Candidate final, homologação e limpeza de publicação",
   "date": "22/06/2026",
   "isoDate": "2026-06-22",
-  "time": "15:58",
-  "stamp": "20260622-1558",
-  "environment": "public-beta",
+  "time": "18:38",
+  "stamp": "20260622-1838",
+  "environment": "release-candidate-final",
   "costStrategy": "firebase-spark-free-first",
-  "resilience": "anti-break-v39"
+  "resilience": "anti-break-v42"
 };
