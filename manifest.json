@@ -1,0 +1,72 @@
+{
+  "name": "Stage Music",
+  "short_name": "Stage Music",
+  "description": "Cifras, repertórios e Sala Live sincronizada para músicos, bandas e ministérios.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#080b14",
+  "theme_color": "#6d4aff",
+  "icons": [
+    {
+      "src": "assets/icons/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "id": "./",
+  "scope": "./",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
+  "lang": "pt-BR",
+  "orientation": "any",
+  "categories": [
+    "music",
+    "productivity",
+    "utilities"
+  ],
+  "shortcuts": [
+    {
+      "name": "Modo Live",
+      "short_name": "Live",
+      "description": "Abrir leitura ao vivo",
+      "url": "./modo-live.html",
+      "icons": [
+        {
+          "src": "assets/icons/favicon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Buscar cifras",
+      "short_name": "Cifras",
+      "description": "Abrir a biblioteca",
+      "url": "./buscar-cifra.html",
+      "icons": [
+        {
+          "src": "assets/icons/favicon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Sala Live",
+      "short_name": "Sala",
+      "description": "Criar ou entrar em uma sala",
+      "url": "./sala-live.html",
+      "icons": [
+        {
+          "src": "assets/icons/favicon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ]
+}

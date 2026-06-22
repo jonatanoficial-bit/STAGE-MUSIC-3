@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Stage Music • Central Administrativa</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/global-catalog.css" />
+  <link rel="stylesheet" href="css/catalog-admin.css" />
+  <link rel="stylesheet" href="css/mobile-audit.css" />
+</head>
+<body data-page="catalogo-admin">
+  <main class="page-shell catalog-admin-page">
+    <header class="page-header compact catalog-admin-header">
+      <div class="catalog-admin-top-actions">
+        <a href="inserir-cifra.html" class="back-link">← Editor individual</a>
+        <a class="btn btn-outline" href="buscar-cifra.html?filter=global">Ver catálogo publicado</a>
+      </div>
+      <span class="visual-badge">Catálogo global</span>
+      <h1>Central Administrativa do Catálogo</h1>
+      <p>Importe sua planilha, complete as cifras, verifique duplicidades e publique em sequência sem sobrescrever músicas anteriores.</p>
+    </header>
+
+    <section id="catalog-admin-gate" class="catalog-admin-gate" aria-live="polite">
+      <strong>Validando conta administrativa…</strong>
+      <span>Aguarde a restauração segura da sessão Google.</span>
+    </section>
+
+    <section id="catalog-admin-content" hidden>
+      <div class="catalog-admin-stats" aria-label="Resumo da fila">
+        <article><span>Total na fila</span><strong id="admin-stat-total">0</strong></article>
+        <article><span>Prontas</span><strong id="admin-stat-ready">0</strong></article>
+        <article><span>Sem cifra</span><strong id="admin-stat-incomplete">0</strong></article>
+        <article><span>Repetidas</span><strong id="admin-stat-duplicates">0</strong></article>
+        <article><span>Publicadas</span><strong id="admin-stat-published">0</strong></article>
+      </div>
+
+      <section class="catalog-admin-card catalog-import-card">
+        <div class="catalog-admin-card-head">
+          <div>
+            <span class="catalog-source-badge global">Importação em massa</span>
+            <h2>Cole direto do Google Planilhas</h2>
+            <p>Reconhece TAB real, ponto e vírgula e CSV. As seis colunas atuais já funcionam; conteúdo e observações são opcionais.</p>
+          </div>
+          <div class="catalog-admin-head-actions">
+            <button id="download-import-model" class="btn btn-outline" type="button">Baixar modelo</button>
+            <label class="btn btn-outline file-button">Abrir arquivo<input id="catalog-import-file" type="file" accept=".tsv,.txt,.csv,text/tab-separated-values,text/plain,text/csv" /></label>
+          </div>
+        </div>
+        <textarea id="catalog-import-text" class="catalog-import-text" spellcheck="false" placeholder="Música[TAB]Artista[TAB]Estilo[TAB]Tags[TAB]Tom oficial[TAB]BPM oficial[TAB]Conteúdo da cifra"></textarea>
+        <div class="catalog-import-actions">
+          <button id="import-to-queue" class="btn btn-primary" type="button">Importar para a fila</button>
+          <button id="clear-import-text" class="btn btn-ghost" type="button">Limpar área de importação</button>
+          <span id="catalog-import-status" class="catalog-inline-status">Nenhum arquivo importado.</span>
+        </div>
+      </section>
+
+      <section class="catalog-admin-toolbar catalog-admin-card">
+        <label class="catalog-search-field"><span>Buscar na fila</span><input id="catalog-queue-search" type="search" placeholder="Música, artista ou tag" /></label>
+        <label><span>Mostrar</span><select id="catalog-queue-filter"><option value="all">Todos</option><option value="ready">Prontas</option><option value="incomplete">Sem conteúdo</option><option value="duplicate">Repetidas</option><option value="published">Publicadas</option><option value="error">Com erro</option></select></label>
+        <label><span>Repetidas no lote</span><select id="catalog-duplicate-policy"><option value="skip">Ignorar e não alterar</option><option value="update">Atualizar a existente</option><option value="version">Criar nova versão</option></select></label>
+        <button id="publish-ready-queue" class="btn btn-primary" type="button">Publicar todas as prontas</button>
+        <button id="sync-admin-queue" class="btn btn-outline" type="button">Sincronizar fila</button>
+        <button id="clear-published-queue" class="btn btn-ghost" type="button">Remover concluídas</button>
+      </section>
+
+      <div class="catalog-admin-workspace">
+        <section class="catalog-admin-card catalog-queue-panel">
+          <div class="catalog-admin-card-head compact-head">
+            <div><span class="visual-badge">FILA</span><h2>Próximas cifras</h2></div>
+            <button id="new-queue-item" class="btn btn-outline" type="button">+ Nova manual</button>
+          </div>
+          <div id="catalog-queue-list" class="catalog-queue-list"></div>
+        </section>
+
+        <section class="catalog-admin-card catalog-item-editor">
+          <div class="catalog-admin-card-head compact-head">
+            <div>
+              <span id="catalog-item-status-badge" class="catalog-source-badge private">Selecione um item</span>
+              <h2 id="catalog-item-heading">Editar item da fila</h2>
+            </div>
+            <button id="open-item-main-editor" class="btn btn-outline" type="button">Abrir no editor completo</button>
+          </div>
+
+          <input id="catalog-queue-id" type="hidden" />
+          <div class="catalog-admin-form-grid">
+            <label><span>Música</span><input id="catalog-item-title" type="text" placeholder="Título da música" /></label>
+            <label><span>Artista</span><input id="catalog-item-artist" type="text" placeholder="Cantor, banda ou ministério" /></label>
+            <label><span>Estilo</span><input id="catalog-item-style" type="text" placeholder="Worship, rock, pentecostal..." /></label>
+            <label><span>Tags</span><input id="catalog-item-tags" type="text" placeholder="Ao vivo, adoração, guitarra..." /></label>
+            <label><span>Tom oficial</span><select id="catalog-item-key"><option value="">Não informado</option><optgroup label="Maiores"><option>C</option><option>C#</option><option>Db</option><option>D</option><option>D#</option><option>Eb</option><option>E</option><option>F</option><option>F#</option><option>Gb</option><option>G</option><option>G#</option><option>Ab</option><option>A</option><option>A#</option><option>Bb</option><option>B</option></optgroup><optgroup label="Menores"><option>Cm</option><option>C#m</option><option>Dbm</option><option>Dm</option><option>D#m</option><option>Ebm</option><option>Em</option><option>Fm</option><option>F#m</option><option>Gbm</option><option>Gm</option><option>G#m</option><option>Abm</option><option>Am</option><option>A#m</option><option>Bbm</option><option>Bm</option></optgroup></select></label>
+            <label><span>BPM oficial</span><input id="catalog-item-bpm" type="number" min="30" max="300" placeholder="Opcional" /></label>
+            <label><span>Capotraste</span><input id="catalog-item-capo" type="number" min="0" max="12" value="0" /></label>
+            <label><span>Observações</span><input id="catalog-item-notes" type="text" placeholder="Versão, entrada, arranjo..." /></label>
+          </div>
+          <label class="catalog-content-label"><span>Conteúdo da cifra</span><textarea id="catalog-item-content" spellcheck="false" placeholder="[Intro]\nC  G  Am  F\n\n[Verso]\nC\nLetra da música..."></textarea></label>
+
+          <div id="catalog-duplicate-alert" class="catalog-duplicate-alert" hidden></div>
+          <div class="catalog-item-actions">
+            <button id="save-queue-item" class="btn btn-outline" type="button">Salvar na fila</button>
+            <button id="publish-current-item" class="btn btn-secondary" type="button">Publicar esta cifra</button>
+            <button id="publish-current-next" class="btn btn-primary" type="button">Publicar e abrir a próxima</button>
+            <button id="remove-queue-item" class="btn btn-danger" type="button">Remover da fila</button>
+          </div>
+          <div id="catalog-admin-progress" class="catalog-admin-progress" aria-live="polite">Fila pronta para trabalhar.</div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Navegação principal mobile">
+    <a href="index.html"><span>⌂</span><small>Início</small></a>
+    <a href="buscar-cifra.html"><span>♬</span><small>Cifras</small></a>
+    <a href="inserir-cifra.html"><span>＋</span><small>Editor</small></a>
+    <a href="catalogo-admin.html" class="active"><span>▦</span><small>Catálogo</small></a>
+    <a href="configuracoes.html"><span>⚙</span><small>Conta</small></a>
+  </nav>
+
+  <footer class="app-footer"><span id="build-info" data-build-info>Carregando informações da build…</span></footer>
+  <script src="js/build-info.js"></script>
+  <script src="js/resilience.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/firebase-runtime.js"></script>
+  <script src="js/global-catalog.js"></script>
+  <script src="js/catalog-admin.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/mobile-audit.js"></script>
+</body>
+</html>

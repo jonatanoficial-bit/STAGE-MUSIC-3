@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Stage Music • Entrar</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+  <link rel="stylesheet" href="css/mobile-audit.css" />
+</head>
+<body data-page="login-cifra">
+  <main class="auth-layout auth-layout-refined">
+    <section class="auth-brand auth-brand-refined" aria-label="Apresentação do Stage Music">
+      <div class="auth-brand-lockup">
+        <img class="auth-hero-mark" src="assets/logo/stage-music-logo.svg" alt="Logo Stage Music" />
+        <span>STAGE MUSIC</span>
+      </div>
+      <h1>Sua música pronta em qualquer palco.</h1>
+      <p>Entre uma vez para levar cifras, repertórios e configurações para seus aparelhos.</p>
+
+      <div class="auth-benefits-clean">
+        <article>
+          <span aria-hidden="true">☁</span>
+          <div><strong>Sincronização segura</strong><small>Atualize seu conteúdo no celular, tablet ou computador.</small></div>
+        </article>
+        <article>
+          <span aria-hidden="true">▣</span>
+          <div><strong>Sua biblioteca é privada</strong><small>Somente sua conta acessa suas cifras pessoais.</small></div>
+        </article>
+        <article>
+          <span aria-hidden="true">♫</span>
+          <div><strong>Compartilhe no palco</strong><small>Use a Sala Live para enviar o repertório da apresentação à banda.</small></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="auth-panel auth-panel-refined">
+      <header class="auth-panel-top">
+        <a href="index.html" class="back-link">← Voltar</a>
+        <div class="auth-mobile-brand">
+          <img src="assets/logo/stage-music-logo.svg" alt="" aria-hidden="true" />
+          <strong>Stage Music</strong>
+        </div>
+      </header>
+
+      <div class="auth-heading-clean">
+        <span class="visual-badge">MINHA CONTA</span>
+        <h2>Entre no Stage Music</h2>
+        <p>Sincronize suas cifras e continue de onde parou em qualquer aparelho.</p>
+      </div>
+
+      <div class="auth-status-banner auth-status-clean">
+        <span class="badge-dot" aria-hidden="true"></span>
+        <div>
+          <strong data-session-badge>Sem sessão ativa</strong>
+          <small>Use uma conta online para sincronizar seu conteúdo.</small>
+        </div>
+      </div>
+
+      <div class="login-options auth-mode-switch" aria-label="Escolha o tipo de acesso">
+        <button class="option-card active" type="button" data-mode="online">
+          <strong>Conta online</strong>
+          <span>Recomendado</span>
+        </button>
+        <button class="option-card" type="button" data-mode="local">
+          <strong>Usar sem login</strong>
+          <span>Somente neste aparelho</span>
+        </button>
+      </div>
+
+      <section class="auth-online-panel" data-auth-mode-panel="online">
+        <button class="btn google-login-btn wide" type="button" data-google-login>
+          <span class="google-g-mark" aria-hidden="true">G</span>
+          <span>Continuar com Google</span>
+        </button>
+        <p class="auth-primary-hint">Mais rápido e recomendado para sincronizar automaticamente.</p>
+
+        <button class="btn btn-secondary wide continue-account-btn" type="button" data-go-editor hidden>Continuar para o aplicativo</button>
+
+        <details class="email-access">
+          <summary>Entrar com e-mail e senha</summary>
+          <form class="form-stack email-login-clean" id="email-login-form">
+            <label>
+              <span>E-mail</span>
+              <input id="email-input" type="email" inputmode="email" autocomplete="email" placeholder="seuemail@exemplo.com" required />
+            </label>
+            <label>
+              <span>Senha</span>
+              <input id="password-input" type="password" autocomplete="current-password" placeholder="mínimo 6 caracteres" minlength="6" required />
+            </label>
+            <button class="btn btn-primary wide" type="submit">Entrar ou criar conta</button>
+          </form>
+        </details>
+      </section>
+
+      <section data-auth-mode-panel="local" hidden>
+        <div class="local-mode-box local-mode-clean">
+          <div>
+            <strong>Continuar somente neste aparelho</strong>
+            <p>Você poderá usar o editor offline, mas o conteúdo não será recuperado automaticamente em outro celular.</p>
+          </div>
+          <button class="btn btn-secondary wide" type="button" data-local-login>Continuar sem login</button>
+          <button class="text-link" type="button" data-switch-online>Voltar para conta online</button>
+        </div>
+      </section>
+
+      <aside class="account-privacy-note">
+        <span aria-hidden="true">🔒</span>
+        <div>
+          <strong>Suas cifras não ficam públicas automaticamente</strong>
+          <p>Cada conta possui uma biblioteca privada. Para compartilhar com músicos, crie uma Sala Live; somente o repertório daquela apresentação será enviado.</p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="app-footer"><span id="build-info" data-build-info>Carregando informações da build…</span></footer>
+  <script src="js/build-info.js"></script>
+  <script src="js/resilience.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('email-login-form');
+      const emailInput = document.getElementById('email-input');
+      const passwordInput = document.getElementById('password-input');
+      const switchOnline = document.querySelector('[data-switch-online]');
+      const continueButton = document.querySelector('[data-go-editor]');
+      const goEditor = () => {
+        window.location.href = window.StageMusicAuth.consumeRedirect('inserir-cifra.html');
+      };
+      const refreshContinueButton = () => {
+        const state = window.StageMusicAuth.getState();
+        if (continueButton) continueButton.hidden = !state.isAuthenticated;
+      };
+      refreshContinueButton();
+      window.addEventListener('stage-music-auth-changed', refreshContinueButton);
+      continueButton?.addEventListener('click', () => {
+        const state = window.StageMusicAuth.getState();
+        if (state.isAuthenticated) goEditor();
+      });
+      switchOnline?.addEventListener('click', () => {
+        document.querySelector('[data-mode="online"]')?.click();
+      });
+      document.querySelector('[data-local-login]')?.addEventListener('click', async () => {
+        await window.StageMusicAuth.loginLocal();
+        goEditor();
+      });
+      document.querySelector('[data-google-login]')?.addEventListener('click', async () => {
+        try {
+          if (window.StageMusicAuth.isFirebaseConfigured) {
+            await window.StageMusicAuth.loginWithGoogle();
+          } else {
+            await window.StageMusicAuth.loginDemoEmail('google.demo@stage-music.app');
+          }
+          goEditor();
+        } catch (error) {
+          alert(error?.message || 'Não foi possível entrar com Google.');
+        }
+      });
+      form?.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
+        if (!email || password.length < 6) {
+          alert('Preencha um e-mail válido e uma senha com pelo menos 6 caracteres.');
+          return;
+        }
+        try {
+          if (window.StageMusicAuth.isFirebaseConfigured) {
+            await window.StageMusicAuth.loginWithFirebaseEmail(email, password);
+          } else {
+            await window.StageMusicAuth.loginDemoEmail(email);
+          }
+          goEditor();
+        } catch (error) {
+          alert(error?.message || 'Não foi possível entrar no momento.');
+        }
+      });
+    });
+  </script>
+  <script src="js/mobile-audit.js"></script>
+</body>
+</html>

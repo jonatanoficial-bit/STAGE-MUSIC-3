@@ -1,0 +1,8 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="18" fill="url(#g)"/>
+  <path d="M20 16C28 16 35 19 40 24C44 28 47 34 47 40C47 47 44 52 39 57C34 61 28 64 20 64H18V56H20C25 56 29 54 32 51C35 48 36 44 36 40C36 36 35 32 32 29C29 26 25 24 20 24V16Z" fill="white"/>
+  <rect x="12" y="35" width="4" height="17" rx="2" fill="white"/>
+  <rect x="18" y="31" width="4" height="21" rx="2" fill="white" opacity="0.9"/>
+  <rect x="24" y="27" width="4" height="25" rx="2" fill="white" opacity="0.8"/>
+  <defs><linearGradient id="g" x1="4" y1="3" x2="60" y2="60" gradientUnits="userSpaceOnUse"><stop stop-color="#8C43FF"/><stop offset="1" stop-color="#34B4FF"/></linearGradient></defs>
+</svg>

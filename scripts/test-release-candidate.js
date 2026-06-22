@@ -1,0 +1,14 @@
+const fs=require('fs'),path=require('path'),vm=require('vm');
+const root=path.resolve(__dirname,'..');let failed=false;
+const must=(condition,message)=>{if(!condition){console.error('RC TEST FAIL:',message);failed=true}};
+const read=file=>fs.readFileSync(path.join(root,file),'utf8');
+const files=['diagnostico.html','css/diagnostics.css','css/release-candidate.css','js/diagnostics.js','js/onboarding.js'];
+files.forEach(file=>must(fs.existsSync(path.join(root,file)),`arquivo ausente ${file}`));
+const home=read('index.html');['onboarding-dialog','open-onboarding','js/onboarding.js','diagnostico.html'].forEach(token=>must(home.includes(token),`Home sem ${token}`));
+const diagnostics=read('diagnostico.html');['technical-checks','setup-checks','readiness-score','install-stage-music','js/diagnostics.js'].forEach(token=>must(diagnostics.includes(token),`Diagnóstico sem ${token}`));
+const settings=read('configuracoes.html');['import-full-backup','backup-file-input','backup-import-mode','undo-last-restore','diagnostico.html'].forEach(token=>must(settings.includes(token),`Configurações sem ${token}`));
+const settingsJs=read('js/settings.js');['schemaVersion:2','normalizeBackup','saveRecovery','mergeIdArray','stage_music_recovery_snapshot_v1'].forEach(token=>must(settingsJs.includes(token),`Backup sem ${token}`));
+const sw=read('service-worker.js');const build=JSON.parse(read('BUILD-INFO.json'));const cacheToken=build.versionNumber.replaceAll('.','-');[cacheToken,'./diagnostico.html','./js/diagnostics.js','./js/onboarding.js','./css/diagnostics.css'].forEach(token=>must(sw.includes(token),`Cache RC sem ${token}`));
+const manifest=JSON.parse(read('manifest.json'));must(Array.isArray(manifest.shortcuts)&&manifest.shortcuts.length>=3,'manifest sem atalhos PWA');
+['js/diagnostics.js','js/onboarding.js','js/settings.js'].forEach(file=>{try{new vm.Script(read(file),{filename:file})}catch(error){must(false,`${file} com erro de sintaxe: ${error.message}`)}});
+if(failed)process.exit(1);console.log('RELEASE CANDIDATE TESTS: APROVADOS — onboarding, diagnóstico, backup e PWA');

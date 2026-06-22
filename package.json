@@ -1,0 +1,21 @@
+{
+  "name": "stage-music",
+  "version": "3.5.0",
+  "private": true,
+  "scripts": {
+    "start": "npx serve .",
+    "build": "npm run check",
+    "check": "npm run audit && npm run test:sharing && npm run test:release-candidate && npm run test:login-ux && npm run test:global-catalog && npm run test:harmonic && npm run test:director && npm run test:firebase-integrity && npm run test:workspace && npm run test:live-director-ux && npm run test:catalog-admin",
+    "audit": "node scripts/validate-build.js",
+    "test:sharing": "node scripts/test-live-sharing.js",
+    "test:firebase-integrity": "node scripts/verify-firebase-integrity.js",
+    "test:release-candidate": "node scripts/test-release-candidate.js",
+    "test:login-ux": "node scripts/test-login-ux.js",
+    "test:global-catalog": "node scripts/test-global-catalog.js",
+    "test:harmonic": "node scripts/test-harmonic-engine.js",
+    "test:director": "node scripts/test-director-console.js",
+    "test:workspace": "node scripts/test-workspace-persistence.js",
+    "test:live-director-ux": "node scripts/test-live-director-ux.js",
+    "test:catalog-admin": "node scripts/test-catalog-admin.js"
+  }
+}

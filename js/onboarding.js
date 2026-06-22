@@ -1,0 +1,15 @@
+(function(){
+  const DONE_KEY='stage_music_onboarding_completed_v1',DISMISS_KEY='stage_music_onboarding_dismissed_session';
+  const safeParse=(value,fallback)=>{try{return JSON.parse(value)??fallback}catch{return fallback}};
+  const auth=()=>window.StageMusicAuth?.getState?.()||safeParse(localStorage.getItem('stage_music_auth')||'{}',{});
+  const list=(key)=>{const data=window.StageMusicSafeStorage?.get?.(key,null)??safeParse(localStorage.getItem(key)||'[]',[]);return Array.isArray(data)?data:[]};
+  const sync=()=>window.StageMusicCloudSync?.getState?.()||{};
+  let step=0;
+  function setState(id,ok,good,bad){const node=document.getElementById(id);if(!node)return;node.dataset.state=ok?'ok':'warn';node.textContent=ok?good:bad}
+  function refreshStates(){const user=auth(),songs=window.StageMusicLocalDB?.getAllSongs?.()||[],setlists=list('stage_music_setlists_v1'),cloud=sync();setState('onboarding-login-state',user?.isAuthenticated&&user.mode==='online',`Conta conectada: ${user.email||user.name}`,'Conta online ainda não conectada.');setState('onboarding-sync-state',!!cloud.lastSyncAt,cloud.lastSyncAt?`Conteúdo sincronizado neste aparelho.`:'Atualização da nuvem ainda não registrada.');setState('onboarding-content-state',songs.length>0&&setlists.length>0,`${songs.length} cifras e ${setlists.length} repertórios disponíveis.`,`${songs.length} cifras e ${setlists.length} repertórios. Continue preparando seu conteúdo.`)}
+  function render(){document.querySelectorAll('[data-onboarding-step]').forEach((node,index)=>node.hidden=index!==step);const progress=document.getElementById('onboarding-progress-bar');if(progress)progress.style.width=`${(step+1)*25}%`;const prev=document.getElementById('onboarding-prev'),next=document.getElementById('onboarding-next');if(prev)prev.disabled=step===0;if(next)next.textContent=step===3?'Concluir e começar':'Próximo';refreshStates()}
+  function open(){const dialog=document.getElementById('onboarding-dialog');if(!dialog)return;step=0;render();if(!dialog.open)dialog.showModal()}
+  function close(){document.getElementById('onboarding-dialog')?.close()}
+  function complete(){localStorage.setItem(DONE_KEY,new Date().toISOString());close()}
+  document.addEventListener('DOMContentLoaded',()=>{if(!document.body.matches('[data-page="home"]'))return;document.getElementById('open-onboarding')?.addEventListener('click',open);document.getElementById('close-onboarding')?.addEventListener('click',close);document.getElementById('onboarding-later')?.addEventListener('click',()=>{sessionStorage.setItem(DISMISS_KEY,'1');close()});document.getElementById('onboarding-prev')?.addEventListener('click',()=>{step=Math.max(0,step-1);render()});document.getElementById('onboarding-next')?.addEventListener('click',()=>{if(step>=3)complete();else{step++;render()}});window.addEventListener('stage-music-auth-changed',refreshStates);window.addEventListener('stage-music-sync-updated',refreshStates);setTimeout(()=>{if(!localStorage.getItem(DONE_KEY)&&!sessionStorage.getItem(DISMISS_KEY))open()},900)});
+})();

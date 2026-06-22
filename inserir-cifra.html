@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Stage Music • Editor de cifra</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/editor.css" />
+  <link rel="stylesheet" href="css/global-catalog.css" />
+  <link rel="stylesheet" href="css/mobile-audit.css" />
+<link rel="stylesheet" href="css/workspace-cloud.css" /></head>
+<body data-page="inserir-cifra">
+  <main class="page-shell">
+    <div class="page-header compact">
+      <a href="index.html" class="back-link">← Início</a>
+      <span class="visual-badge">Editor e catálogo</span>
+      <h1>Inserir cifra</h1>
+      <p>Crie uma cifra individual ou use a Central Administrativa para importar planilhas e publicar várias músicas sem sobrescrever documentos anteriores.</p>
+    </div>
+    <div class="editor-shell">
+      <section class="editor-card">
+        <div class="editor-topbar">
+          <div class="editor-status" data-session-badge>Sem sessão ativa</div>
+          <div class="dual-actions">
+            <button class="btn btn-outline" type="button" data-auth-logout>Sair</button>
+          </div>
+        </div>
+
+        <div class="editor-stat-grid">
+          <article class="editor-stat-card">
+            <strong id="stats-songs">0</strong>
+            <small>Cifras locais</small>
+          </article>
+          <article class="editor-stat-card">
+            <strong id="stats-draft">Nenhum rascunho</strong>
+            <small>Status do rascunho</small>
+          </article>
+        </div>
+
+        <div class="session-card">
+          <strong>Salvamento local ativo</strong>
+          <small id="draft-stamp">Auto-save pronto</small>
+          <small id="save-stamp">Nenhuma cifra local salva</small>
+        </div>
+
+        <div class="session-card sync-card-inline">
+          <strong>Sincronização opcional</strong>
+          <small data-cloud-message>Pronto para sincronizar</small>
+          <div class="dual-actions" style="margin-top:10px; flex-wrap:wrap;">
+            <button class="btn btn-outline" type="button" data-cloud-upload data-cloud-enable>Enviar nuvem</button>
+            <button class="btn btn-outline" type="button" data-cloud-download data-cloud-enable>Baixar nuvem</button>
+            <a class="btn btn-ghost" href="configuracoes.html">Central de sync</a>
+          </div>
+          <small>Última sincronização: <span data-cloud-last-sync>Nunca sincronizado</span></small>
+        </div>
+
+        <section id="global-admin-panel" class="global-admin-panel" hidden>
+          <input id="global-song-id" type="hidden" />
+          <div class="global-admin-head">
+            <div>
+              <span class="catalog-source-badge global">Administrador</span>
+              <h3>Catálogo global</h3>
+              <p>Publique esta cifra para todas as contas conectadas. A biblioteca privada dos usuários continuará separada.</p>
+            </div>
+          </div>
+          <div class="global-admin-actions">
+            <a class="btn btn-secondary" href="catalogo-admin.html">Central administrativa</a>
+            <button id="new-global-song" class="btn btn-outline" type="button">Nova cifra global</button>
+            <button id="publish-global-song" class="btn btn-secondary" type="button">Publicar no catálogo global</button>
+            <button id="publish-global-next" class="btn btn-primary" type="button">Publicar e preparar nova cifra</button>
+            <button id="delete-global-song" class="btn btn-danger" type="button" hidden>Remover do catálogo</button>
+            <a class="btn btn-outline" href="buscar-cifra.html?filter=global">Ver catálogo global</a>
+          </div>
+          <small class="global-admin-mode">Modo: <strong data-global-mode>Nova cifra global</strong>. O botão “Publicar e preparar nova cifra” limpa também os identificadores ocultos.</small>
+          <div id="global-catalog-editor-status" class="global-catalog-status">Verificando permissão administrativa…</div>
+        </section>
+
+        <form id="song-form">
+          <input id="song-id" type="hidden" />
+          <div class="editor-grid">
+            <label>
+              <span>Título</span>
+              <input id="song-title" type="text" placeholder="Ex.: Nunca Vi Amor Assim" />
+            </label>
+            <label>
+              <span>Artista</span>
+              <input id="song-artist" type="text" placeholder="Ex.: Ariane Mazur" />
+            </label>
+            <label>
+              <span>Estilo</span>
+              <input id="song-style" type="text" placeholder="Ex.: Worship congregacional" />
+            </label>
+            <label>
+              <span>Tom</span>
+              <select id="song-key">
+                <optgroup label="Tons maiores">
+                  <option>C</option><option>C#</option><option>Db</option><option>D</option><option>D#</option><option>Eb</option><option>E</option><option>F</option><option>F#</option><option>Gb</option><option>G</option><option>G#</option><option>Ab</option><option>A</option><option>A#</option><option>Bb</option><option>B</option>
+                </optgroup>
+                <optgroup label="Tons menores">
+                  <option>Cm</option><option>C#m</option><option>Dbm</option><option>Dm</option><option>D#m</option><option>Ebm</option><option>Em</option><option>Fm</option><option>F#m</option><option>Gbm</option><option>Gm</option><option>G#m</option><option>Abm</option><option>Am</option><option>A#m</option><option>Bbm</option><option>Bm</option>
+                </optgroup>
+              </select>
+            </label>
+            <label>
+              <span>BPM</span>
+              <input id="song-bpm" type="number" min="40" max="240" value="72" />
+            </label>
+          </div>
+
+          <div class="editor-grid editor-grid-secondary">
+            <label>
+              <span>Tags</span>
+              <input id="song-tags" type="text" placeholder="Ex.: worship, live, abertura" />
+            </label>
+            <label>
+              <span>Notas do palco</span>
+              <input id="song-notes" type="text" placeholder="Entrada suave, solo, ministração..." />
+            </label>
+          </div>
+
+          <section class="music-toolbox" aria-label="Ferramentas musicais">
+            <div class="toolbox-row">
+              <label><span>Capotraste</span><select id="song-capo"><option value="0">Sem capo</option><option value="1">Casa 1</option><option value="2">Casa 2</option><option value="3">Casa 3</option><option value="4">Casa 4</option><option value="5">Casa 5</option><option value="6">Casa 6</option><option value="7">Casa 7</option><option value="8">Casa 8</option><option value="9">Casa 9</option><option value="10">Casa 10</option><option value="11">Casa 11</option><option value="12">Casa 12</option></select></label>
+              <label><span>Notação na transposição</span><select id="accidental-mode"><option value="preserve" selected>Manter escrita original</option><option value="sharp">Preferir sustenidos</option><option value="flat">Preferir bemóis</option></select></label>
+              <button class="btn btn-outline" type="button" id="transpose-down">−1 semitom</button>
+              <button class="btn btn-outline" type="button" id="transpose-up">+1 semitom</button>
+              <button class="btn btn-outline" type="button" id="detect-key">Detectar tom</button>
+              <button class="btn btn-outline" type="button" id="format-chords">Formatar cifra</button>
+            </div>
+            <div class="section-palette" id="section-palette">
+              <span>Inserir seção:</span>
+              <button type="button" data-section="Intro">Intro</button><button type="button" data-section="Verso">Verso</button><button type="button" data-section="Pré-Refrão">Pré</button><button type="button" data-section="Refrão">Refrão</button><button type="button" data-section="Ponte">Ponte</button><button type="button" data-section="Solo">Solo</button><button type="button" data-section="Final">Final</button>
+            </div>
+            <div class="editor-insights">
+              <span id="chord-count">0 acordes detectados</span><span id="section-count">0 seções</span><span id="history-count">Histórico pronto</span>
+            </div>
+          </section>
+
+          <section class="smart-assistant-card" aria-label="Assistente musical inteligente local">
+            <div class="smart-assistant-head">
+              <div>
+                <span class="visual-badge">Inteligência local</span>
+                <h3>Assistente musical</h3>
+                <p>Analisa a cifra no próprio dispositivo, sem enviar conteúdo para serviços externos.</p>
+              </div>
+              <button class="btn btn-primary" type="button" id="smart-analyze">Analisar cifra</button>
+            </div>
+            <div class="smart-action-row">
+              <button class="btn btn-outline" type="button" id="smart-simplify">Simplificar acordes</button>
+              <button class="btn btn-outline" type="button" id="smart-transpose-easy">Levar para tom fácil</button>
+              <button class="btn btn-outline" type="button" id="smart-apply-capo">Aplicar capo sugerido</button>
+              <button class="btn btn-outline" type="button" id="smart-estimate">Estimar duração</button>
+            </div>
+            <div class="smart-inline-status"><span id="smart-duration-value">Duração não estimada</span><span id="smart-capo-shape">Capo não calculado</span></div>
+            <div id="smart-analysis-results" class="smart-analysis-results">
+              <p>Toque em <strong>Analisar cifra</strong> para reconhecer seções, acordes, complexidade, duração e sugestões de capo.</p>
+            </div>
+          </section>
+
+          <label class="editor-area-label">
+            <span>Conteúdo da cifra</span>
+            <textarea id="song-content" placeholder="[Intro]
+G  D  Em  C
+
+[Verso]
+G            D
+Tua presença me sustenta..."></textarea>
+          </label>
+
+          <div class="editor-actions">
+            <button class="btn btn-primary" type="submit">Salvar cifra local</button>
+            <button class="btn btn-secondary" type="button" id="save-draft">Salvar rascunho</button>
+            <button class="btn btn-outline" type="button" id="undo-edit">Desfazer</button>
+            <button class="btn btn-outline" type="button" id="redo-edit">Refazer</button>
+            <button class="btn btn-outline" type="button" id="load-demo">Carregar demo</button>
+            <button class="btn btn-outline" type="button" id="clear-editor">Limpar editor</button>
+            <button class="btn btn-ghost" type="button" id="export-local-json">Exportar JSON</button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="editor-side-card">
+        <div class="page-header compact" style="margin-bottom:16px;">
+          <span class="visual-badge">Prévia</span>
+          <h2 style="margin:10px 0 0; font-size:1.5rem;">Leitura rápida</h2>
+        </div>
+        <div class="preview-block">
+          <pre id="song-preview">Preencha a cifra para visualizar aqui.</pre>
+        </div>
+
+        <div class="page-header compact side-spacing">
+          <span class="visual-badge">Biblioteca local</span>
+          <h2 class="side-title">Suas cifras offline</h2>
+        </div>
+        <div id="local-library" class="library-list"></div>
+      </aside>
+    </div>
+  </main>
+
+  <div class="editor-toast" id="editor-toast" aria-live="polite">Ação concluída</div>
+  <footer class="app-footer"><span id="build-info" data-build-info>Carregando informações da build…</span></footer>
+  <script src="js/build-info.js"></script>
+  <script src="js/resilience.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/firebase-runtime.js"></script>
+  <script src="js/local-db.js"></script>
+  <script src="js/cloud-sync.js"></script><script src="js/workspace-cloud.js"></script>
+  <script src="js/global-catalog.js"></script>
+  <script src="js/harmonic-engine.js"></script>
+  <script src="js/editor-local.js"></script>
+  <script src="js/global-catalog-editor.js"></script>
+  <script src="js/music-intelligence.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/mobile-audit.js"></script>
+</body>
+</html>

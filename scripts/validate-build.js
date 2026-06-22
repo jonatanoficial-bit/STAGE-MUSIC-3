@@ -1,0 +1,140 @@
+const fs=require('fs'),path=require('path');const root=path.resolve(__dirname,'..');const errors=[],warnings=[];
+const info=JSON.parse(fs.readFileSync(path.join(root,'BUILD-INFO.json'))),pkg=JSON.parse(fs.readFileSync(path.join(root,'package.json')));
+if(`v${pkg.version}`!==info.version)errors.push('Versões divergentes.');
+const htmls=fs.readdirSync(root).filter(x=>x.endsWith('.html'));const attrs=['js/build-info.js','js/resilience.js','data-build-info'];
+for(const file of htmls){const html=fs.readFileSync(path.join(root,file),'utf8');for(const a of attrs)if(!html.includes(a))errors.push(`${file}: ausente ${a}`);for(const m of html.matchAll(/(?:href|src)=['"]([^'"]+)['"]/g)){const u=m[1];if(/^(https?:|mailto:|#|data:)/.test(u))continue;const clean=u.split(/[?#]/)[0];if(clean&&!fs.existsSync(path.resolve(root,clean)))errors.push(`${file}: referência inexistente ${clean}`)}}
+for(const required of ['service-worker.js','manifest.json','js/resilience.js','css/global.css','css/setlists.css','js/setlists.js','js/live-mode.js'])if(!fs.existsSync(path.join(root,required)))errors.push(`Arquivo essencial ausente: ${required}`);
+const sw=fs.readFileSync(path.join(root,'service-worker.js'),'utf8');if(!sw.includes(info.versionNumber.replaceAll('.','-')))warnings.push('Nome do cache pode não refletir a versão.');
+if(info.phase>=5){const page=fs.readFileSync(path.join(root,'minhas-listas.html'),'utf8');for(const token of ['setlist-list','setlist-songs','song-picker-dialog','js/setlists.js'])if(!page.includes(token))errors.push('Fase 5 incompleta: '+token);}
+if(info.phase>=6){const page=fs.readFileSync(path.join(root,'modo-live.html'),'utf8');for(const token of ['live-reader','live-controls','js/live-mode.js','live-wake-btn'])if(!page.includes(token))errors.push('Fase 6 incompleta: '+token);}
+if(info.phase>=9){const page=fs.readFileSync(path.join(root,'modo-live.html'),'utf8');for(const token of ['instrument-profile-dialog','instrument-profile-open','instrument-note-banner','js/instrument-profiles.js'])if(!page.includes(token))errors.push('Fase 9 incompleta: '+token);if(!fs.existsSync(path.join(root,'js/instrument-profiles.js')))errors.push('Fase 9 JS ausente.');}
+if(info.phase>=8){const page=fs.readFileSync(path.join(root,'modo-live.html'),'utf8');for(const token of ['music-tools-dialog','metronome-toggle','tap-tempo','count-in','capo-result','harmonic-toggle','js/music-tools.js'])if(!page.includes(token))errors.push('Fase 8 incompleta: '+token);if(!fs.existsSync(path.join(root,'js/music-tools.js')))errors.push('Fase 8 JS ausente.');}
+if(info.phase>=7){const page=fs.readFileSync(path.join(root,'modo-live.html'),'utf8');for(const token of ['live-scroll-toggle','scroll-speed','live-section-strip','section-repeat'])if(!page.includes(token))errors.push('Fase 7 incompleta: '+token);const live=fs.readFileSync(path.join(root,'js/live-mode.js'),'utf8');for(const token of ['requestAnimationFrame','goSection','repeatSection','updateProgress'])if(!live.includes(token))errors.push('Fase 7 JS incompleto: '+token);}
+if(info.phase>=11){const page=fs.readFileSync(path.join(root,'configuracoes.html'),'utf8');for(const token of ['data-cloud-upload','data-cloud-download','data-cloud-auto-sync','js/cloud-sync.js','js/settings.js'])if(!page.includes(token))errors.push('Fase 11 incompleta: '+token);for(const required of ['js/cloud-sync.js','js/settings.js','css/settings.css'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 11 arquivo ausente: '+required);}
+if(info.phase>=12){const page=fs.readFileSync(path.join(root,'equipes.html'),'utf8');for(const token of ['team-list','member-list','permission-summary','js/teams.js','css/teams.css'])if(!page.includes(token))errors.push('Fase 12 incompleta: '+token);for(const required of ['equipes.html','js/teams.js','css/teams.css'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 12 arquivo ausente: '+required);const setlists=fs.readFileSync(path.join(root,'minhas-listas.html'),'utf8');if(!setlists.includes('setlist-team'))errors.push('Fase 12: associação equipe/repertório ausente.');}
+if(info.phase>=13){const page=fs.readFileSync(path.join(root,'sala-live.html'),'utf8');for(const token of ['create-room-btn','join-room-btn','director-next','room-member-list','js/live-room.js'])if(!page.includes(token))errors.push('Fase 13 incompleta: '+token);for(const required of ['sala-live.html','js/live-room.js','js/live-room-client.js','css/live-room.css'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 13 arquivo ausente: '+required);const live=fs.readFileSync(path.join(root,'modo-live.html'),'utf8');if(!live.includes('js/live-room-client.js'))errors.push('Fase 13: cliente da Sala Live ausente no Modo Live.');}
+if(info.phase>=14){const page=fs.readFileSync(path.join(root,'sala-live.html'),'utf8');for(const token of ['worship-flow-panel','flow-section-select','flow-dynamics','data-flow-action'])if(!page.includes(token))errors.push('Fase 14 incompleta: '+token);const roomJs=fs.readFileSync(path.join(root,'js/live-room.js'),'utf8');for(const token of ['applyFlow','flow.history','extractSections'])if(!roomJs.includes(token))errors.push('Fase 14 JS incompleto: '+token);const client=fs.readFileSync(path.join(root,'js/live-room-client.js'),'utf8');for(const token of ['live-worship-flow','gotoSection','applyFlow'])if(!client.includes(token))errors.push('Fase 14 client incompleto: '+token);}
+if(info.phase>=15){const page=fs.readFileSync(path.join(root,'modo-live.html'),'utf8');for(const token of ['external-controls-dialog','external-controls-open','js/external-controls.js','css/external-controls.css'])if(!page.includes(token))errors.push('Fase 15 incompleta: '+token);for(const required of ['js/external-controls.js','css/external-controls.css'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 15 arquivo ausente: '+required);const controls=fs.readFileSync(path.join(root,'js/external-controls.js'),'utf8');for(const token of ['requestMIDIAccess','data-learn-action','StageMusicExternalControls','stopImmediatePropagation'])if(!controls.includes(token))errors.push('Fase 15 JS incompleto: '+token);}
+if(info.phase>=16){const page=fs.readFileSync(path.join(root,'eventos.html'),'utf8');for(const token of ['event-list','event-members','event-checklist','js/events.js','css/events.css'])if(!page.includes(token))errors.push('Fase 16 incompleta: '+token);for(const required of ['eventos.html','js/events.js','css/events.css'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 16 arquivo ausente: '+required);}
+if(info.phase>=17){for(const required of ['js/music-intelligence.js','docs/AUDITORIA-FASE-17.md','docs/TESTES-FASE-17.md'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 17 arquivo ausente: '+required);const editor=fs.readFileSync(path.join(root,'inserir-cifra.html'),'utf8');for(const token of ['smart-analyze','smart-simplify','smart-apply-capo','js/music-intelligence.js'])if(!editor.includes(token))errors.push('Fase 17 editor incompleto: '+token);const setlists=fs.readFileSync(path.join(root,'minhas-listas.html'),'utf8');for(const token of ['setlist-smart-analyze','setlist-smart-results','js/music-intelligence.js'])if(!setlists.includes(token))errors.push('Fase 17 repertório incompleto: '+token);}
+if(info.phase>=18){for(const required of ['js/firebase-runtime.js','js/firebase-live.js','firestore.rules','firebase.json','docs/FIREBASE-SETUP-FASE-18.md','docs/AUDITORIA-FASE-18.md','docs/TESTES-FASE-18.md'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 18 arquivo ausente: '+required);const room=fs.readFileSync(path.join(root,'sala-live.html'),'utf8');for(const token of ['js/firebase-runtime.js','js/firebase-live.js','Fase 18'])if(!room.includes(token))errors.push('Fase 18 Sala Live incompleta: '+token);const roomJs=fs.readFileSync(path.join(root,'js/live-room.js'),'utf8');for(const token of ['StageMusicFirebaseLive','startRemoteSubscription','getRoom'])if(!roomJs.includes(token))errors.push('Fase 18 integração online incompleta: '+token);const client=fs.readFileSync(path.join(root,'js/live-room-client.js'),'utf8');if(!client.includes('ensureRemoteSubscription'))errors.push('Fase 18 listener remoto ausente no Modo Live.');}
+if(info.versionNumber==='2.3.1'){const cloud=fs.readFileSync(path.join(root,'js/cloud-sync.js'),'utf8');if(cloud.includes('toKey(')||cloud.includes('owner=toKey'))errors.push('Hotfix Firebase: caminho baseado em e-mail ainda presente.');for(const token of ['const owner=uid','ownerUid:uid','firebase.auth.currentUser'])if(!cloud.includes(token))errors.push('Hotfix Firebase incompleto: '+token);const config=fs.readFileSync(path.join(root,'js/firebase-config.js'),'utf8');for(const token of ['stage-music-96cc1.firebaseapp.com','stage-music-96cc1','1009564099611'])if(!config.includes(token))errors.push('Configuração Firebase ausente: '+token);const rules=fs.readFileSync(path.join(root,'firestore.rules'),'utf8');for(const token of ['request.auth.uid == uid','request.resource.data.ownerUid == resource.data.ownerUid'])if(!rules.includes(token))errors.push('Regras seguras incompletas: '+token);}
+
+if(info.phase>=19){
+  const backgrounds=[
+    'assets/backgrounds/mobile/webp/bg-home-stage-mobile.webp',
+    'assets/backgrounds/mobile/webp/bg-library-wave-mobile.webp',
+    'assets/backgrounds/mobile/webp/bg-live-stage-mobile.webp',
+    'assets/backgrounds/mobile/webp/bg-account-portal-mobile.webp',
+    'assets/backgrounds/mobile/webp/bg-setlists-flow-mobile.webp',
+    'assets/backgrounds/mobile/backgrounds.json'
+  ];
+  for(const required of backgrounds)if(!fs.existsSync(path.join(root,required)))errors.push('Fase 19 fundo ausente: '+required);
+  const css=fs.readFileSync(path.join(root,'css/global.css'),'utf8');
+  for(const token of ['bg-home-stage-mobile.webp','bg-library-wave-mobile.webp','bg-live-stage-mobile.webp','bg-account-portal-mobile.webp','bg-setlists-flow-mobile.webp','FASE 19'])if(!css.includes(token))errors.push('Fase 19 CSS incompleto: '+token);
+  for(const token of backgrounds.filter(x=>x.endsWith('.webp')).map(x=>'./'+x))if(!sw.includes(token))errors.push('Fase 19 cache ausente: '+token);
+}
+
+if(info.phase>=20){
+  for(const required of ['css/mobile-audit.css','js/mobile-audit.js','docs/AUDITORIA-FASE-20.md','docs/TESTES-FASE-20.md'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 20 arquivo ausente: '+required);
+  for(const file of htmls){const html=fs.readFileSync(path.join(root,file),'utf8');for(const token of ['viewport-fit=cover','css/mobile-audit.css','js/mobile-audit.js'])if(!html.includes(token))errors.push(`Fase 20 ${file}: ausente ${token}`)}
+  const mobileCss=fs.readFileSync(path.join(root,'css/mobile-audit.css'),'utf8');for(const token of ['mobile-audit-nav','editor-actions','setlist-song-row','env(safe-area-inset-bottom)'])if(!mobileCss.includes(token))errors.push('Fase 20 CSS incompleto: '+token);
+}
+
+if(info.phase>=21){
+  for(const required of ['js/home-auth-sync.js','docs/AUDITORIA-FASE-21.md','docs/TESTES-FASE-21.md'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 21 arquivo ausente: '+required);
+  const home=fs.readFileSync(path.join(root,'index.html'),'utf8');for(const token of ['home-auth-gateway','home-login-primary','home-sync-now','js/home-auth-sync.js'])if(!home.includes(token))errors.push('Fase 21 Home incompleta: '+token);
+  const livePage=fs.readFileSync(path.join(root,'modo-live.html'),'utf8');for(const token of ['live-ui-toggle','js/live-mode.js'])if(!livePage.includes(token))errors.push('Fase 21 Live incompleto: '+token);
+  const liveJs=fs.readFileSync(path.join(root,'js/live-mode.js'),'utf8');for(const token of ['live-immersive','immersive','Mostrar controles','Ocultar controles'])if(!liveJs.includes(token))errors.push('Fase 21 Live JS incompleto: '+token);
+  const mobile=fs.readFileSync(path.join(root,'js/mobile-audit.js'),'utf8');if(!mobile.includes('login-priority'))errors.push('Fase 21 menu mobile sem login prioritário.');
+}
+
+if(info.phase>=22){
+  for(const required of ['js/live-sharing-core.js','js/vendor/qrcode.min.js','js/vendor/qrcode.LICENSE.txt','scripts/test-live-sharing.js','scripts/verify-firebase-integrity.js','docs/AUDITORIA-FASE-22.md','docs/TESTES-FASE-22.md'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 22 arquivo ausente: '+required);
+  const page=fs.readFileSync(path.join(root,'sala-live.html'),'utf8');for(const token of ['room-invite-panel','room-qr-canvas','room-share-code','copy-room-link','share-room-link','whatsapp-room-link','Entrar e abrir cifra','js/live-sharing-core.js','js/vendor/qrcode.min.js'])if(!page.includes(token))errors.push('Fase 22 Sala Live incompleta: '+token);
+  const roomJs=fs.readFileSync(path.join(root,'js/live-room.js'),'utf8');for(const token of ['sharedSetlist','buildSnapshot','activateRoomSetlist','buildShareUrl','payloadBytes','refreshSharedContent'])if(!roomJs.includes(token))errors.push('Fase 22 compartilhamento incompleto: '+token);
+  const client=fs.readFileSync(path.join(root,'js/live-room-client.js'),'utf8');for(const token of ['StageMusicLiveSharing','resolveRoomSetlist','roomCode'])if(!client.includes(token))errors.push('Fase 22 cliente incompleto: '+token);
+  const livePage=fs.readFileSync(path.join(root,'modo-live.html'),'utf8');if(!livePage.includes('js/live-sharing-core.js'))errors.push('Fase 22 core ausente no Modo Live.');
+  for(const token of ['./js/live-sharing-core.js','./js/vendor/qrcode.min.js'])if(!sw.includes(token))errors.push('Fase 22 cache ausente: '+token);
+}
+
+if(info.phase>=23){
+  for(const required of ['diagnostico.html','css/diagnostics.css','css/release-candidate.css','js/diagnostics.js','js/onboarding.js','scripts/test-release-candidate.js','docs/AUDITORIA-FASE-23.md','docs/TESTES-FASE-23.md'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 23 arquivo ausente: '+required);
+  const home=fs.readFileSync(path.join(root,'index.html'),'utf8');for(const token of ['onboarding-dialog','open-onboarding','diagnostico.html','js/onboarding.js'])if(!home.includes(token))errors.push('Fase 23 Home incompleta: '+token);
+  const diagnostics=fs.readFileSync(path.join(root,'diagnostico.html'),'utf8');for(const token of ['technical-checks','setup-checks','readiness-score','install-stage-music','js/diagnostics.js'])if(!diagnostics.includes(token))errors.push('Fase 23 diagnóstico incompleto: '+token);
+  const settings=fs.readFileSync(path.join(root,'configuracoes.html'),'utf8');for(const token of ['import-full-backup','backup-file-input','backup-import-mode','undo-last-restore'])if(!settings.includes(token))errors.push('Fase 23 backup incompleto: '+token);
+  for(const token of ['./diagnostico.html','./js/diagnostics.js','./js/onboarding.js','./css/diagnostics.css','./css/release-candidate.css'])if(!sw.includes(token))errors.push('Fase 23 cache ausente: '+token);
+}
+
+if(info.phase>=23.1){
+  for(const required of ['scripts/test-login-ux.js','docs/AUDITORIA-FASE-23-1.md','docs/TESTES-FASE-23-1.md','docs/ARQUITETURA-BIBLIOTECAS.md'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 23.1 arquivo ausente: '+required);
+  const login=fs.readFileSync(path.join(root,'login-cifra.html'),'utf8');
+  for(const token of ['Continuar com Google','account-privacy-note','data-google-login','data-local-login','email-login-form'])if(!login.includes(token))errors.push('Fase 23.1 Login incompleto: '+token);
+  const authCss=fs.readFileSync(path.join(root,'css/auth.css'),'utf8');
+  for(const token of ['google-login-btn','auth-mode-switch','auth-brand-refined','account-privacy-note'])if(!authCss.includes(token))errors.push('Fase 23.1 CSS incompleto: '+token);
+}
+
+if(info.phase>=24){
+  for(const required of ['js/global-catalog.js','js/global-catalog-editor.js','css/global-catalog.css','scripts/test-global-catalog.js','docs/AUDITORIA-FASE-24.md','docs/TESTES-FASE-24.md','docs/CATALOGO-GLOBAL-ADMIN.md'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 24 arquivo ausente: '+required);
+  const library=fs.readFileSync(path.join(root,'buscar-cifra.html'),'utf8');for(const token of ['library-global','Catálogo global','library-refresh-global','js/global-catalog.js'])if(!library.includes(token))errors.push('Fase 24 biblioteca incompleta: '+token);
+  const editor=fs.readFileSync(path.join(root,'inserir-cifra.html'),'utf8');for(const token of ['global-admin-panel','publish-global-song','delete-global-song','js/global-catalog-editor.js'])if(!editor.includes(token))errors.push('Fase 24 editor incompleto: '+token);
+  const rules=fs.readFileSync(path.join(root,'firestore.rules'),'utf8');for(const token of ['match /globalSongs/{songId}','isGlobalCatalogAdmin()','jonatanoficial@gmail.com'])if(!rules.includes(token))errors.push('Fase 24 regras incompletas: '+token);
+  const setlists=fs.readFileSync(path.join(root,'js/setlists.js'),'utf8');for(const token of ['StageMusicGlobalCatalog','content:s.content','Cifra global adicionada'])if(!setlists.includes(token))errors.push('Fase 24 repertórios incompletos: '+token);
+  for(const token of ['./js/global-catalog.js','./js/global-catalog-editor.js','./css/global-catalog.css'])if(!sw.includes(token))errors.push('Fase 24 cache ausente: '+token);
+}
+
+if(info.phase>=25){
+  for(const required of ['js/harmonic-engine.js','scripts/test-harmonic-engine.js','docs/AUDITORIA-FASE-25.md','docs/TESTES-FASE-25.md'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 25 arquivo ausente: '+required);
+  const editor=fs.readFileSync(path.join(root,'inserir-cifra.html'),'utf8');for(const token of ['Tons maiores','Tons menores','C#m','Bbm','Manter escrita original','js/harmonic-engine.js'])if(!editor.includes(token))errors.push('Fase 25 editor incompleto: '+token);
+  const live=fs.readFileSync(path.join(root,'modo-live.html'),'utf8');for(const token of ['<div id="live-content"','js/harmonic-engine.js'])if(!live.includes(token))errors.push('Fase 25 Live incompleto: '+token);
+  const engine=fs.readFileSync(path.join(root,'js/harmonic-engine.js'),'utf8');for(const token of ['renderResponsive','transposeKey','buildResponsivePair','Bbm'])if(!engine.includes(token))errors.push('Fase 25 motor incompleto: '+token);
+  const liveCss=fs.readFileSync(path.join(root,'css/live.css'),'utf8');for(const token of ['chord-lyric-row','chord-lyric-segment','chord-only-row'])if(!liveCss.includes(token))errors.push('Fase 25 CSS incompleto: '+token);
+  if(!sw.includes('./js/harmonic-engine.js'))errors.push('Fase 25 cache ausente: harmonic-engine.js');
+}
+
+if(info.phase>=26){
+  for(const required of ['docs/AUDITORIA-FASE-26.md','docs/TESTES-FASE-26.md','docs/CENTRAL-DIRETOR-FASE-26.md','docs/FIREBASE-INTEGRITY-FASE-26.sha256','scripts/test-director-console.js'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 26 arquivo ausente: '+required);
+  const roomPage=fs.readFileSync(path.join(root,'sala-live.html'),'utf8');
+  for(const token of ['director-performance-key','director-save-key','director-open-live','director-advanced-toggle'])if(!roomPage.includes(token))errors.push('Fase 26 Sala Live incompleta: '+token);
+  if(roomPage.includes('+1 semitom')||roomPage.includes('−1 semitom'))errors.push('Fase 26 ainda exibe modulação por semitons.');
+  const livePage=fs.readFileSync(path.join(root,'modo-live.html'),'utf8');
+  for(const token of ['director-dock-toggle','director-live-dock','director-live-key'])if(!livePage.includes(token))errors.push('Fase 26 Central do Diretor ausente: '+token);
+  const liveJs=fs.readFileSync(path.join(root,'js/live-mode.js'),'utf8');
+  for(const token of ['displayedContent','setTemporaryKey','updateSavedKey','stage:live-local-navigation'])if(!liveJs.includes(token))errors.push('Fase 26 transposição Live incompleta: '+token);
+  const roomJs=fs.readFileSync(path.join(root,'js/live-room.js'),'utf8');
+  for(const token of ['targetKey','savePerformanceKey','effectivePerformanceKey'])if(!roomJs.includes(token))errors.push('Fase 26 tom da sala incompleto: '+token);
+  const client=fs.readFileSync(path.join(root,'js/live-room-client.js'),'utf8');
+  for(const token of ['saveDirectorKey','applyDirectorKey','director-live-key'])if(!client.includes(token))errors.push('Fase 26 cliente do diretor incompleto: '+token);
+  const setlists=fs.readFileSync(path.join(root,'js/setlists.js'),'utf8');
+  for(const token of ['Tom desta apresentação','reset-key','create-room-from-setlist'])if(!setlists.includes(token))errors.push('Fase 26 repertórios incompletos: '+token);
+  const mobile=fs.readFileSync(path.join(root,'js/mobile-audit.js'),'utf8');
+  if(!mobile.includes("'sala-live.html','◎','Sala'"))errors.push('Fase 26 menu mobile sem Sala Live.');
+}
+
+
+if(info.phase>=27){
+  for(const required of ['js/workspace-cloud.js','css/workspace-cloud.css','scripts/test-workspace-persistence.js','scripts/test-live-director-ux.js','docs/AUDITORIA-FASE-27.md','docs/TESTES-FASE-27.md','docs/PERSISTENCIA-E-SALA-LIVE-FASE-27.md'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 27 arquivo ausente: '+required);
+  const workspace=fs.readFileSync(path.join(root,'js/workspace-cloud.js'),'utf8');
+  for(const token of ['stage_music_setlists_v1','stage_music_teams_v1','stage_music_events_v1','saveSetlists','saveTeams','saveEvents','deleteDoc','restoreAll'])if(!workspace.includes(token))errors.push('Fase 27 persistência incompleta: '+token);
+  const setlists=fs.readFileSync(path.join(root,'js/setlists.js'),'utf8');if(!setlists.includes('StageMusicWorkspaceCloud?.saveSetlists'))errors.push('Fase 27 repertórios sem proteção permanente.');
+  const teams=fs.readFileSync(path.join(root,'js/teams.js'),'utf8');if(!teams.includes('StageMusicWorkspaceCloud?.saveTeams'))errors.push('Fase 27 equipes sem proteção permanente.');
+  const events=fs.readFileSync(path.join(root,'js/events.js'),'utf8');if(!events.includes('StageMusicWorkspaceCloud?.saveEvents'))errors.push('Fase 27 eventos sem proteção permanente.');
+  const livePage=fs.readFileSync(path.join(root,'modo-live.html'),'utf8');for(const token of ['live-director-alert','director-quick-rail','director-live-message'])if(!livePage.includes(token))errors.push('Fase 27 Modo Live incompleto: '+token);
+  const roomPage=fs.readFileSync(path.join(root,'sala-live.html'),'utf8');for(const token of ['director-message-card','director-message-history','room-invite-pending'])if(!roomPage.includes(token))errors.push('Fase 27 Sala Live incompleta: '+token);
+  const client=fs.readFileSync(path.join(root,'js/live-room-client.js'),'utf8');for(const token of ['showDirectorAlert','sendDirectorMessage','commandType','messages'])if(!client.includes(token))errors.push('Fase 27 cliente Live incompleto: '+token);
+  for(const token of ['./js/workspace-cloud.js','./css/workspace-cloud.css'])if(!sw.includes(token))errors.push('Fase 27 cache ausente: '+token);
+}
+
+
+if(info.phase>=28){
+  for(const required of ['catalogo-admin.html','js/catalog-admin.js','css/catalog-admin.css','scripts/test-catalog-admin.js','docs/AUDITORIA-FASE-28.md','docs/TESTES-FASE-28.md','docs/CENTRAL-ADMINISTRATIVA-FASE-28.md','docs/FIREBASE-INTEGRITY-FASE-28.sha256'])if(!fs.existsSync(path.join(root,required)))errors.push('Fase 28 arquivo ausente: '+required);
+  const adminPage=fs.readFileSync(path.join(root,'catalogo-admin.html'),'utf8');for(const token of ['catalog-import-text','catalog-queue-list','publish-ready-queue','catalog-duplicate-policy','js/catalog-admin.js'])if(!adminPage.includes(token))errors.push('Fase 28 Central incompleta: '+token);
+  const adminJs=fs.readFileSync(path.join(root,'js/catalog-admin.js'),'utf8');for(const token of ['adminCatalogQueue','parseDelimited','publishAllReady','duplicateTarget','loadCloudQueue'])if(!adminJs.includes(token))errors.push('Fase 28 JS incompleto: '+token);
+  const auth=fs.readFileSync(path.join(root,'js/auth.js'),'utf8');for(const token of ['ensureAuthenticated','restorePromise','stage-music-auth-ready'])if(!auth.includes(token))errors.push('Fase 28 restauração de login incompleta: '+token);
+  const globalEditor=fs.readFileSync(path.join(root,'js/global-catalog-editor.js'),'utf8');for(const token of ['publish-global-next','resetForNext','stage-music-editor-cleared'])if(!globalEditor.includes(token))errors.push('Fase 28 publicação consecutiva insegura: '+token);
+  const globalCatalog=fs.readFileSync(path.join(root,'js/global-catalog.js'),'utf8');for(const token of ['createGlobalId','findDuplicate','Math.random'])if(!globalCatalog.includes(token))errors.push('Fase 28 ID ou duplicidade ausente: '+token);
+  for(const token of ['./catalogo-admin.html','./js/catalog-admin.js','./css/catalog-admin.css'])if(!sw.includes(token))errors.push('Fase 28 cache ausente: '+token);
+}
+
+if(errors.length){console.error('AUDITORIA REPROVADA\n'+errors.join('\n'));process.exit(1)}console.log(`AUDITORIA APROVADA — ${info.app} ${info.version} | ${htmls.length} páginas | ${info.date} ${info.time}`);if(warnings.length)console.warn(warnings.join('\n'));
+

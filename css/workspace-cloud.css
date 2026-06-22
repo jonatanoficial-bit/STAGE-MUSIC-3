@@ -1,0 +1,7 @@
+.workspace-cloud-status{position:fixed;left:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:220;display:inline-flex;align-items:center;gap:8px;min-height:36px;max-width:min(330px,calc(100vw - 24px));padding:8px 12px;border:1px solid rgba(67,214,160,.24);border-radius:999px;background:rgba(7,10,18,.9);color:#bff4dc;font-size:.76rem;font-weight:900;box-shadow:0 10px 34px rgba(0,0,0,.36);backdrop-filter:blur(16px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:default}
+.workspace-cloud-status::before{content:"";width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:#43d6a0;box-shadow:0 0 12px rgba(67,214,160,.8)}
+.workspace-cloud-status[data-state="saving"]::before,.workspace-cloud-status[data-state="restoring"]::before{background:#44c7ff;box-shadow:0 0 12px rgba(68,199,255,.85);animation:workspacePulse 1s infinite alternate}
+.workspace-cloud-status[data-state="error"]{border-color:rgba(255,104,126,.38);color:#ffd0d8;cursor:pointer}.workspace-cloud-status[data-state="error"]::before{background:#ff687e;box-shadow:0 0 12px rgba(255,104,126,.8)}
+.workspace-cloud-status[data-state="local"]{border-color:rgba(255,193,90,.28);color:#ffe0a0}.workspace-cloud-status[data-state="local"]::before{background:#ffc15a;box-shadow:0 0 12px rgba(255,193,90,.72)}
+@keyframes workspacePulse{from{opacity:.45;transform:scale(.82)}to{opacity:1;transform:scale(1.08)}}
+@media(max-width:800px){.workspace-cloud-status{left:8px;right:8px;bottom:calc(74px + env(safe-area-inset-bottom));justify-content:center;max-width:none;font-size:.72rem}}

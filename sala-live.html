@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Stage Music • Sala Live</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/live-room.css" />
+  <link rel="stylesheet" href="css/workspace-cloud.css" />
+  <script>if(new URLSearchParams(location.search).get('room')||new URLSearchParams(location.search).get('code'))document.documentElement.classList.add('room-invite-pending');</script>
+  <link rel="stylesheet" href="css/mobile-audit.css" />
+</head>
+<body data-page="sala-live">
+  <main class="page-shell live-room-page">
+    <header class="page-header live-room-header">
+      <div>
+        <a href="index.html" class="back-link">← Início</a>
+        <span class="visual-badge">Sala Live</span>
+        <h1>Conecte a banda e conduza a apresentação em tempo real.</h1>
+        <p>Compartilhe o QR Code, acompanhe os participantes, troque o tom da apresentação e envie avisos visuais para todos sem tirar o foco da música.</p>
+      </div>
+      <a class="btn btn-primary" href="modo-live.html?director=1">Abrir Central do Diretor</a>
+    </header>
+
+    <section class="sharing-steps" aria-label="Como funciona">
+      <article><span>1</span><div><strong>Crie a sala</strong><small>Escolha o repertório que será compartilhado.</small></div></article>
+      <article><span>2</span><div><strong>Envie o convite</strong><small>QR Code, link ou código curto.</small></div></article>
+      <article><span>3</span><div><strong>Toquem juntos</strong><small>Todos veem a mesma música e os sinais do diretor.</small></div></article>
+    </section>
+
+    <section class="room-stats-grid">
+      <article><strong id="room-stat-status">Inativa</strong><small>Status</small></article>
+      <article><strong id="room-stat-code">—</strong><small>Código</small></article>
+      <article><strong id="room-stat-members">0</strong><small>Participantes</small></article>
+      <article><strong id="room-stat-position">0 / 0</strong><small>Música atual</small></article>
+    </section>
+
+    <section class="room-layout room-layout-primary">
+      <article class="section-card room-control-card">
+        <div class="section-head">
+          <div><span class="eyebrow">Criador / diretor</span><h2>Criar sala para a banda</h2></div>
+          <span id="room-role-badge" class="status-pill">Sem sala</span>
+        </div>
+        <p class="section-subtitle">O repertório é copiado para a sala como uma versão de apresentação. Os músicos não precisam ter suas cifras salvas antes de entrar.</p>
+
+        <div class="room-form-grid">
+          <label><span>Repertório a compartilhar</span><select id="room-setlist-select"></select></label>
+          <label><span>Equipe</span><select id="room-team-select"></select></label>
+          <label><span>Seu nome</span><input id="room-display-name" maxlength="60" autocomplete="name" placeholder="Ex.: Jonatan" /></label>
+          <label><span>Seu instrumento</span><select id="room-instrument"><option>Direção musical</option><option>Vocal</option><option>Teclado</option><option>Guitarra</option><option>Violão</option><option>Baixo</option><option>Bateria</option><option>Sopros</option><option>Outro</option></select></label>
+        </div>
+        <div class="room-actions">
+          <button id="create-room-btn" class="btn btn-primary room-main-cta" type="button">Criar sala e gerar convite</button>
+          <button id="end-room-btn" class="btn btn-danger" type="button" disabled>Encerrar sala</button>
+        </div>
+
+        <section id="room-invite-panel" class="room-invite-panel" hidden>
+          <div class="invite-title-row">
+            <div>
+              <span class="eyebrow">Convide sua banda</span>
+              <h3>Mostre o QR ou envie o código</h3>
+            </div>
+            <span class="live-dot">Sala ativa</span>
+          </div>
+          <div class="invite-main-grid">
+            <div class="room-code-display">
+              <small>CÓDIGO DA SALA</small>
+              <strong id="room-share-code">—</strong>
+              <p>O músico digita este código e toca em <b>Entrar e abrir cifra</b>.</p>
+            </div>
+            <div class="room-qr-card">
+              <canvas id="room-qr-canvas" width="232" height="232" aria-label="QR Code da Sala Live"></canvas>
+              <small>Aponte a câmera do celular</small>
+            </div>
+          </div>
+          <label class="share-link-field"><span>Link do convite</span><input id="room-share-url" readonly /></label>
+          <div class="invite-actions">
+            <button id="copy-room-code" class="btn btn-outline" type="button" disabled>Copiar código</button>
+            <button id="copy-room-link" class="btn btn-outline" type="button">Copiar link</button>
+            <button id="share-room-link" class="btn btn-primary" type="button">Compartilhar convite</button>
+            <a id="whatsapp-room-link" class="btn btn-secondary" target="_blank" rel="noopener">Enviar no WhatsApp</a>
+          </div>
+          <button id="refresh-room-content" class="text-link" type="button">Atualizar cifras compartilhadas com a versão mais recente</button>
+        </section>
+
+        <div id="director-panel" class="director-panel" hidden>
+          <div class="current-song-card">
+            <span>MÚSICA QUE TODOS ESTÃO VENDO</span>
+            <strong id="director-current-title">—</strong>
+            <small id="director-current-meta">—</small>
+          </div>
+          <div class="director-controls">
+            <button id="director-prev" class="btn btn-outline" type="button">← Anterior</button>
+            <button id="director-next" class="btn btn-primary" type="button">Próxima →</button>
+          </div>
+
+          <section class="director-key-card" aria-label="Tom da apresentação">
+            <div class="director-key-copy">
+              <span class="eyebrow">TOM DESTA APRESENTAÇÃO</span>
+              <h3>Escolha o tom real do cantor</h3>
+              <p id="director-key-hint">O tom escolhido pode ser temporário ou salvo somente neste repertório.</p>
+            </div>
+            <label class="director-key-select"><span>Tom que todos verão</span><select id="director-performance-key"></select></label>
+            <div class="director-key-actions">
+              <button id="director-apply-key" class="btn btn-primary" type="button">Aplicar para todos</button>
+              <button id="director-save-key" class="btn btn-secondary" type="button">Salvar neste repertório</button>
+              <button id="director-reset-key" class="btn btn-outline" type="button">Usar tom salvo</button>
+            </div>
+            <a id="director-open-live" class="btn btn-outline director-open-live" href="modo-live.html?director=1">Abrir cifra + controles</a>
+          </section>
+
+          <button id="director-advanced-toggle" class="btn btn-outline director-advanced-toggle" type="button" aria-expanded="true">Ocultar comandos avançados</button>
+          <div id="director-advanced-controls" class="director-advanced-controls">
+          <section class="director-message-card" aria-label="Avisos para a banda">
+            <div class="director-message-copy"><span class="eyebrow">AVISO EM DESTAQUE</span><strong>Mensagem para todos os músicos</strong><small>A mensagem ocupará o centro da tela por alguns segundos.</small></div>
+            <div class="director-message-row">
+              <input id="director-message" maxlength="140" placeholder="Ex.: repetir refrão, somente piano, final agora..." />
+              <button id="director-send-message" class="btn btn-primary" type="button">Enviar para todos</button>
+            </div>
+            <div id="director-message-history" class="director-message-history"><p class="section-subtitle">Nenhum aviso enviado.</p></div>
+          </section>
+          <div class="quick-command-grid" id="quick-command-grid">
+            <button type="button" data-command="Repetir refrão">Repetir refrão</button>
+            <button type="button" data-command="Baixar dinâmica">Baixar dinâmica</button>
+            <button type="button" data-command="Somente piano">Somente piano</button>
+            <button type="button" data-command="Banda entra">Banda entra</button>
+            <button type="button" data-command="Final agora">Final agora</button>
+            <button type="button" data-command="Preparar troca de tom">Preparar troca de tom</button>
+          </div>
+
+          <section class="worship-flow-panel" id="worship-flow-panel">
+            <div class="flow-panel-head">
+              <div><span class="eyebrow">Worship Flow</span><h3>Condução musical avançada</h3></div>
+              <span id="flow-live-state" class="status-pill">Fluxo normal</span>
+            </div>
+            <div class="flow-control-grid flow-control-grid-compact">
+              <label><span>Seção ao vivo</span><select id="flow-section-select"><option value="">Automática / atual</option></select></label>
+              <label><span>Dinâmica</span><select id="flow-dynamics"><option value="normal">Normal</option><option value="soft">Suave</option><option value="build">Crescendo</option><option value="full">Banda completa</option><option value="drop">Corte / somente voz</option></select></label>
+              <label><span>Modo de execução</span><select id="flow-mode"><option value="normal">Estrutura normal</option><option value="repeat">Repetir seção</option><option value="vamp">Vamp contínuo</option><option value="ministry">Ministração</option><option value="spontaneous">Espontâneo</option><option value="ending">Preparar final</option></select></label>
+            </div>
+            <div class="flow-action-grid">
+              <button type="button" data-flow-action="apply">Aplicar fluxo</button>
+              <button type="button" data-flow-action="repeat">Repetir seção</button>
+              <button type="button" data-flow-action="vamp">Ativar vamp</button>
+              <button type="button" data-flow-action="ministry">Entrar em ministração</button>
+              <button type="button" data-flow-action="build">Crescendo</button>
+              <button type="button" data-flow-action="drop">Corte total</button>
+              <button type="button" data-flow-action="band">Banda entra</button>
+              <button type="button" data-flow-action="ending">Final agora</button>
+            </div>
+            <div class="flow-summary" id="flow-summary">
+              <div><span>Seção</span><strong id="flow-summary-section">Automática</strong></div>
+              <div><span>Modo</span><strong id="flow-summary-mode">Normal</strong></div>
+              <div><span>Dinâmica</span><strong id="flow-summary-dynamics">Normal</strong></div>
+              <div><span>Tom atual</span><strong id="flow-summary-modulation">—</strong></div>
+            </div>
+            <div class="flow-history" id="flow-history"><p class="section-subtitle">Nenhum comando avançado enviado.</p></div>
+          </section>
+          </div>
+        </div>
+      </article>
+
+      <aside class="room-side-column">
+        <article class="section-card room-join-card">
+          <div class="section-head">
+            <div><span class="eyebrow">Músico convidado</span><h2>Entrar com código</h2></div>
+          </div>
+          <div id="join-invite-hint" class="join-invite-hint" hidden>Convite encontrado. Confirme para abrir a cifra sincronizada.</div>
+          <label class="join-code-label"><span>Código da sala</span><input id="join-room-code" maxlength="10" inputmode="text" autocapitalize="characters" autocomplete="off" placeholder="ABC-123" /></label>
+          <div class="join-profile-summary">
+            <span>Você entrará como</span>
+            <strong id="join-profile-name">Músico</strong>
+            <small id="join-profile-instrument">Outro • pode alterar acima</small>
+          </div>
+          <div class="room-actions single">
+            <button id="join-room-btn" class="btn btn-primary room-main-cta" type="button">Entrar e abrir cifra</button>
+            <button id="leave-room-btn" class="btn btn-outline" type="button" disabled>Sair da sala</button>
+          </div>
+          <div class="joined-room-summary" id="joined-room-summary" hidden>
+            <span>SALA CONECTADA</span>
+            <strong id="joined-room-name">—</strong>
+            <p id="joined-room-song">Aguardando direção musical...</p>
+            <div id="room-command-banner" class="room-command-banner" hidden></div>
+            <a class="btn btn-secondary wide" href="modo-live.html">Abrir leitura sincronizada</a>
+          </div>
+        </article>
+
+        <article class="section-card shared-view-card">
+          <div class="section-head"><div><span class="visual-badge">O que o músico verá</span><h3>A mesma apresentação do diretor</h3></div></div>
+          <div class="shared-view-list">
+            <div><span>✓</span><p><strong>Mesmo repertório</strong><small>Títulos, ordem, tom, BPM e cifra completa.</small></p></div>
+            <div><span>✓</span><p><strong>Mesma música atual</strong><small>Quando o diretor avança, todos acompanham.</small></p></div>
+            <div><span>✓</span><p><strong>Comandos em tempo real</strong><small>Seção, dinâmica, vamp, ministração e modulação.</small></p></div>
+            <div><span>✓</span><p><strong>Leitura pessoal</strong><small>Cada músico controla sua fonte, tema e rolagem sem atrapalhar os outros.</small></p></div>
+          </div>
+        </article>
+
+        <article class="section-card room-members-card">
+          <div class="section-head"><div><span class="visual-badge">Conectados</span><h3>Participantes da sala</h3></div></div>
+          <div id="room-member-list" class="room-member-list"><p class="section-subtitle">Nenhum participante conectado.</p></div>
+        </article>
+      </aside>
+
+      <article class="section-card room-connection-card">
+        <div class="section-head"><div><span class="visual-badge">Conexão</span><h3>Sincronização protegida</h3></div></div>
+        <div class="connection-status-grid">
+          <div><span>Local</span><strong>BroadcastChannel + armazenamento protegido</strong></div>
+          <div><span>Nuvem</span><strong data-cloud-config>Firebase não configurado</strong></div>
+          <div><span>Conteúdo</span><strong>Snapshot do repertório dentro da sala</strong></div>
+          <div><span>Fallback</span><strong>App continua funcional offline</strong></div>
+        </div>
+        <p class="section-subtitle">A sala compartilha somente o repertório usado na apresentação. A biblioteca privada completa do criador não é enviada aos convidados.</p>
+      </article>
+    </section>
+  </main>
+
+  <div id="room-toast" class="stage-toast" role="status" aria-live="polite"></div>
+  <footer class="app-footer"><span data-build-info>Carregando build…</span></footer>
+  <script src="js/build-info.js"></script>
+  <script src="js/resilience.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/firebase-runtime.js"></script>
+  <script src="js/firebase-live.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/local-db.js"></script>
+  <script src="js/cloud-sync.js"></script><script src="js/workspace-cloud.js"></script>
+  <script src="js/vendor/qrcode.min.js"></script>
+  <script src="js/live-sharing-core.js"></script>
+  <script src="js/harmonic-engine.js"></script>
+  <script src="js/live-room.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/mobile-audit.js"></script>
+</body>
+</html>

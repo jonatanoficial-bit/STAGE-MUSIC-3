@@ -1,0 +1,65 @@
+/* Stage Music Fase 20 — auditoria mobile/tablet */
+:root{--mobile-nav-h:72px;--tap-min:46px}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{overscroll-behavior-y:none}
+button,a,input,select,textarea{touch-action:manipulation}
+button,.btn,.icon-btn,.live-control,.chip-btn,.quick-action,.setlist-nav-item{min-height:var(--tap-min)}
+input,select,textarea{font-size:16px}
+img,svg,video,canvas{max-width:100%}
+.mobile-audit-nav{display:none}
+.mobile-safe-spacer{display:none}
+@media(max-width:980px){
+ body:not([data-page="modo-live"]){padding-bottom:calc(var(--mobile-nav-h) + env(safe-area-inset-bottom) + 18px)}
+ .mobile-audit-nav{position:fixed;left:10px;right:10px;bottom:calc(8px + env(safe-area-inset-bottom));z-index:999;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;padding:8px;border:1px solid rgba(255,255,255,.11);border-radius:22px;background:rgba(7,10,19,.94);box-shadow:0 20px 60px rgba(0,0,0,.42);backdrop-filter:blur(18px)}
+ .mobile-audit-nav a{display:grid;place-items:center;gap:2px;min-width:0;padding:8px 4px;border-radius:14px;color:#abb5d0;font-size:.7rem;font-weight:700;text-align:center;line-height:1.15}
+ .mobile-audit-nav a span{font-size:1rem}.mobile-audit-nav a.active{color:#fff;background:linear-gradient(135deg,#7958ff,#35bdf0)}
+ .bottom-nav{display:none!important}
+ .page-shell,.main-content{padding-left:16px!important;padding-right:16px!important}
+ .page-header h1{font-size:clamp(2rem,9vw,3rem);line-height:1.02}
+ .section-card,.panel-card,.editor-card,.editor-side-card{border-radius:20px}
+ .stage-dialog{max-height:calc(100dvh - 24px);overflow:auto;margin:auto;padding:18px}
+ .stage-dialog::backdrop{backdrop-filter:blur(6px)}
+ .dialog-actions{position:sticky;bottom:-18px;padding:12px 0 2px;background:linear-gradient(180deg,transparent,#0d111b 28%)}
+}
+@media(max-width:760px){
+ .hero-actions,.settings-action-grid,.setlist-main-actions,.dual-actions{display:grid!important;grid-template-columns:1fr!important;width:100%}
+ .hero-actions .btn,.settings-action-grid .btn,.setlist-main-actions .btn,.dual-actions .btn{width:100%}
+ .stats-grid,.settings-stat-grid,.setlist-stats,.editor-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .editor-shell{grid-template-columns:1fr!important}
+ .editor-card,.editor-side-card{padding:16px!important}
+ .editor-grid,.editor-grid-secondary,.toolbox-row{grid-template-columns:1fr!important}
+ .music-toolbox{padding:14px!important}
+ .editor-area-label textarea{min-height:48dvh!important;line-height:1.65}
+ .editor-actions{position:sticky;bottom:calc(var(--mobile-nav-h) + env(safe-area-inset-bottom) + 8px);z-index:30;display:grid!important;grid-template-columns:1fr 1fr!important;padding:10px;margin:16px -6px 0!important;border:1px solid rgba(255,255,255,.1);border-radius:18px;background:rgba(8,11,20,.96);box-shadow:0 18px 50px rgba(0,0,0,.45);backdrop-filter:blur(16px)}
+ .editor-actions .btn-primary{grid-column:1/-1;order:-3;font-size:1rem}
+ .editor-actions #save-draft{order:-2}.editor-actions #export-local-json{display:none}
+ .preview-block{max-height:55dvh;overflow:auto}
+ .setlist-workspace{display:block!important;min-height:0!important}
+ .setlist-sidebar{max-height:none!important;margin-bottom:14px}
+ .setlist-editor{padding:14px!important}
+ .setlist-song-row{display:grid!important;grid-template-columns:36px minmax(0,1fr)!important;gap:10px!important;padding:14px!important}
+ .setlist-song-row>*{grid-column:auto!important;grid-row:auto!important}
+ .setlist-song-row .drag-handle{grid-column:1;grid-row:1}.setlist-song-row .song-identity{grid-column:2;grid-row:1}
+ .setlist-song-row .compact-input,.setlist-song-row .compact-select{grid-column:2}
+ .setlist-song-row .row-actions{grid-column:1/-1;justify-content:flex-end;border-top:1px solid rgba(255,255,255,.08);padding-top:10px}
+ .setlist-table-head{display:none!important}
+ .song-picker-item{align-items:stretch;flex-direction:column}.song-picker-item .btn{width:100%}
+ .live-room-grid,.teams-grid,.events-grid,.settings-grid-advanced{grid-template-columns:1fr!important}
+}
+@media(max-width:420px){
+ .page-shell,.main-content{padding-left:12px!important;padding-right:12px!important}
+ .stats-grid,.settings-stat-grid,.setlist-stats,.editor-stat-grid{grid-template-columns:1fr!important}
+ .mobile-audit-nav{left:6px;right:6px;gap:3px;padding:6px}.mobile-audit-nav a{font-size:.64rem;padding:8px 2px}
+ .editor-actions{grid-template-columns:1fr!important}.editor-actions .btn{grid-column:1!important}
+ .btn{padding-left:14px;padding-right:14px}
+}
+@media(orientation:landscape) and (max-height:560px){
+ body:not([data-page="modo-live"]){padding-bottom:64px}.mobile-audit-nav{left:50%;right:auto;width:min(620px,calc(100% - 20px));transform:translateX(-50%);bottom:4px;padding:5px}.mobile-audit-nav a{min-height:42px}
+ .page-header{margin-bottom:16px}.page-header h1{font-size:2rem}.editor-area-label textarea{min-height:58dvh!important}
+}
+@media(min-width:761px) and (max-width:1100px){
+ .page-shell,.main-content{padding-left:24px!important;padding-right:24px!important}
+ .editor-shell{grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr)!important;gap:16px!important}
+ .setlist-workspace{grid-template-columns:260px minmax(0,1fr)!important}
+}
+.mobile-audit-nav a.login-priority{color:#fff;background:linear-gradient(135deg,#7b57ff,#25bce8);box-shadow:0 7px 22px rgba(68,191,235,.28);font-weight:900}.mobile-audit-nav a.login-priority span{display:grid;place-items:center;width:25px;height:25px;border-radius:50%;background:rgba(255,255,255,.17)}

@@ -1,0 +1,59 @@
+
+> stage-music@3.5.0 check
+> npm run audit && npm run test:sharing && npm run test:release-candidate && npm run test:login-ux && npm run test:global-catalog && npm run test:harmonic && npm run test:director && npm run test:firebase-integrity && npm run test:workspace && npm run test:live-director-ux && npm run test:catalog-admin
+
+
+> stage-music@3.5.0 audit
+> node scripts/validate-build.js
+
+AUDITORIA APROVADA — Stage Music v3.5.0 | 13 páginas | 17/06/2026 11:21
+
+> stage-music@3.5.0 test:sharing
+> node scripts/test-live-sharing.js
+
+LIVE SHARING CORE: APROVADO
+
+> stage-music@3.5.0 test:release-candidate
+> node scripts/test-release-candidate.js
+
+RELEASE CANDIDATE TESTS: APROVADOS — onboarding, diagnóstico, backup e PWA
+
+> stage-music@3.5.0 test:login-ux
+> node scripts/test-login-ux.js
+
+LOGIN UX: APROVADO — Google prioritário, modo local preservado e privacidade clara
+
+> stage-music@3.5.0 test:global-catalog
+> node scripts/test-global-catalog.js
+
+TESTE CATÁLOGO GLOBAL APROVADO — leitura global, administração exclusiva, repertórios e cache verificados.
+
+> stage-music@3.5.0 test:harmonic
+> node scripts/test-harmonic-engine.js
+
+FASE 25: MOTOR HARMÔNICO E CIFRA RESPONSIVA — APROVADO
+
+> stage-music@3.5.0 test:director
+> node scripts/test-director-console.js
+
+FASE 26 — CENTRAL DO DIRETOR: APROVADA
+
+> stage-music@3.5.0 test:firebase-integrity
+> node scripts/verify-firebase-integrity.js
+
+FIREBASE INTEGRITY: APROVADA — conexões preservadas e regras ampliadas somente para globalSongs
+
+> stage-music@3.5.0 test:workspace
+> node scripts/test-workspace-persistence.js
+
+FASE 27 — PERSISTÊNCIA DE REPERTÓRIOS, EQUIPES E EVENTOS: APROVADA
+
+> stage-music@3.5.0 test:live-director-ux
+> node scripts/test-live-director-ux.js
+
+FASE 27 — CHAT, ALERTA E CONTROLES MÓVEIS DO DIRETOR: APROVADA
+
+> stage-music@3.5.0 test:catalog-admin
+> node scripts/test-catalog-admin.js
+
+TESTE FASE 28 APROVADO — fila em nuvem, importação, duplicidades, publicação segura e sessão restaurada.

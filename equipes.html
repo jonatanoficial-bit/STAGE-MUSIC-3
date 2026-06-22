@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Stage Music • Equipes</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/teams.css" />
+  <link rel="stylesheet" href="css/mobile-audit.css" />
+<link rel="stylesheet" href="css/workspace-cloud.css" /></head>
+<body data-page="equipes">
+  <main class="page-shell teams-page">
+    <header class="page-header teams-header">
+      <div>
+        <a href="index.html" class="back-link">← Início</a>
+        <span class="visual-badge">Equipes e funções</span>
+        <h1>Equipes musicais</h1>
+        <p>Organize bandas, ministérios, músicos e permissões. A estrutura já fica preparada para repertórios compartilhados e futura Sala Live sincronizada.</p>
+      </div>
+      <button id="new-team-btn" class="btn btn-primary" type="button">＋ Criar equipe</button>
+    </header>
+
+    <section class="team-stats-grid">
+      <article><strong id="team-stat-total">0</strong><small>Equipes</small></article>
+      <article><strong id="team-stat-members">0</strong><small>Membros</small></article>
+      <article><strong id="team-stat-directors">0</strong><small>Diretores</small></article>
+      <article><strong id="team-stat-invites">0</strong><small>Convites ativos</small></article>
+    </section>
+
+    <section class="teams-workspace">
+      <aside class="teams-sidebar panel-card">
+        <div class="section-head">
+          <div><span class="eyebrow">Suas equipes</span><h2>Grupos</h2></div>
+        </div>
+        <label class="search-field"><span>⌕</span><input id="team-search" type="search" placeholder="Buscar equipe" /></label>
+        <div id="team-list" class="team-list"></div>
+        <button id="join-team-btn" class="btn btn-outline wide" type="button">Entrar com código</button>
+      </aside>
+
+      <section class="team-editor panel-card">
+        <div id="team-empty" class="team-empty">
+          <span>♬</span>
+          <h2>Crie sua primeira equipe</h2>
+          <p>Monte sua banda, ministério ou grupo de apoio e defina quem pode administrar, editar ou apenas visualizar.</p>
+          <button class="btn btn-primary" type="button" data-action="new-team">Criar equipe</button>
+        </div>
+
+        <div id="team-content" hidden>
+          <div class="team-title-row">
+            <div>
+              <span class="eyebrow">Equipe ativa</span>
+              <input id="team-name" class="team-name-input" maxlength="80" aria-label="Nome da equipe" />
+              <p id="team-summary" class="section-subtitle"></p>
+            </div>
+            <div class="team-main-actions">
+              <button id="generate-invite-btn" class="btn btn-secondary" type="button">Gerar convite</button>
+              <button id="delete-team-btn" class="btn btn-danger" type="button">Excluir</button>
+            </div>
+          </div>
+
+          <div class="team-details-grid">
+            <label><span>Tipo</span><select id="team-type"><option>Ministério de louvor</option><option>Banda</option><option>Dupla</option><option>Grupo vocal</option><option>Equipe de evento</option><option>Outro</option></select></label>
+            <label><span>Seu papel</span><select id="team-owner-role"><option value="admin">Administrador</option><option value="director">Diretor musical</option><option value="editor">Editor</option><option value="musician">Músico</option><option value="viewer">Somente leitura</option></select></label>
+            <label class="wide"><span>Descrição</span><input id="team-description" maxlength="200" placeholder="Ex.: equipe do culto de domingo, repertório e direção musical" /></label>
+          </div>
+
+          <section class="permissions-card">
+            <div class="section-head">
+              <div><span class="visual-badge">Permissões</span><h3>Controle por função</h3></div>
+            </div>
+            <div id="permission-summary" class="permission-summary"></div>
+          </section>
+
+          <section class="members-section">
+            <div class="section-head">
+              <div><span class="visual-badge">Membros</span><h3>Equipe e instrumentos</h3></div>
+              <button id="add-member-btn" class="btn btn-outline" type="button">＋ Adicionar membro</button>
+            </div>
+            <div id="member-list" class="member-list"></div>
+          </section>
+
+          <section class="team-sharing-section">
+            <div class="section-head">
+              <div><span class="visual-badge">Compartilhamento</span><h3>Convites e repertórios</h3></div>
+            </div>
+            <div class="sharing-grid">
+              <article>
+                <span>Código da equipe</span>
+                <strong id="team-code">—</strong>
+                <button id="copy-team-code" class="btn btn-outline" type="button">Copiar código</button>
+              </article>
+              <article>
+                <span>Repertórios associados</span>
+                <strong id="team-setlist-count">0 repertórios</strong>
+                <a class="btn btn-outline" href="minhas-listas.html">Abrir setlists</a>
+              </article>
+              <article>
+                <span>Status de nuvem</span>
+                <strong data-cloud-config>Firebase não configurado</strong>
+                <a class="btn btn-outline" href="configuracoes.html">Central de sync</a>
+              </article>
+            </div>
+          </section>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="team-dialog" class="stage-dialog">
+    <form method="dialog" id="team-form">
+      <div class="dialog-header"><div><span class="eyebrow">Nova equipe</span><h2>Criar grupo</h2></div><button value="cancel" class="icon-btn">✕</button></div>
+      <label><span>Nome</span><input id="new-team-name" required maxlength="80" placeholder="Ex.: Louvor Peri Alto" /></label>
+      <label><span>Tipo</span><select id="new-team-type"><option>Ministério de louvor</option><option>Banda</option><option>Dupla</option><option>Grupo vocal</option><option>Equipe de evento</option><option>Outro</option></select></label>
+      <div class="dialog-actions"><button value="cancel" class="btn btn-secondary">Cancelar</button><button value="default" class="btn btn-primary">Criar equipe</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="member-dialog" class="stage-dialog">
+    <form method="dialog" id="member-form">
+      <div class="dialog-header"><div><span class="eyebrow">Novo membro</span><h2>Adicionar músico</h2></div><button value="cancel" class="icon-btn">✕</button></div>
+      <label><span>Nome</span><input id="member-name" required maxlength="80" /></label>
+      <label><span>E-mail</span><input id="member-email" type="email" placeholder="musico@exemplo.com" /></label>
+      <div class="dialog-grid"><label><span>Função</span><select id="member-role"><option value="director">Diretor musical</option><option value="editor">Editor</option><option value="musician" selected>Músico</option><option value="viewer">Somente leitura</option></select></label><label><span>Instrumento</span><select id="member-instrument"><option>Vocal</option><option>Teclado</option><option>Guitarra</option><option>Violão</option><option>Baixo</option><option>Bateria</option><option>Sopros</option><option>Direção musical</option><option>Outro</option></select></label></div>
+      <div class="dialog-actions"><button value="cancel" class="btn btn-secondary">Cancelar</button><button value="default" class="btn btn-primary">Adicionar</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="join-team-dialog" class="stage-dialog">
+    <form method="dialog" id="join-team-form">
+      <div class="dialog-header"><div><span class="eyebrow">Entrar em equipe</span><h2>Usar código</h2></div><button value="cancel" class="icon-btn">✕</button></div>
+      <label><span>Código</span><input id="join-team-code" required maxlength="12" placeholder="STG-ABC123" /></label>
+      <p class="section-subtitle">Cadastre músicos, funções e observações para organizar sua equipe com mais clareza.</p>
+      <div class="dialog-actions"><button value="cancel" class="btn btn-secondary">Cancelar</button><button value="default" class="btn btn-primary">Entrar</button></div>
+    </form>
+  </dialog>
+
+  <div id="team-toast" class="stage-toast" role="status" aria-live="polite"></div>
+  <footer class="app-footer"><span id="build-info" data-build-info>Carregando informações da build…</span></footer>
+  <script src="js/build-info.js"></script>
+  <script src="js/resilience.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cloud-sync.js"></script><script src="js/workspace-cloud.js"></script>
+  <script src="js/teams.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/mobile-audit.js"></script>
+</body>
+</html>

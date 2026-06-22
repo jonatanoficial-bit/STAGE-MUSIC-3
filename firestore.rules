@@ -1,0 +1,69 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    function isGlobalCatalogAdmin() {
+      return signedIn() && (
+        request.auth.uid == 'lurXl8ffICMx9FsLR08TDJnyDJA3'
+        || (
+          request.auth.token.email == 'jonatanoficial@gmail.com'
+          && request.auth.token.email_verified == true
+        )
+      );
+    }
+
+    // Dados privados de cada usuário e todas as subcoleções.
+    match /users/{uid}/{document=**} {
+      allow read, write: if isOwner(uid);
+    }
+
+    // Catálogo global: qualquer conta autenticada pode ler.
+    // Somente o administrador definido acima pode publicar, editar ou remover.
+    match /globalSongs/{songId} {
+      allow read: if signedIn();
+      allow create: if isGlobalCatalogAdmin()
+        && request.resource.data.id == songId
+        && request.resource.data.status == 'published';
+      allow update: if isGlobalCatalogAdmin()
+        && request.resource.data.id == resource.data.id
+        && request.resource.data.createdAt == resource.data.createdAt;
+      allow delete: if isGlobalCatalogAdmin();
+    }
+
+    // Salas Live autenticadas.
+    match /liveRooms/{roomCode} {
+      allow read: if signedIn();
+
+      allow create: if signedIn()
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.code == roomCode;
+
+      allow update: if signedIn()
+        && resource.data.status == 'active'
+        && request.resource.data.code == resource.data.code
+        && request.resource.data.ownerUid == resource.data.ownerUid;
+
+      allow delete: if signedIn()
+        && resource.data.ownerUid == request.auth.uid;
+    }
+
+    // Teste de conexão das Configurações.
+    match /systemChecks/{uid} {
+      allow read, write: if isOwner(uid);
+    }
+
+    // Bloqueia qualquer caminho não declarado acima.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

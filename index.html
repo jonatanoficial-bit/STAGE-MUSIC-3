@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang='pt-BR'>
+<head>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, viewport-fit=cover' />
+  <title>Stage Music</title>
+  <meta name='theme-color' content='#6d4aff' />
+  <link rel='icon' type='image/svg+xml' href='assets/icons/favicon.svg' />
+  <link rel='manifest' href='manifest.json' />
+  <link rel='stylesheet' href='css/global.css' />
+  <link rel='stylesheet' href='css/home.css' />
+  <link rel='stylesheet' href='css/release-candidate.css' />
+  <link rel="stylesheet" href="css/mobile-audit.css" />
+<link rel="stylesheet" href="css/workspace-cloud.css" /></head>
+<body data-page='home'>
+  <div class='app-shell'>
+    <aside class='sidebar desktop-only'>
+      <div class='brand-block'>
+        <img class='brand-logo' src='assets/logo/stage-music-logo.svg' alt='Logo Stage Music' />
+        <div>
+          <h1>Stage Music</h1>
+          <p>Sua música em qualquer palco.</p>
+        </div>
+      </div>
+
+      <nav class='side-nav'>
+        <a class='active' href='index.html'>Início</a>
+        <a class='side-login-link' href='login-cifra.html' data-home-login-link>Entrar com Google</a>
+        <a href='modo-live.html'>Modo Live</a>
+        <a href='sala-live.html'>Sala Live</a>
+        <a href='buscar-cifra.html'>Buscar cifra</a>
+        <a href='login-cifra.html'>Inserir cifra</a>
+        <a href='minhas-listas.html'>Minhas listas</a>
+        <a href='equipes.html'>Equipes</a>
+        <a href='eventos.html'>Eventos</a>
+        <a href='configuracoes.html'>Configurações</a>
+        <a href='diagnostico.html'>Diagnóstico</a>
+      </nav>
+
+      <div class='promo-card home-promo-card'>
+        <span class='visual-badge'>Teste aberto</span>
+        <h3>Centro de comando do palco</h3>
+        <p>Organize repertórios, acesse cifras e conduza sua equipe com segurança em qualquer aparelho.</p>
+        <div class='promo-status-list'>
+          <span>Offline first</span>
+          <span>Sem anúncios</span>
+          <span>Versão de testes</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class='main-content home-page'>
+      <header class='topbar home-topbar'>
+        <div class='brand-inline mobile-only'>
+          <img class='brand-inline-logo' src='assets/logo/stage-music-logo.svg' alt='Logo Stage Music' />
+          <strong>Stage Music</strong>
+        </div>
+        <div class='search-shell home-search-shell'>
+          <input data-home-search type='search' placeholder='Buscar músicas, artistas, repertórios ou cifras...' aria-label='Buscar' />
+        </div>
+        <a class='icon-btn home-live-shortcut' href='modo-live.html' aria-label='Abrir modo live'>♫</a>
+      </header>
+
+      <section class='home-release-entry' aria-label='Primeiros passos e diagnóstico'>
+        <div>
+          <span class='eyebrow'>STAGE MUSIC</span>
+          <strong>Entre, organize e toque com segurança.</strong>
+          <small>Use sua conta Google para manter cifras, repertórios e equipes salvos.</small>
+        </div>
+        <div class='home-release-actions'>
+          <button class='btn btn-secondary' type='button' id='open-onboarding'>Primeiros passos</button>
+          <a class='btn btn-outline' href='diagnostico.html'>Diagnóstico</a>
+        </div>
+      </section>
+
+      <section class='home-auth-gateway' id='home-auth-gateway' aria-live='polite'>
+        <div class='home-auth-copy'>
+          <span class='eyebrow'>COMECE AQUI</span>
+          <h2 id='home-auth-title'>Entre para acessar suas cifras em qualquer aparelho.</h2>
+          <p id='home-auth-text'>Use sua conta Google para sincronizar cifras, repertórios, equipes e Sala Live com segurança.</p>
+        </div>
+        <div class='home-auth-actions'>
+          <a class='btn btn-primary home-google-login' href='login-cifra.html' id='home-login-primary'>Entrar com Google</a>
+          <button class='btn btn-secondary home-sync-now' type='button' id='home-sync-now' hidden>Atualizar meu conteúdo agora</button>
+          <span class='home-sync-hint' id='home-sync-hint'>Login recomendado para não perder seus dados.</span>
+        </div>
+      </section>
+
+      <section class='hero-card home-command-hero'>
+        <div class='hero-copy'>
+          <span class='eyebrow'>STAGE MUSIC</span>
+          <h2>Seu palco. Suas cifras. Tudo pronto para tocar.</h2>
+          <p class='hero-commercial-copy'>Escolha uma ação e comece agora.</p>
+
+          <div class='hero-actions'>
+            <a class='btn btn-primary' href='modo-live.html'>Continuar no palco</a>
+            <a class='btn btn-outline' href='buscar-cifra.html'>Buscar cifra</a>
+            <a class='btn btn-secondary' href='minhas-listas.html'>Criar repertório</a>
+          </div>
+
+          <div class='hero-stat-pills'>
+            <article class='hero-pill'>
+              <span>Cifras</span>
+              <strong id='home-stat-songs'>0</strong>
+            </article>
+            <article class='hero-pill'>
+              <span>Repertórios</span>
+              <strong id='home-stat-setlists'>0</strong>
+            </article>
+            <article class='hero-pill'>
+              <span>Favoritas</span>
+              <strong id='home-stat-favorites'>0</strong>
+            </article>
+            <article class='hero-pill'>
+              <span>Prontas</span>
+              <strong id='home-stat-ready'>0%</strong>
+            </article>
+          </div>
+        </div>
+
+        <div class='hero-panel'>
+          <article class='live-session-card'>
+            <div class='live-session-top'>
+              <span class='card-tag live'>Modo Live</span>
+              <span class='live-session-status'>Ao vivo sem distrações</span>
+            </div>
+            <div class='live-session-title'>
+              <small>Retomar agora</small>
+              <strong id='hero-live-name'>Nenhum repertório ativo</strong>
+              <p id='hero-live-meta'>Crie um repertório para começar sua rotina de palco.</p>
+            </div>
+            <div class='live-session-grid'>
+              <div>
+                <span>Próxima ação</span>
+                <strong id='hero-next-action'>Montar repertório</strong>
+              </div>
+              <div>
+                <span>Biblioteca</span>
+                <strong id='hero-library-size'>0 cifras</strong>
+              </div>
+              <div>
+                <span>Última atividade</span>
+                <strong id='hero-last-activity'>Sem dados</strong>
+              </div>
+              <div>
+                <span>Resiliência</span>
+                <strong>Anti-break + offline</strong>
+              </div>
+            </div>
+            <div class='hero-panel-actions'>
+              <a class='btn btn-primary wide' href='modo-live.html'>Abrir Modo Live</a>
+              <a class='btn btn-outline wide' href='minhas-listas.html'>Abrir repertórios</a>
+            </div>
+          </article>
+
+          <article class='mini-status-board'>
+            <div class='mini-stat stat-board-item'>
+              <span>Build</span>
+              <strong data-build-version>v3.6.0</strong>
+            </div>
+            <div class='mini-stat stat-board-item'>
+              <span>Status</span>
+              <strong data-build-phase>Live Premium seguro</strong>
+            </div>
+            <div class='mini-stat stat-board-item'>
+              <span>Diferencial</span>
+              <strong>Leitura ao vivo + setlists + foco em palco</strong>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class='grid-cards home-entry-grid'>
+        <a class='feature-card live feature-card-premium' href='modo-live.html'>
+          <span class='card-tag'>Performance</span>
+          <h3>Modo Live</h3>
+          <p>Leitura limpa, seções, rolagem automática, ferramentas musicais e perfil por instrumento.</p>
+          <strong class='feature-cta'>Abrir agora →</strong>
+        </a>
+        <a class='feature-card search feature-card-premium' href='buscar-cifra.html'>
+          <span class='card-tag'>Biblioteca</span>
+          <h3>Buscar cifra</h3>
+          <p>Encontre cifras locais, favoritas, recentes e filtre por artista, tom, tag ou trecho.</p>
+          <strong class='feature-cta'>Explorar acervo →</strong>
+        </a>
+        <a class='feature-card insert feature-card-premium' href='login-cifra.html'>
+          <span class='card-tag'>Criação</span>
+          <h3>Editor musical</h3>
+          <p>Escreva, formate, transpõe, aplique capo e monte sua cifra com foco no uso real.</p>
+          <strong class='feature-cta'>Criar nova cifra →</strong>
+        </a>
+        <a class='feature-card lists feature-card-premium' href='minhas-listas.html'>
+          <span class='card-tag'>Organização</span>
+          <h3>Repertórios</h3>
+          <p>Monte setlists por evento, controle tonalidade, duração e o estado de ensaio de cada música.</p>
+          <strong class='feature-cta'>Organizar setlist →</strong>
+        </a>
+      </section>
+
+      <section class='dashboard-grid home-dashboard-grid'>
+        <div class='dashboard-stack'>
+          <article class='section-card'>
+            <div class='section-head'>
+              <div>
+                <span class='visual-badge'>Retomar agora</span>
+                <h3>Cifras recentes</h3>
+              </div>
+              <a class='mini-link' href='buscar-cifra.html'>Ir para biblioteca</a>
+            </div>
+            <div class='song-list premium-list' id='home-recent-songs'>
+              <div class='song-row empty-home-row'>
+                <div class='song-meta'>
+                  <strong>Sua biblioteca ainda está vazia</strong>
+                  <small>Crie ou importe sua primeira cifra para ver atalhos rápidos aqui.</small>
+                </div>
+                <div class='song-actions'>
+                  <a class='soft-btn' href='login-cifra.html'>Criar cifra</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class='section-card'>
+            <div class='section-head'>
+              <div>
+                <span class='visual-badge'>Ações rápidas</span>
+                <h3>Seu fluxo em um toque</h3>
+              </div>
+            </div>
+            <div class='quick-actions premium-quick-actions'>
+              <a class='quick-action' href='modo-live.html'>
+                <strong>Continuar ao vivo</strong>
+                <span>Volte direto ao modo leitura de palco.</span>
+              </a>
+              <a class='quick-action' href='buscar-cifra.html'>
+                <strong>Pesquisar música</strong>
+                <span>Busque por artista, tom, tag ou trecho.</span>
+              </a>
+              <a class='quick-action' href='minhas-listas.html'>
+                <strong>Preparar setlist</strong>
+                <span>Monte repertórios por culto, show ou ensaio.</span>
+              </a>
+              <a class='quick-action' href='equipes.html'>
+                <strong>Gerenciar equipe</strong>
+                <span>Músicos, funções, instrumentos e permissões.</span>
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <div class='dashboard-stack'>
+          <article class='section-card' id='recentes'>
+            <div class='section-head'>
+              <div>
+                <span class='visual-badge'>Repertórios</span>
+                <h3>Listas recentes</h3>
+              </div>
+              <a class='mini-link' href='minhas-listas.html'>Abrir listas</a>
+            </div>
+            <div class='list-grid premium-list-grid' id='home-setlists'>
+              <div class='list-card empty-home-card'>
+                <strong>Nenhum repertório criado</strong>
+                <small>Monte seu primeiro setlist para culto, show, ministração ou ensaio.</small>
+                <div class='list-badges'><span>Começar</span><span>Organização</span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class='section-card'>
+            <div class='section-head'>
+              <div>
+                <span class='visual-badge'>Diferenciais</span>
+                <h3>O que torna o Stage Music especial</h3>
+              </div>
+            </div>
+            <div class='benefit-cards'>
+              <div class='benefit-card'>
+                <strong>Foco em palco</strong>
+                <small>Não é só catálogo de cifras. É leitura pronta para execução ao vivo.</small>
+              </div>
+              <div class='benefit-card'>
+                <strong>Offline first</strong>
+                <small>Biblioteca, repertórios e preferências permanecem disponíveis sem internet.</small>
+              </div>
+              <div class='benefit-card'>
+                <strong>Sem anúncios</strong>
+                <small>Experiência limpa, sem interrupção visual no palco ou durante o ensaio.</small>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class='visual-section home-visual-section'>
+        <article class='highlight-card home-highlight-card'>
+          <span class='visual-badge'>Fluxo ideal do músico</span>
+          <h3>Da preparação até o palco, sem perder tempo.</h3>
+          <div class='stage-flow'>
+            <div class='stage-step'>
+              <strong>1. Buscar ou criar cifra</strong>
+              <small>Encontre rápido na biblioteca ou escreva no editor musical.</small>
+            </div>
+            <div class='stage-step'>
+              <strong>2. Ajustar tom e estrutura</strong>
+              <small>Transponha, organize seções, defina capo e notas por instrumento.</small>
+            </div>
+            <div class='stage-step'>
+              <strong>3. Montar o repertório</strong>
+              <small>Ordene as músicas, defina duração e marque o que já está pronto.</small>
+            </div>
+            <div class='stage-step'>
+              <strong>4. Abrir o Live</strong>
+              <small>Leitura com contraste, seções, rolagem, metrônomo e retomada rápida.</small>
+            </div>
+          </div>
+        </article>
+
+        <article class='splash-card home-splash-card'>
+          <span class='visual-badge'>Atalhos inteligentes</span>
+          <div class='chips-row'>
+            <button class='chip-btn' type='button' data-fill-search='Louvor e adoração'>Louvor e adoração</button>
+            <button class='chip-btn' type='button' data-fill-search='Acústico'>Acústico</button>
+            <button class='chip-btn' type='button' data-fill-search='Ministração'>Ministração</button>
+            <button class='chip-btn' type='button' data-fill-search='Rock worship'>Rock worship</button>
+            <button class='chip-btn' type='button' data-fill-search='Show ao vivo'>Show ao vivo</button>
+          </div>
+          <div class='spotlight-panel'>
+            <div class='spotlight-line'>
+              <strong>Visual premium</strong>
+              <span>Mais contraste, mais profundidade e melhor hierarquia de informação.</span>
+            </div>
+            <div class='spotlight-line'>
+              <strong>Porta de entrada melhor</strong>
+              <span>Agora a Home comunica o produto, seus diferenciais e sua utilidade real.</span>
+            </div>
+            <div class='spotlight-line'>
+              <strong>Próxima etapa</strong>
+              <span>Conta, nuvem e sincronização usando recursos gratuitos do Firebase.</span>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class='roadmap-strip home-roadmap-strip'>
+        <article>
+          <strong>Agora</strong>
+          <p>Home premium, entrada estratégica e identidade visual mais forte e coerente.</p>
+        </article>
+        <article>
+          <strong>Próximo</strong>
+          <p>Conta, nuvem e sincronização com Firebase gratuito, sem perder o modo offline local.</p>
+        </article>
+        <article>
+          <strong>Depois</strong>
+          <p>Sala Live sincronizada e colaboração entre músicos com foco em apresentações reais.</p>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <dialog id='onboarding-dialog' class='onboarding-dialog'>
+    <div class='onboarding-shell'>
+      <div class='onboarding-top'>
+        <div>
+          <span class='eyebrow'>BEM-VINDO AO STAGE MUSIC</span>
+          <h2>Prepare seu palco em quatro passos.</h2>
+        </div>
+        <button class='icon-btn' type='button' id='close-onboarding' aria-label='Fechar'>✕</button>
+      </div>
+      <div class='onboarding-progress' aria-hidden='true'><span id='onboarding-progress-bar'></span></div>
+      <div class='onboarding-step' data-onboarding-step='0'>
+        <span class='onboarding-number'>1</span>
+        <h3>Entre com sua conta</h3>
+        <p>Use Google ou e-mail para proteger suas cifras e acessar o conteúdo em outros aparelhos.</p>
+        <span class='onboarding-state' id='onboarding-login-state'>Verificando conta…</span>
+      </div>
+      <div class='onboarding-step' data-onboarding-step='1' hidden>
+        <span class='onboarding-number'>2</span>
+        <h3>Atualize o conteúdo</h3>
+        <p>Baixe da nuvem as cifras, repertórios e equipes antes de começar a trabalhar neste aparelho.</p>
+        <span class='onboarding-state' id='onboarding-sync-state'>Verificando sincronização…</span>
+      </div>
+      <div class='onboarding-step' data-onboarding-step='2' hidden>
+        <span class='onboarding-number'>3</span>
+        <h3>Prepare as músicas</h3>
+        <p>Busque ou crie cifras, revise tom, BPM, capo e estrutura. Depois reúna tudo em um repertório.</p>
+        <span class='onboarding-state' id='onboarding-content-state'>Verificando biblioteca…</span>
+      </div>
+      <div class='onboarding-step' data-onboarding-step='3' hidden>
+        <span class='onboarding-number'>4</span>
+        <h3>Teste antes da apresentação</h3>
+        <p>Abra o Modo Live, teste a Sala Live por QR Code e execute o diagnóstico deste aparelho.</p>
+        <div class='onboarding-links'>
+          <a href='modo-live.html'>Modo Live</a>
+          <a href='sala-live.html'>Sala Live</a>
+          <a href='diagnostico.html'>Diagnóstico</a>
+        </div>
+      </div>
+      <div class='onboarding-bottom'>
+        <button class='btn btn-outline' type='button' id='onboarding-later'>Agora não</button>
+        <div class='onboarding-navigation'>
+          <button class='btn btn-secondary' type='button' id='onboarding-prev' disabled>Voltar</button>
+          <button class='btn btn-primary' type='button' id='onboarding-next'>Próximo</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <nav class='bottom-nav mobile-only'>
+    <a class='active' href='index.html'>Início</a>
+    <a href='modo-live.html'>Live</a>
+    <a href='sala-live.html'>Sala</a>
+    <a href='buscar-cifra.html'>Buscar</a>
+    <a href='minhas-listas.html'>Listas</a>
+    <a href='equipes.html'>Equipes</a>
+    <a href='eventos.html'>Eventos</a>
+    <a class='bottom-login-link' href='login-cifra.html'>Entrar</a>
+  </nav>
+
+  <footer class='app-footer'>
+    <span id='build-info' data-build-info>Carregando informações da build…</span>
+  </footer>
+
+  <script src='js/build-info.js'></script>
+  <script src='js/resilience.js'></script>
+  <script src='js/firebase-config.js'></script>
+  <script src='js/auth.js'></script>
+  <script src='js/firebase-runtime.js'></script>
+  <script src='js/local-db.js'></script>
+  <script src='js/cloud-sync.js'></script>
+  <script src='js/workspace-cloud.js'></script>
+  <script src='js/app.js'></script>
+  <script src='js/home-dashboard.js'></script>
+  <script src='js/onboarding.js'></script>
+  <script src='js/home-auth-sync.js'></script>
+  <script src="js/mobile-audit.js"></script>
+</body>
+</html>
