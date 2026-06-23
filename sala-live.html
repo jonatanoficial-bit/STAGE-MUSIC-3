@@ -183,7 +183,7 @@
             <small>Para abrir em outro celular sem perder a sincronização, entre rapidamente com Google. O app volta para esta sala automaticamente.</small>
             <a id="room-guest-login-link" class="btn btn-primary wide" href="login-cifra.html">Entrar com Google e voltar para a sala</a>
           </div>
-          <label class="join-code-label"><span>Código da sala</span><input id="join-room-code" maxlength="10" inputmode="text" autocapitalize="characters" autocomplete="off" placeholder="ABC-123" /></label>
+          <label class="join-code-label"><span>Código da sala</span><input id="join-room-code" maxlength="10" inputmode="text" autocapitalize="characters" autocomplete="off" placeholder="ABC-123" /></label><button id="room-scan-qr" class="btn btn-outline wide qr-scan-action" type="button">Ler QR Code pela câmera</button>
           <div class="invite-role-switch" aria-label="Escolha rápida de função">
             <button type="button" class="invite-role-option" data-invite-role="vocal" data-instrument="Vocal" data-view="lyrics"><strong>Vou cantar</strong><small>Letra limpa</small></button>
             <button type="button" class="invite-role-option" data-invite-role="musico" data-instrument="Violão" data-view="chords"><strong>Vou tocar</strong><small>Cifra completa</small></button>
@@ -249,6 +249,7 @@
   <script src="js/cloud-sync.js"></script><script src="js/workspace-cloud.js"></script>
   <script src="js/vendor/qrcode.min.js"></script>
   <script src="js/live-sharing-core.js"></script>
+  <script src="js/qr-scanner.js"></script>
   <script src="js/live-stability.js"></script>
   <script src="js/harmonic-engine.js"></script>
   <script src="js/live-room.js"></script>

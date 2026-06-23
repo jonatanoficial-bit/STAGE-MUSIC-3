@@ -62,3 +62,6 @@
  .international-grid,.legal-grid,.help-grid{grid-template-columns:1fr}
  .international-hero,.legal-hero,.help-hero{border-radius:22px;padding:20px}
 }
+
+/* Fase 39 — app em português: seletor PT/EN/ES removido da interface */
+.language-switcher{display:none!important;visibility:hidden!important;pointer-events:none!important}

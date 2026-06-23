@@ -18,7 +18,7 @@
     return `${value.slice(0,3)}-${value.slice(3)}`;
   }
   function buildShareUrl(code,href){
-    const base=new URL('sala-live.html',href||'https://stage-music.local/index.html');
+    const base=new URL('convite.html',href||'https://stage-music.local/index.html');
     base.search='';
     base.hash='';
     base.searchParams.set('room',normalizeCode(code));

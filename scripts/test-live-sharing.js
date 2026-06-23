@@ -14,6 +14,6 @@ const resolved=core.resolveRoomSetlist({sharedSetlist:snapshot,setlistId:'missin
 assert.strictEqual(resolved.name,'Culto');
 assert.strictEqual(resolved.songs[0].content,songs.s1.content);
 const url=core.buildShareUrl('abc123','https://example.com/app/index.html');
-assert.strictEqual(url,'https://example.com/app/sala-live.html?room=ABC-123');
+assert.strictEqual(url,'https://example.com/app/convite.html?room=ABC-123');
 assert.ok(core.payloadBytes({sharedSetlist:snapshot})<850000);
 console.log('LIVE SHARING CORE: APROVADO');

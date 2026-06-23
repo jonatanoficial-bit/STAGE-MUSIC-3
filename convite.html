@@ -26,7 +26,7 @@
       <div class="section-head">
         <div><span class="eyebrow">PASSO 1</span><h2>Digite o código da Sala Live</h2></div>
       </div>
-      <label class="invite-code-label"><span>Código recebido</span><input id="invite-room-code" maxlength="10" autocapitalize="characters" autocomplete="off" inputmode="text" placeholder="ABC-123" /></label>
+      <label class="invite-code-label"><span>Código recebido</span><input id="invite-room-code" maxlength="10" autocapitalize="characters" autocomplete="off" inputmode="text" placeholder="ABC-123" /></label><button id="invite-scan-qr" class="btn btn-outline wide qr-scan-action" type="button">Ler QR Code pela câmera</button>
       <label class="invite-name-label"><span>Seu nome</span><input id="invite-display-name" maxlength="60" autocomplete="name" placeholder="Ex.: Ana, João, Teclado 1" /></label>
 
       <div class="section-head compact">
@@ -74,6 +74,8 @@
   <script src="js/build-info.js"></script>
   <script src="js/resilience.js"></script>
   <script src="js/i18n.js"></script>
+  <script src="js/live-sharing-core.js"></script>
+  <script src="js/qr-scanner.js"></script>
   <script src="js/invite.js"></script>
   <script src="js/mobile-audit.js"></script>
 </body>

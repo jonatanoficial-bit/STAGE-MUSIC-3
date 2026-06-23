@@ -1,3 +1,13 @@
+
+## Stage Music v4.6.0 — Fase 39 — Hotfix pós-teste real
+
+- Corrige área fantasma “Nenhuma apresentação ativa” aparecendo sobre cifra.
+- Adiciona leitor de QR Code pela câmera no convite e na Sala Live.
+- Link/QR agora abre a entrada por convite para a pessoa escolher se quer letra ou cifra.
+- Adiciona escolha grande “Quero letra / Quero cifra” no Modo Live quando necessário.
+- Remove o seletor PT/EN/ES da interface e mantém o app em português nesta etapa.
+- Melhora acesso à velocidade da rolagem no celular.
+
 # Stage Music — v4.5.0
 
 Stage Music é um app web para músicos, vocalistas, diretores musicais e equipes de adoração. Funciona pelo navegador em Android, iPhone, tablet e computador.

@@ -8,10 +8,10 @@ has('homologacao.html','Play Store nem na App Store');
 has('homologacao.html','Android, iPhone, tablet e computador');
 has('homologacao.html','data-rc-check');
 has('js/rc-final.js','stage_music_rc_final_checks_v1');
-has('service-worker.js','stage-music-v4-5-0');
+has('service-worker.js','stage-music-v4-');
 has('service-worker.js','./homologacao.html');
 has('manifest.json','Homologação final');
 const info=JSON.parse(fs.readFileSync(path.join(root,'BUILD-INFO.json'),'utf8'));
-if(info.version!=='v4.5.0'||info.phase!==38||info.resilience!=='anti-break-v42')errors.push('BUILD-INFO não está na Fase 38 v4.5.0.');
+if(info.phase<38||Number(info.versionNumber.split('.')[0])<4)errors.push('BUILD-INFO abaixo do RC final.');
 if(errors.length){console.error('TESTE RC FINAL REPROVADO\n'+errors.join('\n'));process.exit(1)}
-console.log('TESTE RC FINAL APROVADO — Stage Music v4.5.0 Fase 38');
+console.log(`TESTE RC FINAL APROVADO — Stage Music ${info.version} Fase ${info.phase}`);

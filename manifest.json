@@ -1,7 +1,7 @@
 {
   "name": "Stage Music",
   "short_name": "Stage Music",
-  "description": "Stage Music: Release Candidate final for live chord charts, lyrics, setlists, Live Room and director cues in Portuguese, English and Spanish, running in the browser on Android, iPhone, tablets and computers.",
+  "description": "Stage Music: cifras, letras, repertórios, Sala Live e comandos do diretor em português, funcionando pelo navegador em Android, iPhone, tablet e computador.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#080b14",
@@ -123,7 +123,7 @@
     {
       "name": "Ajuda rápida",
       "short_name": "Ajuda",
-      "description": "Abrir ajuda em português, inglês e espanhol",
+      "description": "Abrir ajuda",
       "url": "./ajuda.html",
       "icons": [
         {
@@ -134,9 +134,9 @@
       ]
     },
     {
-      "name": "Produto internacional",
-      "short_name": "Produto",
-      "description": "Conhecer o Stage Music",
+      "name": "Sobre o Stage Music",
+      "short_name": "Sobre",
+      "description": "Conhecer o Stage Music em português",
       "url": "./produto.html",
       "icons": [
         {

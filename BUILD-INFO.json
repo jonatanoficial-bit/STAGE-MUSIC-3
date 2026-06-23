@@ -1,15 +1,15 @@
 {
   "app": "Stage Music",
-  "version": "v4.5.0",
-  "versionNumber": "4.5.0",
-  "phase": 38,
-  "phaseLabel": "Fase 38",
-  "phaseName": "Release Candidate final, homologação e limpeza de publicação",
-  "date": "22/06/2026",
-  "isoDate": "2026-06-22",
-  "time": "18:38",
-  "stamp": "20260622-1838",
-  "environment": "release-candidate-final",
+  "version": "v4.6.0",
+  "versionNumber": "4.6.0",
+  "phase": 39,
+  "phaseLabel": "Fase 39",
+  "phaseName": "Hotfix pós-teste real: convite por QR, letra/cifra na entrada e Live sem área fantasma",
+  "date": "23/06/2026",
+  "isoDate": "2026-06-23",
+  "time": "10:40",
+  "stamp": "20260623-1040",
+  "environment": "beta-hotfix-real-test",
   "costStrategy": "firebase-spark-free-first",
-  "resilience": "anti-break-v42"
+  "resilience": "anti-break-v43"
 }
