@@ -1,3 +1,7 @@
+# Stage Music v4.7.0
+
+Hotfix de teste real: interface pública limpa, entrada por convite mais direta e correção do leitor de QR.
+
 
 ## Stage Music v4.6.0 — Fase 39 — Hotfix pós-teste real
 

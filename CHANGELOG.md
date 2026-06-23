@@ -1,4 +1,12 @@
 
+## v4.7.0 — Fase 40 — Hotfix interface limpa e QR funcional
+
+- Remove textos explicativos das telas públicas principais.
+- Corrige o botão Ler QR, que podia não vincular o evento quando chamado depois do carregamento da página.
+- Simplifica convite e Sala Live para uso por pessoas leigas.
+- Mantém Firebase e regras sem alteração.
+
+
 ## Stage Music v4.6.0 — Fase 39 — Hotfix pós-teste real
 
 - Corrige área fantasma “Nenhuma apresentação ativa” aparecendo sobre cifra.

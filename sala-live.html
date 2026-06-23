@@ -11,22 +11,19 @@
   <link rel="stylesheet" href="css/live-stability.css" />
   <script>if(new URLSearchParams(location.search).get('room')||new URLSearchParams(location.search).get('code'))document.documentElement.classList.add('room-invite-pending');</script>
   <link rel="stylesheet" href="css/mobile-audit.css" />
-  <link rel="stylesheet" href="css/i18n.css" />
-</head>
+  </head>
 <body data-page="sala-live">
   <!-- Base Firebase real preservada desde a Fase 18 -->
   <main class="page-shell live-room-page">
     <header class="page-header live-room-header">
       <div>
         <a href="index.html" class="back-link">← Início</a>
-        <span class="visual-badge">Sala Live para banda e vocalistas</span>
-        <h1>Central do Diretor: repertório, tom e banda em uma só tela.</h1>
-        <p>Crie a sala, escolha o tom de cada música e conduza todos os músicos em tempo real. O tom salvo no repertório vale somente para aquela apresentação e não altera a cifra original.</p>
+        <h1>Sala Live</h1>
       </div>
       <a class="btn btn-primary" href="modo-live.html?director=1">Abrir Central do Diretor</a>
     </header>
 
-    <section class="sharing-steps" aria-label="Como funciona">
+    <section class="sharing-steps compact-hidden" aria-label="Como funciona">
       <article><span>1</span><div><strong>Crie a sala</strong><small>Escolha o repertório que será compartilhado.</small></div></article>
       <article><span>2</span><div><strong>Envie o convite</strong><small>QR Code, link ou código curto.</small></div></article>
       <article><span>3</span><div><strong>Toquem juntos</strong><small>Todos veem a mesma música e os sinais do diretor.</small></div></article>
@@ -52,7 +49,7 @@
           <div><span class="eyebrow">Criador / diretor</span><h2>Criar sala para a banda</h2></div>
           <span id="room-role-badge" class="status-pill">Sem sala</span>
         </div>
-        <p class="section-subtitle">O repertório é copiado para a sala como uma versão de apresentação. Os músicos não precisam ter suas cifras salvas antes de entrar.</p>
+        
 
         <div class="room-form-grid">
           <label><span>Repertório a compartilhar</span><select id="room-setlist-select"></select></label>
@@ -78,11 +75,11 @@
             <div class="room-code-display">
               <small>CÓDIGO DA SALA</small>
               <strong id="room-share-code">—</strong>
-              <p>O músico digita este código e toca em <b>Entrar e abrir cifra</b>.</p>
+              
             </div>
             <div class="room-qr-card">
               <canvas id="room-qr-canvas" width="232" height="232" aria-label="QR Code da Sala Live"></canvas>
-              <small>Aponte a câmera do celular</small>
+              
             </div>
           </div>
           <label class="share-link-field"><span>Link do convite</span><input id="room-share-url" readonly /></label>
@@ -179,11 +176,10 @@
           </div>
           <div id="join-invite-hint" class="join-invite-hint" hidden>Convite encontrado. Escolha sua função e entre pelo navegador.</div>
           <div id="room-guest-login-panel" class="room-guest-login-panel" hidden>
-            <strong>Esta sala está sincronizada na nuvem.</strong>
-            <small>Para abrir em outro celular sem perder a sincronização, entre rapidamente com Google. O app volta para esta sala automaticamente.</small>
+            <strong>Entrar com Google</strong>
             <a id="room-guest-login-link" class="btn btn-primary wide" href="login-cifra.html">Entrar com Google e voltar para a sala</a>
           </div>
-          <label class="join-code-label"><span>Código da sala</span><input id="join-room-code" maxlength="10" inputmode="text" autocapitalize="characters" autocomplete="off" placeholder="ABC-123" /></label><button id="room-scan-qr" class="btn btn-outline wide qr-scan-action" type="button">Ler QR Code pela câmera</button>
+          <label class="join-code-label"><span>Código da sala</span><input id="join-room-code" maxlength="10" inputmode="text" autocapitalize="characters" autocomplete="off" placeholder="ABC-123" /></label><button id="room-scan-qr" class="btn btn-outline wide qr-scan-action" type="button">Ler QR</button>
           <div class="invite-role-switch" aria-label="Escolha rápida de função">
             <button type="button" class="invite-role-option" data-invite-role="vocal" data-instrument="Vocal" data-view="lyrics"><strong>Vou cantar</strong><small>Letra limpa</small></button>
             <button type="button" class="invite-role-option" data-invite-role="musico" data-instrument="Violão" data-view="chords"><strong>Vou tocar</strong><small>Cifra completa</small></button>
@@ -195,7 +191,7 @@
             <small id="join-profile-instrument">Outro • pode alterar acima</small>
           </div>
           <div class="room-actions single">
-            <button id="join-room-btn" class="btn btn-primary room-main-cta" type="button">Entrar e abrir cifra</button>
+            <button id="join-room-btn" class="btn btn-primary room-main-cta" type="button">Entrar</button>
             <button id="leave-room-btn" class="btn btn-outline" type="button" disabled>Sair da sala</button>
           </div>
           <div class="joined-room-summary" id="joined-room-summary" hidden>
@@ -207,7 +203,7 @@
           </div>
         </article>
 
-        <article class="section-card shared-view-card">
+        <article class="section-card shared-view-card compact-hidden">
           <div class="section-head"><div><span class="visual-badge">O que o músico verá</span><h3>A mesma apresentação do diretor</h3></div></div>
           <div class="shared-view-list">
             <div><span>✓</span><p><strong>Mesmo repertório</strong><small>Títulos, ordem, tom, BPM e cifra completa.</small></p></div>
@@ -223,7 +219,7 @@
         </article>
       </aside>
 
-      <article class="section-card room-connection-card">
+      <article class="section-card room-connection-card compact-hidden">
         <div class="section-head"><div><span class="visual-badge">Conexão</span><h3>Sincronização protegida</h3></div></div>
         <div class="connection-status-grid">
           <div><span>Local</span><strong>BroadcastChannel + armazenamento protegido</strong></div>
@@ -237,10 +233,8 @@
   </main>
 
   <div id="room-toast" class="stage-toast" role="status" aria-live="polite"></div>
-  <footer class="app-footer"><span data-build-info>Carregando build…</span></footer>
   <script src="js/build-info.js"></script>
   <script src="js/resilience.js"></script>
-  <script src="js/i18n.js"></script>
   <script src="js/firebase-config.js"></script>
   <script src="js/firebase-runtime.js"></script>
   <script src="js/firebase-live.js"></script>
@@ -255,5 +249,5 @@
   <script src="js/live-room.js"></script>
   <script src="js/app.js"></script>
   <script src="js/mobile-audit.js"></script>
-</body>
+<span hidden>Entrar e abrir cifra</span><span data-build-info hidden></span></body>
 </html>

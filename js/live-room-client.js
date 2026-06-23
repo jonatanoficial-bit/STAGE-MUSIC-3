@@ -168,8 +168,8 @@ function sync(){
  if(list){
   const active=read(ACTIVE,null),signature=JSON.stringify((list.songs||[]).map(song=>[song.songId||song.id||'',song.key||'',song.originalKey||'',song.content?.length||0])),target={...list,id:list.id||`shared_${room.code}`,roomCode:room.code,roomName:room.name,source:'live-room',startedAt:active?.startedAt||now(),roomSignature:signature};
   const changed=active?.id!==target.id||active?.roomCode!==room.code||active?.roomSignature!==signature;
-  if(changed){write(ACTIVE,target);if(window.StageMusicLiveMode?.getSetlist?.())window.StageMusicLiveMode.refreshSetlist(target);else{location.reload();return}}
-  window.StageMusicLiveMode?.goToIndex?.(Number(room.index||0),{broadcast:false});
+  if(changed){write(ACTIVE,target);window.StageMusicLiveMode?.refreshSetlist?.(target)}
+  window.StageMusicLiveMode?.goToIndex?.(Number(room.index||0),{broadcast:false}); const empty=document.getElementById('live-empty'),content=document.getElementById('live-content'); if(list&&empty&&content){empty.hidden=true;content.hidden=false}
  }
  const director=isDirector(ctx),member=activeMember(ctx),viewMode=inferViewMode(member,ctx);
  window.StageMusicLiveMode?.setDisplayMode?.(viewMode);

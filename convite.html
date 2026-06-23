@@ -10,55 +10,33 @@
   <link rel="stylesheet" href="css/global.css" />
   <link rel="stylesheet" href="css/invite.css" />
   <link rel="stylesheet" href="css/mobile-audit.css" />
-  <link rel="stylesheet" href="css/i18n.css" />
 </head>
 <body data-page="convite">
   <main class="invite-shell">
     <section class="invite-hero-card">
       <a class="back-link" href="index.html">← Início</a>
-      <span class="visual-badge">Entrada rápida</span>
-      <h1>Recebeu um convite da banda?</h1>
-      <p>Entre na Sala Live pelo navegador do celular. Escolha se vai cantar ou tocar e abra a leitura sincronizada da apresentação.</p>
-      <div class="browser-note">Ainda não está na Play Store ou App Store. Funciona pelo navegador em Android, iPhone, tablet e computador.</div>
+      <h1>Entrar na Sala Live</h1>
     </section>
 
     <section class="invite-card invite-form-card" aria-label="Entrar em uma sala">
       <div class="section-head">
-        <div><span class="eyebrow">PASSO 1</span><h2>Digite o código da Sala Live</h2></div>
+        <div><h2>Código da sala</h2></div>
       </div>
-      <label class="invite-code-label"><span>Código recebido</span><input id="invite-room-code" maxlength="10" autocapitalize="characters" autocomplete="off" inputmode="text" placeholder="ABC-123" /></label><button id="invite-scan-qr" class="btn btn-outline wide qr-scan-action" type="button">Ler QR Code pela câmera</button>
+      <label class="invite-code-label"><span>Código recebido</span><input id="invite-room-code" maxlength="10" autocapitalize="characters" autocomplete="off" inputmode="text" placeholder="ABC-123" /></label><button id="invite-scan-qr" class="btn btn-outline wide qr-scan-action" type="button">Ler QR</button>
       <label class="invite-name-label"><span>Seu nome</span><input id="invite-display-name" maxlength="60" autocomplete="name" placeholder="Ex.: Ana, João, Teclado 1" /></label>
 
       <div class="section-head compact">
-        <div><span class="eyebrow">PASSO 2</span><h2>Como você vai participar?</h2></div>
+        <div><h2>Escolha sua leitura</h2></div>
       </div>
       <div class="invite-role-grid" role="group" aria-label="Escolha sua função">
-        <button class="invite-role-card active" type="button" data-role="vocal" data-instrument="Vocal" data-view="lyrics"><strong>Vou cantar</strong><small>Abre letra limpa com título fixo.</small></button>
-        <button class="invite-role-card" type="button" data-role="musico" data-instrument="Violão" data-view="chords"><strong>Vou tocar</strong><small>Abre cifra completa com acordes.</small></button>
-        <button class="invite-role-card" type="button" data-role="diretor" data-instrument="Direção musical" data-view="director"><strong>Sou diretor</strong><small>Abre comandos, tom e Sala Live.</small></button>
+        <button class="invite-role-card active" type="button" data-role="vocal" data-instrument="Vocal" data-view="lyrics"><strong>Letra</strong></button>
+        <button class="invite-role-card" type="button" data-role="musico" data-instrument="Violão" data-view="chords"><strong>Cifra</strong></button>
+        <button class="invite-role-card" type="button" data-role="diretor" data-instrument="Direção musical" data-view="director"><strong>Diretor</strong></button>
       </div>
       <label class="invite-instrument-label"><span>Instrumento ou função</span><select id="invite-instrument">
         <option>Vocal</option><option>Back vocal</option><option>Teclado</option><option>Violão</option><option>Guitarra</option><option>Baixo</option><option>Bateria</option><option>Sopros</option><option>Direção musical</option><option>Técnico de som</option><option>Outro</option>
       </select></label>
-      <button id="invite-open-room" class="btn btn-primary wide invite-main-action" type="button">Entrar na Sala Live</button>
-      <p class="invite-helper" id="invite-helper">Dica: vocalistas entram em letra limpa; músicos entram em cifra.</p>
-    </section>
-
-    <section class="invite-card invite-director-card">
-      <div><span class="eyebrow">PARA O DIRETOR</span><h2>Vai criar a sala?</h2><p>Monte ou selecione o repertório, crie a Sala Live e compartilhe o QR Code com a equipe.</p></div>
-      <div class="invite-director-actions">
-        <a class="btn btn-secondary" href="minhas-listas.html">Preparar repertório</a>
-        <a class="btn btn-outline" href="sala-live.html?director=1">Criar Sala Live</a>
-      </div>
-    </section>
-
-    <section class="invite-card invite-checklist-card">
-      <h2>O que acontece ao entrar</h2>
-      <div class="invite-checklist">
-        <div><span>✓</span><p><strong>Título sempre visível</strong><small>Você sabe qual música está sendo tocada.</small></p></div>
-        <div><span>✓</span><p><strong>Letra ou cifra certa</strong><small>O app escolhe a tela ideal para sua função.</small></p></div>
-        <div><span>✓</span><p><strong>Comandos do diretor</strong><small>Avisos aparecem com destaque durante a apresentação.</small></p></div>
-      </div>
+      <button id="invite-open-room" class="btn btn-primary wide invite-main-action" type="button">Entrar</button>
     </section>
   </main>
 
@@ -69,14 +47,12 @@
     <a href="modo-live.html">Live</a>
     <a href="login-cifra.html">Conta</a>
   </nav>
-  <footer class="app-footer"><span data-build-info>Carregando build…</span></footer>
   <div id="invite-toast" class="stage-toast" role="status" aria-live="polite"></div>
   <script src="js/build-info.js"></script>
   <script src="js/resilience.js"></script>
-  <script src="js/i18n.js"></script>
   <script src="js/live-sharing-core.js"></script>
   <script src="js/qr-scanner.js"></script>
   <script src="js/invite.js"></script>
   <script src="js/mobile-audit.js"></script>
-</body>
+<span data-build-info hidden></span></body>
 </html>

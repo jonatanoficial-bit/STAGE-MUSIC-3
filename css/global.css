@@ -284,3 +284,44 @@ body[data-page] .live-stage-card{
   body[data-page="minhas-listas"],body[data-page="equipes"],body[data-page="eventos"]{background-image:linear-gradient(180deg,rgba(5,8,18,.42),rgba(5,8,18,.77) 52%,rgba(5,8,18,.94)),var(--stage-bg-setlists);}
   body[data-page]{background-size:cover;background-position:center top;background-attachment:scroll;}
 }
+
+
+/* Fase 40 hotfix: interface pública limpa para teste real */
+.app-footer{display:none!important}
+.compact-hidden{display:none!important}
+body[data-page="convite"] .invite-shell{gap:14px;padding-bottom:92px}
+body[data-page="convite"] .invite-hero-card{padding:18px 18px 8px;background:transparent;border:0;box-shadow:none}
+body[data-page="convite"] .invite-hero-card h1{margin:8px 0 0;font-size:clamp(1.55rem,7vw,2.25rem)}
+body[data-page="convite"] .invite-form-card{margin-top:0}
+body[data-page="convite"] .section-head{margin-bottom:10px}
+body[data-page="convite"] .section-head h2{font-size:1.02rem}
+body[data-page="convite"] .invite-role-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+body[data-page="convite"] .invite-role-card{min-height:76px;justify-content:center;text-align:center}
+body[data-page="convite"] .invite-role-card strong{font-size:1.14rem}
+body[data-page="convite"] .invite-role-card small{display:none}
+body[data-page="convite"] .invite-role-card[data-role="diretor"]{grid-column:1/-1;min-height:58px}
+body[data-page="convite"] .invite-main-action{font-size:1.08rem;min-height:56px}
+body[data-page="sala-live"] .page-header p,
+body[data-page="sala-live"] .section-subtitle,
+body[data-page="sala-live"] .visual-badge,
+body[data-page="sala-live"] .eyebrow{display:none!important}
+body[data-page="sala-live"] .page-header{padding-block:16px}
+body[data-page="sala-live"] .page-header h1{font-size:clamp(1.5rem,6vw,2.1rem);margin:8px 0 0}
+.room-invite-pending body[data-page="sala-live"] .live-room-header,
+.room-invite-pending body[data-page="sala-live"] .sharing-steps,
+.room-invite-pending body[data-page="sala-live"] .room-stats-grid,
+.room-invite-pending body[data-page="sala-live"] #room-health-panel,
+.room-invite-pending body[data-page="sala-live"] .room-control-card,
+.room-invite-pending body[data-page="sala-live"] .room-members-card,
+.room-invite-pending body[data-page="sala-live"] .shared-view-card,
+.room-invite-pending body[data-page="sala-live"] .room-connection-card{display:none!important}
+.room-invite-pending body[data-page="sala-live"] .room-layout{display:block}
+.room-invite-pending body[data-page="sala-live"] .room-side-column{display:block}
+.room-invite-pending body[data-page="sala-live"] .room-join-card{margin-top:12px}
+body[data-page="modo-live"] .live-empty p{display:none!important}
+body[data-page="modo-live"] .live-empty{min-height:120px;background:transparent!important;border:0!important}
+body[data-page="modo-live"] .live-view-choice{padding:14px;border-radius:18px}
+body[data-page="modo-live"] .live-view-choice .eyebrow,
+body[data-page="modo-live"] .live-view-choice small{display:none!important}
+body[data-page="modo-live"] .live-view-choice strong{font-size:1.08rem}
+body[data-page="modo-live"] .live-view-choice-actions button{min-height:54px;font-size:1rem}
